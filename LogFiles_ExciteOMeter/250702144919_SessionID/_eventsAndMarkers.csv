@@ -1,0 +1,15 @@
+datetime,sessionTime,type,message,details
+250702144919.966,0.000,ManualMarkers,ExperimentStarted,CUSTOM_MARKER
+250702144920.009,0.000,Screenshots,screen_1920x1080_0.jpg,NONE
+250702144930.014,10.060,ManualMarkers,ExperimentalStageStarted:0,CUSTOM_MARKER
+250702144930.044,10.060,Screenshots,screen_1920x1080_1.jpg,NONE
+250702144939.975,19.980,Screenshots,screen_1920x1080_2.jpg,NONE
+250702144940.014,20.060,ManualMarkers,ExperimentalStageEnded:0,CUSTOM_MARKER
+250702144940.045,20.060,Screenshots,screen_1920x1080_3.jpg,NONE
+250702144945.046,25.080,ManualMarkers,ExperimentalStageStarted:1,CUSTOM_MARKER
+250702144945.077,25.080,Screenshots,screen_1920x1080_4.jpg,NONE
+250702144955.047,35.080,ManualMarkers,ExperimentalStageEnded:1,CUSTOM_MARKER
+250702144955.078,35.080,Screenshots,screen_1920x1080_5.jpg,NONE
+250702144959.980,39.980,Screenshots,screen_1920x1080_6.jpg,NONE
+250702145000.080,40.120,ManualMarkers,ExperimentalStageStarted:2,CUSTOM_MARKER
+250702145000.114,40.120,Screenshots,screen_1920x1080_7.jpg,NONE

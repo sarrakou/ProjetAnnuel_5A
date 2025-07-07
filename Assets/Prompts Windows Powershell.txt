@@ -1,0 +1,2 @@
+CheckNetIsolation LoopbackExempt -a -n="10247LuisQuintero.Excite-O-Meter_k7zc7t0y9176w"
+CheckNetIsolation LoopbackExempt -is -n="10247LuisQuintero.Excite-O-Meter_k7zc7t0y9176w"

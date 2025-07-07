@@ -1,0 +1,5 @@
+datetime,sessionTime,type,message,details
+250707150545.893,0.000,ManualMarkers,ExperimentStarted,CUSTOM_MARKER
+250707150545.947,0.000,Screenshots,screen_1920x1080_0.jpg,NONE
+250707150545.948,0.000,ManualMarkers,BaselineCollectionStarted,CUSTOM_MARKER
+250707150545.972,0.000,Screenshots,screen_1920x1080_1.jpg,NONE
