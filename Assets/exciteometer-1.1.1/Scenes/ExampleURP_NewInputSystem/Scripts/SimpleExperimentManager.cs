@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using ExciteOMeter;
+using System.IO;
 
 /*
 * Enhanced SimpleExperimentManager with integrated phobia detection API.
@@ -289,6 +290,7 @@ public class SimpleExperimentManager : MonoBehaviour
             }
 
             ShowPopupMessage(resultMessage);
+            SavePhobiaResults.SaveResultsToJson();
         }
 
         if (!stopExperimentWasForced && popupMessages != null)

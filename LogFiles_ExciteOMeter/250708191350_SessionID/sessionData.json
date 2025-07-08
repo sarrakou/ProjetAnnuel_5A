@@ -1,0 +1,320 @@
+{
+    "HR": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 1
+    },
+    "RRi": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 2
+    },
+    "RMSSD": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 5
+    },
+    "SDNN": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 6
+    },
+    "EOM": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 7
+    },
+    "automaticMarkers": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 8
+    },
+    "manualMarkers": {
+        "timestamp": [
+            0.0,
+            0.0,
+            7.899997234344482,
+            7.899997234344482,
+            7.899997234344482,
+            17.919994354248048,
+            17.919994354248048,
+            22.979991912841798,
+            22.979991912841798,
+            32.97998809814453,
+            32.97998809814453,
+            38.01998519897461,
+            38.01998519897461,
+            48.019981384277347,
+            48.019981384277347,
+            53.079978942871097,
+            53.079978942871097,
+            63.079978942871097,
+            63.079978942871097,
+            63.079978942871097
+        ],
+        "value": [],
+        "text": [
+            "ExperimentStarted",
+            "BaselineCollectionStarted",
+            "BaselineCollectionEnded",
+            "PhobiaTest_Entomophobia_Started",
+            "ExperimentalStageStarted:0",
+            "PhobiaTest_Entomophobia_Ended",
+            "ExperimentalStageEnded:0",
+            "PhobiaTest_Nyctophobia_Started",
+            "ExperimentalStageStarted:1",
+            "PhobiaTest_Nyctophobia_Ended",
+            "ExperimentalStageEnded:1",
+            "PhobiaTest_Scopophobia_Started",
+            "ExperimentalStageStarted:2",
+            "PhobiaTest_Scopophobia_Ended",
+            "ExperimentalStageEnded:2",
+            "PhobiaTest_Claustrophobia_Started",
+            "ExperimentalStageStarted:3",
+            "PhobiaTest_Claustrophobia_Ended",
+            "ExperimentalStageEnded:3",
+            "ExperimentEnded"
+        ],
+        "type": 9
+    },
+    "screenshots": {
+        "timestamp": [
+            0.0,
+            0.0,
+            7.899997234344482,
+            7.899997234344482,
+            7.899997234344482,
+            17.919994354248048,
+            17.919994354248048,
+            19.97999382019043,
+            22.979991912841798,
+            22.979991912841798,
+            32.97998809814453,
+            32.97998809814453,
+            38.01998519897461,
+            38.01998519897461,
+            39.99998474121094,
+            48.019981384277347,
+            48.019981384277347,
+            53.079978942871097,
+            53.079978942871097,
+            59.999977111816409,
+            63.079978942871097,
+            63.079978942871097,
+            63.079978942871097
+        ],
+        "value": [],
+        "text": [
+            "screen_1920x1080_0.jpg",
+            "screen_1920x1080_1.jpg",
+            "screen_1920x1080_2.jpg",
+            "screen_1920x1080_3.jpg",
+            "screen_1920x1080_4.jpg",
+            "screen_1920x1080_5.jpg",
+            "screen_1920x1080_6.jpg",
+            "screen_1920x1080_7.jpg",
+            "screen_1920x1080_8.jpg",
+            "screen_1920x1080_9.jpg",
+            "screen_1920x1080_10.jpg",
+            "screen_1920x1080_11.jpg",
+            "screen_1920x1080_12.jpg",
+            "screen_1920x1080_13.jpg",
+            "screen_1920x1080_14.jpg",
+            "screen_1920x1080_15.jpg",
+            "screen_1920x1080_16.jpg",
+            "screen_1920x1080_17.jpg",
+            "screen_1920x1080_18.jpg",
+            "screen_1920x1080_19.jpg",
+            "screen_1920x1080_20.jpg",
+            "screen_1920x1080_21.jpg",
+            "screen_1920x1080_22.jpg"
+        ],
+        "type": 10
+    },
+    "headset_posX": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 12
+    },
+    "headset_posY": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 13
+    },
+    "headset_posZ": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 14
+    },
+    "headset_q0": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 15
+    },
+    "headset_qi": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 16
+    },
+    "headset_qj": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 17
+    },
+    "headset_qk": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 18
+    },
+    "headset_yaw": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 20
+    },
+    "headset_pitch": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 19
+    },
+    "headset_roll": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 21
+    },
+    "headset_velPosX": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 23
+    },
+    "headset_velPosY": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 25
+    },
+    "headset_velPosZ": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 27
+    },
+    "headset_accPosX": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 24
+    },
+    "headset_accPosY": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 26
+    },
+    "headset_accPosZ": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 28
+    },
+    "headset_velQuat0": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 29
+    },
+    "headset_velQuati": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 30
+    },
+    "headset_velQuatj": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 31
+    },
+    "headset_velQuatk": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 32
+    },
+    "headset_accQuat0": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 33
+    },
+    "headset_accQuati": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 34
+    },
+    "headset_accQuatj": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 35
+    },
+    "headset_accQuatk": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 36
+    },
+    "headset_velEuleri": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 37
+    },
+    "headset_velEulerj": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 38
+    },
+    "headset_velEulerk": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 39
+    },
+    "headset_accEuleri": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 40
+    },
+    "headset_accEulerj": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 41
+    },
+    "headset_accEulerk": {
+        "timestamp": [],
+        "value": [],
+        "text": [],
+        "type": 42
+    }
+}

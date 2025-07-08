@@ -1,7 +1,7 @@
 {
     "logSettings": {
         "sessionId": "SessionID",
-        "mainLogFolder": "C:/Users/sarra/ProjetAnnuel_5A/Assets/../LogFiles_ExciteOMeter/",
+        "mainLogFolder": "C:/Users/adria/Documents/Adriana/ESGI/5/PA/FinalPhobies/ProjetAnnuel_5A/Assets/../LogFiles_ExciteOMeter/",
         "mainDebugFilename": "logDebug.txt",
         "sessionJsonFilename": "sessionData.json",
         "recordScreenshots": true,
