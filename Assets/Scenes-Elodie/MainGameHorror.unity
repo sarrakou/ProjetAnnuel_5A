@@ -2734,7 +2734,7 @@ MonoBehaviour:
   interactKey: 101
   doorLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1 &2073710080 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7334862534832428583, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
@@ -2898,7 +2898,7 @@ PrefabInstance:
       objectReference: {fileID: 2063955219}
     - target: {fileID: 4497735894823681429, guid: 4fb7413a691aa49278af8c80fce2e382, type: 3}
       propertyPath: interactableLayer.m_Bits
-      value: 0
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 5724831046560353142, guid: 4fb7413a691aa49278af8c80fce2e382, type: 3}
       propertyPath: doorLayer.m_Bits
