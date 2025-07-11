@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractableObject : MonoBehaviour
+public class Interactable_Object : MonoBehaviour
 {
     public enum TransformType { Rotation, Movement }
     public enum Axis { X, Y, Z }
