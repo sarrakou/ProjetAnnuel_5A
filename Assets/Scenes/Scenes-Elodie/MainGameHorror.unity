@@ -2485,7 +2485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128600a43648fb14287428b0142f69fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionDistance: 3
+  interactionDistance: 2
   interactableLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -3251,7 +3251,7 @@ Transform:
   m_GameObject: {fileID: 1971615005}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.053758033, z: -0, w: 0.998554}
-  m_LocalPosition: {x: 1.033, y: -1.651, z: 0.036}
+  m_LocalPosition: {x: 0.218, y: -0.256, z: -0.052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
