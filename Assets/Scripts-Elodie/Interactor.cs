@@ -23,7 +23,7 @@ public class Interactor : MonoBehaviour
         // SphereCast pour interaction plus facile
         if (Physics.SphereCast(InteractorSource.position, SphereRadius, InteractorSource.forward, out RaycastHit hit, InteractRange))
         {
-            if (hit.collider.TryGetComponent(out IInteractable interactObj))
+            if (hit.collider.TryGetComponent(out IInteractableBis interactObj))
             {
                 foundInteractable = true;
 
