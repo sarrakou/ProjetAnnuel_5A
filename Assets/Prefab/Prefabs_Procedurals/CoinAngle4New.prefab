@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 4461477262279268955}
   - component: {fileID: 1925582892644994778}
   - component: {fileID: 2514850998406773805}
+  - component: {fileID: 3786600082331375645}
   m_Layer: 0
   m_Name: Spot Light (1)
   m_TagString: Untagged
@@ -218,15 +219,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightSource: {fileID: 5245126529818656419}
+  lightSource: {fileID: 1925582892644994778}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.01
+  minIntensity: 0.1
   maxIntensity: 0.5
   flickerIntervalMin: 0.1
   flickerIntervalMax: 0.4
   dangerChance: 0.05
   dangerDuration: 2
+--- !u!114 &3786600082331375645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2266240262250896553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &4606382790480140402
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601001c9d4f97b84cab1dfae66e33ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomMeshDetector: {fileID: 8396300470789942732, guid: 42f05bd44518cfa48ba833e53435a864, type: 3}
+  piecePrefabMeshTest: {fileID: 0}
   BigPiece: {fileID: 2582864938798645289, guid: fbf6620f5dd67944383ca6acdc7d5d51, type: 3}
 --- !u!1 &5616661435231940946
 GameObject:
@@ -370,6 +394,7 @@ GameObject:
   - component: {fileID: 879571781771881260}
   - component: {fileID: 5245126529818656419}
   - component: {fileID: 5845786545349777383}
+  - component: {fileID: 6115008017552476375}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -472,12 +497,35 @@ MonoBehaviour:
   lightSource: {fileID: 5245126529818656419}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.01
+  minIntensity: 0.1
   maxIntensity: 0.5
   flickerIntervalMin: 0.1
   flickerIntervalMax: 0.4
   dangerChance: 0.05
   dangerDuration: 2
+--- !u!114 &6115008017552476375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5616661435231940946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &5720547950799383497
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,7 +1001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601001c9d4f97b84cab1dfae66e33ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomMeshDetector: {fileID: 8396300470789942732, guid: 42f05bd44518cfa48ba833e53435a864, type: 3}
+  piecePrefabMeshTest: {fileID: 0}
   BigPiece: {fileID: 2582864938798645289, guid: fbf6620f5dd67944383ca6acdc7d5d51, type: 3}
 --- !u!1 &8248934104505530801
 GameObject:

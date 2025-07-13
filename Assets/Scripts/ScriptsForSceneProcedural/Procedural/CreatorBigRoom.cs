@@ -12,30 +12,33 @@ public class CreatorBigRoom : MonoBehaviour
     {
         PlacementDetector dernierDetectorUtilise = null;
 
-        int piecesCreees = 0;
-        PlacementDetector[] detectors = FindObjectsByType<PlacementDetector>(FindObjectsSortMode.None);
-        List<PlacementDetector> detectorsAvecEspace = new List<PlacementDetector>();
+        // Compter les pièces déjà existantes (BigPiece)
+        GameObject[] existingPieces = GameObject.FindGameObjectsWithTag("BigPiece"); 
+        int piecesDejaExistantes = existingPieces.Length;
 
-        foreach (PlacementDetector detector in detectors)
-        {
+        int piecesCreees = piecesDejaExistantes; // Commencer avec les pièces déjà présentes
 
-            if (detector.isTheirSpace())
-            {
-                detectorsAvecEspace.Add(detector);
-                print("aa");
-
-            }
-        }
+        Debug.Log("Pièces déjà existantes : " + piecesDejaExistantes);
 
         // Tant qu'on doit encore créer des pièces
         while (piecesCreees < NBpieceACreer)
         {
-            // Trouver tous les PlacementDetector avec espace libre AU MOMENT
+            // À chaque itération, chercher TOUS les détecteurs avec espace libre
+            PlacementDetector[] detectors = FindObjectsByType<PlacementDetector>(FindObjectsSortMode.None);
+            List<PlacementDetector> detectorsAvecEspace = new List<PlacementDetector>();
 
-            // S’il n’y a plus d’espace libre, on arrête la boucle
+            foreach (PlacementDetector detector in detectors)
+            {
+                if (detector.isTheirSpace())
+                {
+                    detectorsAvecEspace.Add(detector);
+                }
+            }
+
+            // S'il n'y a plus d'espace libre, on arrête la boucle
             if (detectorsAvecEspace.Count == 0)
             {
-
+                Debug.Log("Plus d'espace libre pour créer des pièces. Pièces créées : " + piecesCreees);
                 break;
             }
 

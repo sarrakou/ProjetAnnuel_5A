@@ -604,6 +604,7 @@ GameObject:
   - component: {fileID: 7547364360442383083}
   - component: {fileID: 4621845448179305874}
   - component: {fileID: 8841308198782048664}
+  - component: {fileID: 958827420759027381}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -706,12 +707,35 @@ MonoBehaviour:
   lightSource: {fileID: 4621845448179305874}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.6
-  maxIntensity: 1.5
+  minIntensity: 0.1
+  maxIntensity: 0.5
   flickerIntervalMin: 0.1
   flickerIntervalMax: 0.4
   dangerChance: 0.05
   dangerDuration: 2
+--- !u!114 &958827420759027381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963639979788176552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &3677699891546136223
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1211,7 @@ GameObject:
   - component: {fileID: 1103205174862510537}
   - component: {fileID: 6467050812004837456}
   - component: {fileID: 6050515244979666316}
+  - component: {fileID: 7554460180554152120}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -1290,11 +1315,34 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
   minIntensity: 0.001
-  maxIntensity: 0.2
+  maxIntensity: 0.02
   flickerIntervalMin: 0.1
   flickerIntervalMax: 0.4
   dangerChance: 0.05
   dangerDuration: 2
+--- !u!114 &7554460180554152120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939853480540361535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &5186653644609717794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,6 +1904,7 @@ GameObject:
   - component: {fileID: 6377573018849256716}
   - component: {fileID: 8575333023516109801}
   - component: {fileID: 5328242432474532284}
+  - component: {fileID: 6420515779523699766}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -1958,12 +2007,35 @@ MonoBehaviour:
   lightSource: {fileID: 4621845448179305874}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.6
-  maxIntensity: 1.5
+  minIntensity: 0.1
+  maxIntensity: 0.5
   flickerIntervalMin: 0.1
   flickerIntervalMax: 0.4
   dangerChance: 0.05
   dangerDuration: 2
+--- !u!114 &6420515779523699766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8753987206681992105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &8977105956932584421
 GameObject:
   m_ObjectHideFlags: 0
