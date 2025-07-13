@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2733832190903308925}
   - component: {fileID: 7341935976307408220}
   - component: {fileID: 2740660222143114101}
-  - component: {fileID: 3639071087399139223}
-  m_Layer: 0
+  - component: {fileID: 3789464436933063312}
+  m_Layer: 6
   m_Name: Door_Panel_00.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,13 +104,13 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2377045, y: 0.006458007, z: 0.5546439}
+  m_Size: {x: 0.2377045, y: 0.05, z: 0.5546439}
   m_Center: {x: -0.11885103, y: -0.002152663, z: 0.27732196}
---- !u!114 &3639071087399139223
+--- !u!114 &3789464436933063312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openAngle: 90
   speed: 2
+  gameTimer: {fileID: 0}
 --- !u!1 &1842720718438814462
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +136,7 @@ GameObject:
   - component: {fileID: 2332328559125436320}
   - component: {fileID: 3346223072351604917}
   - component: {fileID: 7995853846165255772}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle_00.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +331,7 @@ GameObject:
   - component: {fileID: 3685043643121664586}
   - component: {fileID: 6051551909999057978}
   - component: {fileID: 7198499071102975136}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle_00.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}

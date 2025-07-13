@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NBpieceACreer: 5
-  exitDoorPrefab: {fileID: 8286380796852904986, guid: 6b9b52187ef80a0408dc783a0c08673b, type: 3}
 --- !u!1 &669542591
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +220,51 @@ MonoBehaviour:
   - {fileID: 7030871055082927514, guid: b3e40b3a79b7a24449e239758738db04, type: 3}
   - {fileID: 6304075517466915764, guid: 753f1ab8ffa8403419e240e0d89c3e9d, type: 3}
   BigRoomCreator: {fileID: 228480320}
+--- !u!1 &728953397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728953398}
+  - component: {fileID: 728953399}
+  m_Layer: 0
+  m_Name: GameTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &728953398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728953397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.96715444, y: 0.5260364, z: -1.1789522}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728953399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728953397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89386f04e73d4994fb1d5d64eb3fca2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeLimit: 120
 --- !u!1 &1293719577
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +360,7 @@ MonoBehaviour:
   rayonDetection: 1
   layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   showDebugGizmos: 1
   showDebugLogs: 1
 --- !u!1660057539 &9223372036854775807
@@ -327,3 +371,4 @@ SceneRoots:
   - {fileID: 669542592}
   - {fileID: 1293719578}
   - {fileID: 2034523153}
+  - {fileID: 728953398}

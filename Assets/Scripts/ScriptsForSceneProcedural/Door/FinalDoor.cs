@@ -9,6 +9,9 @@ public class FinalDoor : MonoBehaviour
     private Quaternion closedRot;
     private Quaternion openRot;
 
+    
+
+
     void Start()
     {
         closedRot = transform.rotation;
@@ -30,7 +33,22 @@ public class FinalDoor : MonoBehaviour
         {
             isOpen = true;
             Debug.Log("!!!!!!! Gagné ! Tu as trouvé la sortie !");
-            // Tu peux aussi déclencher ici d'autres effets (sons, fin de jeu, etc.)
+            // Ajoute ici des effets si tu veux (son, fin de partie, etc.)
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Toggle();
+
+            if (GameTimer.Instance != null)
+            {
+                GameTimer.Instance.WinGame();
+            }
+        }
+    }
+
+
 }

@@ -22,7 +22,10 @@ public class ProceduralHouseScript : MonoBehaviour
 
         GameObject randomModule = largeRoomModules[Random.Range(0, largeRoomModules.Length)];
         GameObject firstModule = Instantiate(randomModule, new Vector3(0, 0, 0), Quaternion.identity);
+
         corridorsEnAttente.Push(firstModule);
+
+        
 
         while (nbCouloir > 0)
         {

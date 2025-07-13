@@ -136,7 +136,7 @@ Transform:
   m_GameObject: {fileID: 1076425276426552539}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000011920926, y: -0.00000014901158, z: -1, w: -0.000000029802315}
-  m_LocalPosition: {x: 0, y: 0.06153044, z: 0.011782616}
+  m_LocalPosition: {x: 0, y: 0.062, z: 0.071}
   m_LocalScale: {x: 7.342685, y: 7.3426847, z: 7.3426843}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -151,10 +151,10 @@ Light:
   m_GameObject: {fileID: 1076425276426552539}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 44
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -195,7 +195,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -222,12 +222,7 @@ MonoBehaviour:
   lightSource: {fileID: 2529084631427533686}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.1
-  maxIntensity: 0.5
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
+  baseIntensity: 0.3
 --- !u!114 &2175142750310490492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601001c9d4f97b84cab1dfae66e33ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecePrefabMeshTest: {fileID: 0}
   BigPiece: {fileID: 2582864938798645289, guid: fbf6620f5dd67944383ca6acdc7d5d51, type: 3}
 --- !u!1 &3728276466581637101
 GameObject:
@@ -600,7 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601001c9d4f97b84cab1dfae66e33ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecePrefabMeshTest: {fileID: 0}
   BigPiece: {fileID: 2582864938798645289, guid: fbf6620f5dd67944383ca6acdc7d5d51, type: 3}
 --- !u!1 &6193039369561431588
 GameObject:
@@ -630,7 +623,7 @@ Transform:
   m_GameObject: {fileID: 6193039369561431588}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000011920926, y: -0.00000014901158, z: -1, w: -0.000000029802315}
-  m_LocalPosition: {x: 0, y: -0.05213315, z: 0.011782641}
+  m_LocalPosition: {x: -0, y: -0.052, z: 0.071}
   m_LocalScale: {x: 7.342685, y: 7.3426847, z: 7.3426843}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -645,10 +638,10 @@ Light:
   m_GameObject: {fileID: 6193039369561431588}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 44
   m_InnerSpotAngle: 4
   m_CookieSize: 10
@@ -689,7 +682,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -716,12 +709,7 @@ MonoBehaviour:
   lightSource: {fileID: 4984460469696916508}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.1
-  maxIntensity: 0.5
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
+  baseIntensity: 0.3
 --- !u!114 &662746700672225977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,7 +745,7 @@ GameObject:
   - component: {fileID: 3166763701970170640}
   - component: {fileID: 7714291249821077987}
   - component: {fileID: 4100130682996679646}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: mur_avant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -995,7 +983,7 @@ GameObject:
   - component: {fileID: 7359303822149343843}
   - component: {fileID: 1498768327202221039}
   - component: {fileID: 2507566022226796026}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: mur_g
   m_TagString: Untagged
   m_Icon: {fileID: 0}

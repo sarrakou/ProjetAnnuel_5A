@@ -30,7 +30,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.09803, z: 0.049999975}
   m_LocalScale: {x: 0.13618805, y: 0.13618805, z: 0.13618805}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1955809032395636517}
+  - {fileID: 8552051764346762613}
   m_Father: {fileID: 5949297676936074063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1701927649888124068
@@ -99,7 +101,7 @@ GameObject:
   - component: {fileID: 4195290056675084955}
   - component: {fileID: 6957438045626543498}
   - component: {fileID: 2831854456448179967}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: mur_d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +339,7 @@ GameObject:
   - component: {fileID: 5598872854772940552}
   - component: {fileID: 270738827870702198}
   - component: {fileID: 6542885976755969359}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: mur_avant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601001c9d4f97b84cab1dfae66e33ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecePrefabMeshTest: {fileID: 0}
   BigPiece: {fileID: 2582864938798645289, guid: fbf6620f5dd67944383ca6acdc7d5d51, type: 3}
 --- !u!1 &5552937150840709815
 GameObject:
@@ -658,12 +659,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5674921658166938753}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 7.79902e-15, z: -6.935938e-16, w: 0.70710677}
-  m_LocalPosition: {x: -0, y: 0.09649532, z: 0.0571}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.0000000754979, y: -0.00000008940697, z: -1, w: -9.557899e-15}
+  m_LocalPosition: {x: 0.0281963, y: -0.052133996, z: 0.036934223}
+  m_LocalScale: {x: 7.3427887, y: 7.3427887, z: 7.3427887}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5949297676936074063}
+  m_Father: {fileID: 3661040466011498182}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &2597789916393141806
 Light:
@@ -674,10 +675,10 @@ Light:
   m_GameObject: {fileID: 5674921658166938753}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 44
   m_InnerSpotAngle: 4
   m_CookieSize: 10
@@ -718,7 +719,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -745,12 +746,7 @@ MonoBehaviour:
   lightSource: {fileID: 2597789916393141806}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.1
-  maxIntensity: 0.5
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
+  baseIntensity: 0.3
 --- !u!114 &7576617876681519915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,12 +797,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6036964931628077774}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 6.5071566e-15, z: 5.982704e-16, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 0.09649532, z: 0.041620165}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.0000000754979, y: -0.00000008940697, z: -1, w: -7.730927e-15}
+  m_LocalPosition: {x: 0.0281963, y: 0.06153117, z: 0.03693422}
+  m_LocalScale: {x: 7.3427887, y: 7.3427887, z: 7.3427887}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5949297676936074063}
+  m_Father: {fileID: 3661040466011498182}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &3877703545916691010
 Light:
@@ -817,10 +813,10 @@ Light:
   m_GameObject: {fileID: 6036964931628077774}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 44
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -861,7 +857,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -888,12 +884,7 @@ MonoBehaviour:
   lightSource: {fileID: 3877703545916691010}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.1
-  maxIntensity: 0.5
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
+  baseIntensity: 0.3
 --- !u!114 &3094637110545184644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,7 +952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601001c9d4f97b84cab1dfae66e33ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecePrefabMeshTest: {fileID: 0}
   BigPiece: {fileID: 2582864938798645289, guid: fbf6620f5dd67944383ca6acdc7d5d51, type: 3}
 --- !u!1 &7537130827092119011
 GameObject:
@@ -1124,8 +1114,6 @@ Transform:
   m_Children:
   - {fileID: 111910092427421225}
   - {fileID: 5583324387426126397}
-  - {fileID: 1955809032395636517}
-  - {fileID: 8552051764346762613}
   - {fileID: 3661040466011498182}
   - {fileID: 907222296927884263}
   - {fileID: 4296437016489768520}

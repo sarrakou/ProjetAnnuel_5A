@@ -1,63 +1,72 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
+[RequireComponent(typeof(Light))]
 public class FlickeringMaterialLight : MonoBehaviour
 {
     public Light lightSource;
+
     public Color normalColor = Color.white;
-    public Color dangerColor = Color.red;
+    public Color dangerColor = new Color(1f, 0.1f, 0.1f);
 
-    [Header("Flicker Settings")]
-    public float minIntensity = 0.6f;
-    public float maxIntensity = 1.5f;
-    public float flickerIntervalMin = 0.1f;
-    public float flickerIntervalMax = 0.4f;
-
-    [Header("Danger Color")]
-    public float dangerChance = 0.05f; // 5% chance
-    public float dangerDuration = 2f;
-
-    private bool isInDangerMode = false;
+    public float baseIntensity = 0.005f;
+    private bool alarmStarted = false;
 
     void Start()
     {
-        if (lightSource == null)
-            lightSource = GetComponent<Light>();
+        lightSource = GetComponent<Light>();
+        lightSource.type = LightType.Point;
+        lightSource.range = 0.5f;
+        lightSource.intensity = baseIntensity;
+        lightSource.color = normalColor;
+        lightSource.shadows = LightShadows.None;
+        lightSource.renderMode = LightRenderMode.ForcePixel; // Force visible
 
-        StartCoroutine(FlickerRoutine());
+        StartCoroutine(UpdateLightBehavior());
     }
 
-    IEnumerator FlickerRoutine()
+    IEnumerator UpdateLightBehavior()
     {
         while (true)
         {
-            if (!isInDangerMode)
-            {
-                // Clignotement blanc
-                lightSource.intensity = Random.Range(minIntensity, maxIntensity);
-                lightSource.color = normalColor;
+            float t = Time.timeSinceLevelLoad;
 
-                // Chance d'entrer en mode rouge
-                if (Random.value < dangerChance)
+            if (t < 20f)
+            {
+                lightSource.color = normalColor;
+                lightSource.intensity = baseIntensity;
+            }
+            else if (t < 40f)
+            {
+                lightSource.color = normalColor;
+                lightSource.intensity = Random.Range(baseIntensity * 0.4f, baseIntensity);
+            }
+            else
+            {
+                if (!alarmStarted)
                 {
-                    StartCoroutine(DangerRoutine());
+                    alarmStarted = true;
+                    StartCoroutine(AlarmRoutine());
                 }
             }
 
-            yield return new WaitForSeconds(Random.Range(flickerIntervalMin, flickerIntervalMax));
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
-    IEnumerator DangerRoutine()
+    IEnumerator AlarmRoutine()
     {
-        isInDangerMode = true;
-        lightSource.color = dangerColor;
-        lightSource.intensity = 1f;
+        while (true)
+        {
+            lightSource.color = dangerColor;
 
-        yield return new WaitForSeconds(dangerDuration);
+            // Phase 1 - faible rouge
+            lightSource.intensity = 0.2f;
+            yield return new WaitForSeconds(0.1f);
 
-        lightSource.color = normalColor;
-        isInDangerMode = false;
+            // Phase 2 - flash rouge plus fort
+            lightSource.intensity = 1.0f;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

@@ -22,6 +22,8 @@ public class WallDetector : MonoBehaviour
         // Détection des murs autour de la position cible
         Collider[] colliders = Physics.OverlapSphere(targetPosition, detectionRadius, wallLayer);
 
+
+
         foreach (var collider in colliders)
         {
             Destroy(collider.gameObject);

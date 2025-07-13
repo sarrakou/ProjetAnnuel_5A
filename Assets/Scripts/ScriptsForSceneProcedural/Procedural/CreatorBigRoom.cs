@@ -5,8 +5,8 @@ public class CreatorBigRoom : MonoBehaviour
 {
     public int NBpieceACreer;
 
-    [Header("Porte de sortie")]
-    public GameObject exitDoorPrefab;
+    //[Header("Porte de sortie")]
+    //public GameObject exitDoorPrefab;
 
     public void createBigRoom()
     {
@@ -57,7 +57,7 @@ public class CreatorBigRoom : MonoBehaviour
 
         //place la porte a la fin de la generation 
 
-        if (exitDoorPrefab != null && dernierDetectorUtilise != null)
+        /*if (exitDoorPrefab != null && dernierDetectorUtilise != null)
         {
             Vector3 pos = dernierDetectorUtilise.transform.position;
             Quaternion rot = Quaternion.LookRotation(Vector3.Cross(Vector3.up, dernierDetectorUtilise.transform.forward), Vector3.up);
@@ -67,7 +67,7 @@ public class CreatorBigRoom : MonoBehaviour
         else
         {
             Debug.LogWarning("Porte non placée : prefab ou dernier détecteur manquant.");
-        }
+        }*/
 
     }
 }

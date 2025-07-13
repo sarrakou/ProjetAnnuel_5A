@@ -192,11 +192,16 @@ MonoBehaviour:
   gravity: -9.81
   cameraTransform: {fileID: 668993746592436513}
   mouseSensitivity: 243
+  minLookAngle: -90
+  maxLookAngle: 90
+  cameraHeight: 1.8
+  cameraOffset: 0.3
   groundCheck: {fileID: 721048189431666868}
   groundDistance: 0.2
   groundMask:
     serializedVersion: 2
     m_Bits: 1
+  animator: {fileID: 0}
 --- !u!54 &7395801722592179632
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -237,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coffreFortGameObject: {fileID: 0}
+  digiCodeManager: {fileID: 0}
 --- !u!114 &7914498127160517538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +275,7 @@ MonoBehaviour:
   interactionDistance: 3
   interactableLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
 --- !u!1 &5201628511471934861
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af950c0077fe4d15a76f03e46a8c4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBatteryLife: 120
+  currentBatteryLife: 0
+  batteryDrainRate: 1
+  rechargeAmount: 30
 --- !u!1 &8272898568363343807
 GameObject:
   m_ObjectHideFlags: 0

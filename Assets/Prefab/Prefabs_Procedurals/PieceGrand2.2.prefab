@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 645687229407420235}
   - component: {fileID: 9032090486276931467}
   - component: {fileID: 5972570495635912616}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_droit1.2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 6296919709100401721}
   - component: {fileID: 8325715789386312918}
   - component: {fileID: 5885909951898841546}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_gauche1.3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 5670451874079635833}
   - component: {fileID: 7010446480104766414}
   - component: {fileID: 437808305612518623}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Door_Panel_00.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 4834754582596823289}
   - component: {fileID: 1456492224153771173}
   - component: {fileID: 479684791882578186}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: mur_gauche
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +632,7 @@ GameObject:
   - component: {fileID: 3910414369264957379}
   - component: {fileID: 3504661922699245310}
   - component: {fileID: 5957196292537447182}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_avant1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ GameObject:
   - component: {fileID: 4108291077183804932}
   - component: {fileID: 3445855111087046319}
   - component: {fileID: 6255280038397630054}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Handle_00.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,7 +999,7 @@ GameObject:
   - component: {fileID: 301382261075616788}
   - component: {fileID: 6942683505353967984}
   - component: {fileID: 5550015025715164274}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Handle_00.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1086,7 +1086,7 @@ GameObject:
   - component: {fileID: 2222239575129970944}
   - component: {fileID: 342189268168899588}
   - component: {fileID: 2778554896485913340}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: mur_droit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1367,8 +1367,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3240175788379212203}
   - component: {fileID: 7296146576553940561}
-  - component: {fileID: 800371521568660017}
   - component: {fileID: 4734079784523256678}
+  - component: {fileID: 8431550463482741686}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -1385,7 +1385,7 @@ Transform:
   m_GameObject: {fileID: 4494863214974100188}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.003176}
+  m_LocalPosition: {x: 0, y: -0, z: 0.00559}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1402,8 +1402,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.98039216, b: 0.8627451, a: 1}
-  m_Intensity: 0.008
-  m_Range: 1
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 100
   m_InnerSpotAngle: 1
   m_CookieSize: 10
@@ -1444,7 +1444,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -1456,27 +1456,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &800371521568660017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4494863214974100188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightSource: {fileID: 7296146576553940561}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.001
-  maxIntensity: 0.002
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
 --- !u!114 &4734079784523256678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,6 +1479,22 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &8431550463482741686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494863214974100188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightSource: {fileID: 7296146576553940561}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  dangerColor: {r: 1, g: 0, b: 0, a: 1}
+  baseIntensity: 0.3
 --- !u!1 &5329460918298199685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,7 +1507,7 @@ GameObject:
   - component: {fileID: 5708441191195921288}
   - component: {fileID: 8201338251399786914}
   - component: {fileID: 7574254419244061283}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_arriere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1737,7 +1732,7 @@ GameObject:
   - component: {fileID: 7393611815842459538}
   - component: {fileID: 2159090253066883082}
   - component: {fileID: 7583926668766982293}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_arriere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1952,8 +1947,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2401044068183744982}
   - component: {fileID: 3682338588787771958}
-  - component: {fileID: 8596499640982426062}
   - component: {fileID: 852184643379678545}
+  - component: {fileID: 4333240808478380188}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -1985,10 +1980,10 @@ Light:
   m_GameObject: {fileID: 6707840977073703403}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 44
   m_InnerSpotAngle: 4
   m_CookieSize: 10
@@ -2029,7 +2024,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -2041,27 +2036,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &8596499640982426062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6707840977073703403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightSource: {fileID: 3682338588787771958}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.6
-  maxIntensity: 1.5
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
 --- !u!114 &852184643379678545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,6 +2059,22 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &4333240808478380188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6707840977073703403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightSource: {fileID: 3682338588787771958}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  dangerColor: {r: 1, g: 0, b: 0, a: 1}
+  baseIntensity: 0.3
 --- !u!1 &6800784552606352157
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,7 +2087,7 @@ GameObject:
   - component: {fileID: 1543522016883736707}
   - component: {fileID: 7096724907996271405}
   - component: {fileID: 7053556747249491290}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_droit1.4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2342,8 +2332,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7383158457250454494}
   - component: {fileID: 302318313945499815}
-  - component: {fileID: 5227361837168736321}
   - component: {fileID: 5797910426323316571}
+  - component: {fileID: 566084361433490673}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -2375,10 +2365,10 @@ Light:
   m_GameObject: {fileID: 8477939447677955258}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.00001
+  m_Range: 0.5
   m_SpotAngle: 44
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -2419,7 +2409,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -2431,27 +2421,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &5227361837168736321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8477939447677955258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightSource: {fileID: 3682338588787771958}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  minIntensity: 0.6
-  maxIntensity: 1.5
-  flickerIntervalMin: 0.1
-  flickerIntervalMax: 0.4
-  dangerChance: 0.05
-  dangerDuration: 2
 --- !u!114 &5797910426323316571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2475,6 +2444,22 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &566084361433490673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8477939447677955258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1e48c0704b421468f7ca2e98b18ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightSource: {fileID: 302318313945499815}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  dangerColor: {r: 1, g: 0, b: 0, a: 1}
+  baseIntensity: 0.3
 --- !u!1 &8849189215200218753
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,7 +2472,7 @@ GameObject:
   - component: {fileID: 2168556052558911865}
   - component: {fileID: 2311017355316489891}
   - component: {fileID: 662952292295643158}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_droit1.3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2595,7 +2580,7 @@ GameObject:
   - component: {fileID: 519740761040712145}
   - component: {fileID: 1024307780871398473}
   - component: {fileID: 6911654935246160478}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_gauche1.2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2703,7 +2688,7 @@ GameObject:
   - component: {fileID: 2868482002782831180}
   - component: {fileID: 3303350888169249409}
   - component: {fileID: 5871550465280516811}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: mur_gauche1.4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
