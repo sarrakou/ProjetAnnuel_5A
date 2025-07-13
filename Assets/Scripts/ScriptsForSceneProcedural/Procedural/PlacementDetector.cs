@@ -60,7 +60,7 @@ public class PlacementDetector : MonoBehaviour
         Gizmos.DrawWireSphere(gizmoPos, detectionRadius);
     }
 
-    public void privateCreatePiece()
+    public GameObject privateCreatePiece()
     {
 
 
@@ -75,6 +75,6 @@ public class PlacementDetector : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.Cross(Vector3.up, forward), Vector3.up);
 
         // Instancier avec cette rotation
-        Instantiate(pieceToInstantiate, transform.position, targetRotation);
+        return Instantiate(pieceToInstantiate, transform.position, targetRotation);
     }
 }

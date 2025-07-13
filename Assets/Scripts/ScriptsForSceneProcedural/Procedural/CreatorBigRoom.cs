@@ -5,8 +5,12 @@ public class CreatorBigRoom : MonoBehaviour
 {
     public int NBpieceACreer;
 
+    public PlayerSpawner Spawner;
     //[Header("Porte de sortie")]
     //public GameObject exitDoorPrefab;
+
+    List<GameObject> piecesCreeesList = new List<GameObject>();
+
 
     public void createBigRoom()
     {
@@ -47,12 +51,34 @@ public class CreatorBigRoom : MonoBehaviour
             PlacementDetector choisi = detectorsAvecEspace[randIndex];
 
             // Créer la pièce
-            choisi.privateCreatePiece();
+            //GameObject roomSpawn = choisi.privateCreatePiece();
+
+            GameObject newRoom = choisi.privateCreatePiece();
+            piecesCreeesList.Add(newRoom);
+
 
             // Mémoriser le dernier utilisé
             dernierDetectorUtilise = choisi;
 
             piecesCreees++;
+            //Spawner.SpawnPlayer(roomSpawn.transform.position);
+        }
+
+
+        if (piecesCreeesList.Count > 0)
+        {
+            int indexRandom = Random.Range(0, piecesCreeesList.Count);
+            Vector3 spawnPos = piecesCreeesList[indexRandom].transform.position;
+            spawnPos.y = Mathf.Max(spawnPos.y, 0.02f);
+
+
+            Spawner.SpawnPlayer(spawnPos);
+
+            Debug.Log("Joueur spawné dans une pièce aléatoire !");
+        }
+        else
+        {
+            Debug.LogWarning("Aucune pièce créée, impossible de spawn le joueur.");
         }
 
         //place la porte a la fin de la generation 

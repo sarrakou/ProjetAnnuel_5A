@@ -2074,7 +2074,7 @@ MonoBehaviour:
   lightSource: {fileID: 3682338588787771958}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  baseIntensity: 0.3
+  baseIntensity: 0.05
 --- !u!1 &6800784552606352157
 GameObject:
   m_ObjectHideFlags: 0
@@ -2459,7 +2459,7 @@ MonoBehaviour:
   lightSource: {fileID: 302318313945499815}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 1, g: 0, b: 0, a: 1}
-  baseIntensity: 0.3
+  baseIntensity: 0.05
 --- !u!1 &8849189215200218753
 GameObject:
   m_ObjectHideFlags: 0

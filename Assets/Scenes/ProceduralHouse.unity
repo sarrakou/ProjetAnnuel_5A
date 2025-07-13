@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NBpieceACreer: 5
+  Spawner: {fileID: 1293719579}
 --- !u!1 &669542591
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeLimit: 120
+  allLights: []
 --- !u!1 &1293719577
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +312,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1099483428493378026, guid: c7aac4a4f9da3604298ef5b9711067a9, type: 3}
-  spawnPosition: {x: -0.3, y: 0.033, z: -0.03}
 --- !u!1 &2034523152
 GameObject:
   m_ObjectHideFlags: 0
