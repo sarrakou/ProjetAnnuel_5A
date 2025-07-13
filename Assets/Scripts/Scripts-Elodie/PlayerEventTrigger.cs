@@ -26,10 +26,12 @@ public class PlayerEventTrigger : MonoBehaviour
         // Zone d'horreur
         if (other.CompareTag("EventZone"))
         {
+            Debug.Log("🎯 Zone d'event touchée, déclenchement !");
             Vector3 eventPos = other.transform.position;
             horrorEvents.TriggerRandomEvent(eventPos);
             other.gameObject.SetActive(false);
         }
+
 
         // Zone du coffre-fort
         if (other.CompareTag("CoffreFort") || 

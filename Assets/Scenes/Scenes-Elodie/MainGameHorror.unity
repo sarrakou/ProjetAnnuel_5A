@@ -1762,7 +1762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e0de1b001a4c941a6e2258c296225b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openOffset: {x: 0, y: 0, z: 2}
+  openOffset: {x: 10, y: 0, z: 0}
   speed: 2
   interactKey: 101
 --- !u!1 &1005123462 stripped
@@ -4008,6 +4008,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4416627526701977448, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -256.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416627526701977448, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 4591811131570124760, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -4199,6 +4207,7 @@ PrefabInstance:
     - {fileID: 4613809217202557870, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
     - {fileID: 2531250129375269113, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
     - {fileID: 5432403737217242334, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
+    - {fileID: 7892119903407516297, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4779855993956307256, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
     m_AddedGameObjects:

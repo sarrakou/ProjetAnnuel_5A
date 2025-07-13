@@ -4,49 +4,564 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum PhobiaType
+{
+    Entomophobie,     // Peur des insectes
+    Nyctophobie,      // Peur du noir
+    Scopophobie,      // Peur du regard des autres
+    Claustrophobie    // Peur des espaces clos
+}
+
 public class HorrorEvents : MonoBehaviour
 {
-    public List<Action<Vector3>> eventList = new List<Action<Vector3>>();
+    [Header("Configuration")]
+    public PhobiaType currentPhobia = PhobiaType.Nyctophobie;
+    
+    [Header("Références")]
     public Canvas spiderCanvas;
+    
     private Camera playerCamera;
+    private Dictionary<PhobiaType, List<Action<Vector3>>> phobiaEvents;
 
     private void Awake()
     {
         playerCamera = Camera.main;
+        InitializePhobiaEvents();
+    }
 
-        // eventList.Add(Event_SpawnEnemy);
-        // eventList.Add(Event_SpawnChest);
-        // eventList.Add(Event_TriggerTrap);
-        // eventList.Add(Event_Vignette);
-        // eventList.Add(Event_ClaustroFOV);
-        eventList.Add(Event_InsecteSurEcran);
+    private void InitializePhobiaEvents()
+    {
+        phobiaEvents = new Dictionary<PhobiaType, List<Action<Vector3>>>();
+
+        // Entomophobie - Peur des insectes
+        phobiaEvents[PhobiaType.Entomophobie] = new List<Action<Vector3>>
+        {
+            
+        };
+
+        // Nyctophobie - Peur du noir
+        phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
+        {
+           
+            Event_FlickeringLights,
+           
+        };
+
+        // Scopophobie - Peur du regard des autres
+        phobiaEvents[PhobiaType.Scopophobie] = new List<Action<Vector3>>
+        {
+            
+        };
+
+        // Claustrophobie - Peur des espaces clos
+        phobiaEvents[PhobiaType.Claustrophobie] = new List<Action<Vector3>>
+        {
+           
+        };
     }
 
     public void TriggerRandomEvent(Vector3 position)
     {
-        if (eventList.Count == 0) return;
-        int eventIndex = UnityEngine.Random.Range(0, eventList.Count);
-        eventList[eventIndex].Invoke(position);
+        if (!phobiaEvents.ContainsKey(currentPhobia))
+        {
+            Debug.LogWarning($"Aucun événement pour la phobie : {currentPhobia}");
+            return;
+        }
+
+        var events = phobiaEvents[currentPhobia];
+        if (events.Count == 0) return;
+
+        int eventIndex = UnityEngine.Random.Range(0, events.Count);
+        Debug.Log($"🎭 Déclenchement événement {currentPhobia} : {events[eventIndex].Method.Name}");
+        events[eventIndex].Invoke(position);
     }
 
-    void Event_SpawnEnemy(Vector3 pos)
+    public void SetPhobia(PhobiaType newPhobia)
     {
-        Debug.Log(" Ennemi spawn à " + pos);
+        currentPhobia = newPhobia;
+        Debug.Log($"🎯 Phobie changée pour : {newPhobia}");
     }
 
-    void Event_SpawnChest(Vector3 pos)
+    #region Entomophobie Events
+    
+    void Event_InsectOnScreen(Vector3 pos)
     {
-        Debug.Log(" Coffre spawn à " + pos);
+        Debug.Log("🐛 Insecte à l'écran");
+        StartCoroutine(InsectCoroutine());
     }
 
-    void Event_TriggerTrap(Vector3 pos)
+    void Event_InsectSwarm(Vector3 pos)
     {
-        Debug.Log(" Piège activé à " + pos);
+        Debug.Log("🐛 Essaim d'insectes");
+        StartCoroutine(InsectSwarmCoroutine());
     }
+
+    void Event_InsectSound(Vector3 pos)
+    {
+        Debug.Log("🐛 Son d'insectes");
+        // Implémenter le son bourdonnant
+    }
+
+    void Event_CrawlingEffect(Vector3 pos)
+    {
+        Debug.Log("🐛 Effet de rampement");
+        // Implémenter l'effet de picotement/rampement
+    }
+
+    IEnumerator InsectCoroutine()
+    {
+        GameObject prefab = Resources.Load<GameObject>("SpiderAnimation"); // Renommer en InsectAnimation
+        if (prefab == null)
+        {
+            Debug.LogWarning("InsectAnimation prefab non trouvé !");
+            yield break;
+        }
+
+        GameObject insectGO = Instantiate(prefab);
+
+        if (playerCamera == null)
+        {
+            Debug.LogWarning("Player camera not found!");
+            yield break;
+        }
+
+        insectGO.transform.SetParent(playerCamera.transform);
+        insectGO.transform.localPosition = new Vector3(0f, 0f, 2f);
+        insectGO.transform.localRotation = Quaternion.identity;
+        insectGO.transform.localScale = Vector3.one * 0.8f;
+
+        yield return new WaitForSeconds(5f);
+        Destroy(insectGO);
+    }
+
+    IEnumerator InsectSwarmCoroutine()
+    {
+        GameObject prefab = Resources.Load<GameObject>("SpiderAnimation");
+        if (prefab == null) yield break;
+
+        List<GameObject> insects = new List<GameObject>();
+        
+        // Créer plusieurs insectes
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject insectGO = Instantiate(prefab);
+            insectGO.transform.SetParent(playerCamera.transform);
+            
+            // Positions aléatoires autour de l'écran
+            Vector3 randomPos = new Vector3(
+                UnityEngine.Random.Range(-1f, 1f),
+                UnityEngine.Random.Range(-1f, 1f),
+                2f
+            );
+            insectGO.transform.localPosition = randomPos;
+            insectGO.transform.localScale = Vector3.one * 0.5f;
+            insects.Add(insectGO);
+        }
+
+        yield return new WaitForSeconds(7f);
+
+        // Détruire tous les insectes
+        foreach (GameObject insect in insects)
+        {
+            if (insect != null) Destroy(insect);
+        }
+    }
+
+    #endregion
+
+    #region Scopophobie Events
+
+    void Event_WatchingEyes(Vector3 pos)
+    {
+        Debug.Log("👁️ Yeux qui observent");
+        StartCoroutine(WatchingEyesCoroutine());
+    }
+
+    void Event_ShadowySilhouette(Vector3 pos)
+    {
+        Debug.Log("👁️ Silhouette qui observe");
+        // Implémenter une silhouette dans l'ombre
+    }
+
+    void Event_StareEffect(Vector3 pos)
+    {
+        Debug.Log("👁️ Effet de regard fixe");
+        // Implémenter l'effet de regard intense
+    }
+
+    void Event_MultipleEyes(Vector3 pos)
+    {
+        Debug.Log("👁️ Multiples yeux");
+        StartCoroutine(MultipleEyesCoroutine());
+    }
+
+    IEnumerator WatchingEyesCoroutine()
+    {
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+        {
+            GameObject canvasGO = new GameObject("Canvas");
+            canvas = canvasGO.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvasGO.AddComponent<CanvasScaler>();
+            canvasGO.AddComponent<GraphicRaycaster>();
+        }
+
+        // Créer des yeux aux coins de l'écran
+        List<GameObject> eyes = new List<GameObject>();
+        Vector2[] eyePositions = {
+            new Vector2(0.1f, 0.9f),  // Coin haut gauche
+            new Vector2(0.9f, 0.9f),  // Coin haut droite
+            new Vector2(0.1f, 0.1f),  // Coin bas gauche
+            new Vector2(0.9f, 0.1f)   // Coin bas droite
+        };
+
+        foreach (Vector2 pos in eyePositions)
+        {
+            GameObject eyeGO = new GameObject("WatchingEye");
+            eyeGO.transform.SetParent(canvas.transform, false);
+            
+            Image eyeImage = eyeGO.AddComponent<Image>();
+            eyeImage.color = Color.red;
+            eyeImage.rectTransform.anchorMin = pos;
+            eyeImage.rectTransform.anchorMax = pos;
+            eyeImage.rectTransform.sizeDelta = new Vector2(50, 50);
+            
+            eyes.Add(eyeGO);
+        }
+
+        yield return new WaitForSeconds(6f);
+
+        // Détruire les yeux
+        foreach (GameObject eye in eyes)
+        {
+            if (eye != null) Destroy(eye);
+        }
+    }
+
+    IEnumerator MultipleEyesCoroutine()
+    {
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null) yield break;
+
+        List<GameObject> eyes = new List<GameObject>();
+        
+        // Créer des yeux aléatoires sur tout l'écran
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject eyeGO = new GameObject("Eye");
+            eyeGO.transform.SetParent(canvas.transform, false);
+            
+            Image eyeImage = eyeGO.AddComponent<Image>();
+            eyeImage.color = Color.red;
+            
+            Vector2 randomPos = new Vector2(
+                UnityEngine.Random.Range(0.1f, 0.9f),
+                UnityEngine.Random.Range(0.1f, 0.9f)
+            );
+            
+            eyeImage.rectTransform.anchorMin = randomPos;
+            eyeImage.rectTransform.anchorMax = randomPos;
+            eyeImage.rectTransform.sizeDelta = new Vector2(30, 30);
+            
+            eyes.Add(eyeGO);
+        }
+
+        yield return new WaitForSeconds(8f);
+
+        foreach (GameObject eye in eyes)
+        {
+            if (eye != null) Destroy(eye);
+        }
+    }
+
+    #endregion
+
+    #region Claustrophobie Events
+
+    void Event_ClaustroFOV(Vector3 pos)
+    {
+        Debug.Log("🚪 Réduction FOV claustrophobe");
+        if (playerCamera != null)
+        {
+            StartCoroutine(ClaustroFOVCoroutine());
+        }
+    }
+
+    void Event_WallsClosing(Vector3 pos)
+    {
+        Debug.Log("🚪 Murs qui se rapprochent");
+        // Implémenter l'effet de murs
+    }
+
+    void Event_TightSpace(Vector3 pos)
+    {
+        Debug.Log("🚪 Espace réduit");
+        // Implémenter l'effet d'espace réduit
+    }
+
+    IEnumerator ClaustroFOVCoroutine()
+    {
+        float normalFOV = 60f;
+        float claustroFOV = 30f;
+        float duration = 7f;
+        float timer = 0f;
+
+        // Réduction FOV
+        while (timer < duration / 2f)
+        {
+            timer += Time.deltaTime;
+            playerCamera.fieldOfView = Mathf.Lerp(normalFOV, claustroFOV, timer / (duration / 2f));
+            yield return null;
+        }
+
+        // Maintien FOV réduit
+        timer = 0f;
+        while (timer < duration / 4f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Retour normal
+        timer = 0f;
+        while (timer < duration / 4f)
+        {
+            timer += Time.deltaTime;
+            playerCamera.fieldOfView = Mathf.Lerp(claustroFOV, normalFOV, timer / (duration / 4f));
+            yield return null;
+        }
+
+        playerCamera.fieldOfView = normalFOV;
+    }
+
+    #endregion
+
+    #region Nyctophobie Events
+
+    void Event_DarknessEffect(Vector3 pos)
+    {
+        Debug.Log("🌑 Effet d'obscurité");
+        StartCoroutine(DarknessCoroutine());
+    }
+
+    void Event_FlickeringLights(Vector3 pos)
+    {
+        Debug.Log("🌑 Lumières qui clignotent");
+        StartCoroutine(FlickeringLightsCoroutine());
+    }
+
+    void Event_ShadowMovement(Vector3 pos)
+    {
+        Debug.Log("🌑 Mouvement d'ombre");
+        StartCoroutine(ShadowMovementCoroutine());
+    }
+
+    void Event_LightFailure(Vector3 pos)
+    {
+        Debug.Log("🌑 Panne de lumière");
+        StartCoroutine(LightFailureCoroutine());
+    }
+
+    IEnumerator DarknessCoroutine()
+    {
+        // Obscurité progressive plus intense que la vignette
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+        {
+            GameObject canvasGO = new GameObject("Canvas");
+            canvas = canvasGO.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvasGO.AddComponent<CanvasScaler>();
+            canvasGO.AddComponent<GraphicRaycaster>();
+        }
+
+        Image darknessImage = null;
+        Transform existing = canvas.transform.Find("DarknessImage");
+        if (existing != null)
+        {
+            darknessImage = existing.GetComponent<Image>();
+        }
+        else
+        {
+            GameObject imgGO = new GameObject("DarknessImage");
+            imgGO.transform.SetParent(canvas.transform, false);
+            darknessImage = imgGO.AddComponent<Image>();
+            darknessImage.color = new Color(0, 0, 0, 0);
+            darknessImage.rectTransform.anchorMin = Vector2.zero;
+            darknessImage.rectTransform.anchorMax = Vector2.one;
+            darknessImage.rectTransform.offsetMin = Vector2.zero;
+            darknessImage.rectTransform.offsetMax = Vector2.zero;
+        }
+
+        float duration = 6f;
+        float maxAlpha = 0.95f; // Très sombre
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, maxAlpha, timer / duration);
+            darknessImage.color = new Color(0, 0, 0, alpha);
+            yield return null;
+        }
+
+        // Retour progressif à la normale
+        timer = 0f;
+        while (timer < duration / 2f)
+        {
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(maxAlpha, 0f, timer / (duration / 2f));
+            darknessImage.color = new Color(0, 0, 0, alpha);
+            yield return null;
+        }
+
+        Destroy(darknessImage.gameObject);
+    }
+
+    IEnumerator FlickeringLightsCoroutine()
+    {
+        Debug.Log("💡 Début du clignotement progressif...");
+        Light[] lights = FindObjectsOfType<Light>();
+        Dictionary<Light, float> originalIntensities = new Dictionary<Light, float>();
+
+        // Enregistre l'intensité de base
+        foreach (var light in lights)
+            originalIntensities[light] = light.intensity;
+
+        float duration = 8f;
+        float timer = 0f;
+        float flickerInterval = 0.2f;
+
+        while (timer < duration)
+        {
+            // Diminue intensité
+            foreach (var light in lights)
+                light.intensity = originalIntensities[light] * 0.2f;
+
+            yield return new WaitForSeconds(flickerInterval);
+
+            // Restaure l'intensité
+            foreach (var light in lights)
+                light.intensity = originalIntensities[light];
+
+            yield return new WaitForSeconds(flickerInterval);
+
+            timer += flickerInterval * 2;
+        }
+
+        Debug.Log("💡 Fin du clignotement progressif");
+    }
+
+
+
+    IEnumerator ShadowMovementCoroutine()
+    {
+        // Créer des ombres mouvantes sur l'écran
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null) yield break;
+
+        List<GameObject> shadows = new List<GameObject>();
+        
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject shadowGO = new GameObject("MovingShadow");
+            shadowGO.transform.SetParent(canvas.transform, false);
+            
+            Image shadowImage = shadowGO.AddComponent<Image>();
+            shadowImage.color = new Color(0, 0, 0, 0.7f);
+            shadowImage.rectTransform.sizeDelta = new Vector2(200, 200);
+            
+            shadows.Add(shadowGO);
+        }
+
+        float duration = 8f;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            
+            foreach (GameObject shadow in shadows)
+            {
+                if (shadow != null)
+                {
+                    Vector2 newPos = new Vector2(
+                        Mathf.Sin(timer * 2f) * 100f,
+                        Mathf.Cos(timer * 1.5f) * 100f
+                    );
+                    shadow.GetComponent<RectTransform>().anchoredPosition = newPos;
+                }
+            }
+            
+            yield return null;
+        }
+
+        foreach (GameObject shadow in shadows)
+        {
+            if (shadow != null) Destroy(shadow);
+        }
+    }
+
+    IEnumerator LightFailureCoroutine()
+    {
+        Light[] lights = FindObjectsOfType<Light>();
+        float[] originalIntensities = new float[lights.Length];
+        
+        for (int i = 0; i < lights.Length; i++)
+        {
+            originalIntensities[i] = lights[i].intensity;
+        }
+
+        // Extinction progressive
+        float duration = 2f;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float intensity = Mathf.Lerp(1f, 0f, timer / duration);
+            
+            for (int i = 0; i < lights.Length; i++)
+            {
+                lights[i].intensity = originalIntensities[i] * intensity;
+            }
+            
+            yield return null;
+        }
+
+        // Maintenir l'obscurité
+        yield return new WaitForSeconds(3f);
+
+        // Rallumage progressif
+        timer = 0f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float intensity = Mathf.Lerp(0f, 1f, timer / duration);
+            
+            for (int i = 0; i < lights.Length; i++)
+            {
+                lights[i].intensity = originalIntensities[i] * intensity;
+            }
+            
+            yield return null;
+        }
+
+        // Restaurer les intensités
+        for (int i = 0; i < lights.Length; i++)
+        {
+            lights[i].intensity = originalIntensities[i];
+        }
+    }
+
+    #endregion
+
+    #region Shared Events
 
     void Event_Vignette(Vector3 pos)
     {
-        Debug.Log(" Vignette activée à " + pos);
+        Debug.Log("🎭 Vignette activée");
         StartCoroutine(VignetteCoroutine());
     }
 
@@ -93,89 +608,5 @@ public class HorrorEvents : MonoBehaviour
         }
     }
 
-    void Event_ClaustroFOV(Vector3 pos)
-    {
-        Debug.Log(" Claustrophobie FOV activé à " + pos);
-        if (playerCamera != null)
-        {
-            StartCoroutine(ClaustroFOVCoroutine());
-        }
-        else
-        {
-            Debug.LogWarning("Player camera not found!");
-        }
-    }
-
-    IEnumerator ClaustroFOVCoroutine()
-    {
-        float normalFOV = 60f;
-        float claustroFOV = 30f;
-        float duration = 7f;
-        float timer = 0f;
-
-        while (timer < duration / 2f)
-        {
-            timer += Time.deltaTime;
-            playerCamera.fieldOfView = Mathf.Lerp(normalFOV, claustroFOV, timer / (duration / 2f));
-            yield return null;
-        }
-
-        timer = 0f;
-        while (timer < duration / 4f)
-        {
-            timer += Time.deltaTime;
-            playerCamera.fieldOfView = claustroFOV;
-            yield return null;
-        }
-
-        timer = 0f;
-        while (timer < duration / 4f)
-        {
-            timer += Time.deltaTime;
-            playerCamera.fieldOfView = Mathf.Lerp(claustroFOV, normalFOV, timer / (duration / 4f));
-            yield return null;
-        }
-
-        playerCamera.fieldOfView = normalFOV;
-    }
-
-    // Nouvel event : insecte animé rampant à l’écran
-    void Event_InsecteSurEcran(Vector3 pos)
-    {
-        Debug.Log("🐜 Insecte rampant à l'écran à " + pos);
-        StartCoroutine(InsecteCoroutine());
-    }
-
-    IEnumerator InsecteCoroutine()
-    {
-        GameObject prefab = Resources.Load<GameObject>("SpiderAnimation");
-        if (prefab == null)
-        {
-            Debug.LogWarning(" InsectePrefab non trouvé dans Resources !");
-            yield break;
-        }
-
-        GameObject insectGO = Instantiate(prefab);
-
-        Camera cam = Camera.main;
-        if (cam == null)
-        {
-            Debug.LogWarning("Player camera not found!");
-            yield break;
-        }
-
-        insectGO.transform.SetParent(cam.transform);
-        insectGO.transform.localPosition = new Vector3(0f, 0f, 2f);
-        insectGO.transform.localRotation = Quaternion.identity;
-        insectGO.transform.localScale = Vector3.one * 0.8f;
-
-
-        yield return new WaitForSeconds(5f);
-
-        Destroy(insectGO);
-    }
-
-
-
-
+    #endregion
 }
