@@ -9,7 +9,7 @@ public class FlickeringMaterialLight : MonoBehaviour
     public Color normalColor = Color.white;
     public Color dangerColor = new Color(1f, 0.1f, 0.1f);
 
-    public float baseIntensity = 0.005f;
+    public float baseIntensity = 0.02f;
     private bool alarmStarted = false;
 
     void Start()
@@ -61,11 +61,11 @@ public class FlickeringMaterialLight : MonoBehaviour
             lightSource.color = dangerColor;
 
             // Phase 1 - faible rouge
-            lightSource.intensity = 0.2f;
+            lightSource.intensity = 0.02f;
             yield return new WaitForSeconds(0.1f);
 
             // Phase 2 - flash rouge plus fort
-            lightSource.intensity = 1.0f;
+            lightSource.intensity = 0.1f;
             yield return new WaitForSeconds(0.1f);
         }
     }
