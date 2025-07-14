@@ -43,17 +43,16 @@ public class HorrorEvents : MonoBehaviour
         // Entomophobie - Peur des insectes
         phobiaEvents[PhobiaType.Entomophobie] = new List<Action<Vector3>>
         {
-            
+            //Event_InsectOnScreen,
+            Event_InsectSound
         };
 
-        // Nyctophobie - Peur du noir
-        // Nyctophobie - Peur du noir
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
         { 
-            /*Event_FlickeringLights,
+            Event_FlickeringLights,
             Event_TeleportToEmptyRoom,
-            Event_PlayCreepyAudio,*/
-           Event_Crying
+            Event_PlayCreepyAudio,
+              Event_Crying
         };
 
 
@@ -96,25 +95,25 @@ public class HorrorEvents : MonoBehaviour
     
     void Event_InsectOnScreen(Vector3 pos)
     {
-        Debug.Log("🐛 Insecte à l'écran");
+        Debug.Log(" Insecte à l'écran");
         StartCoroutine(InsectCoroutine());
     }
 
     void Event_InsectSwarm(Vector3 pos)
     {
-        Debug.Log("🐛 Essaim d'insectes");
-        StartCoroutine(InsectSwarmCoroutine());
+        Debug.Log(" Essaim d'insectes");
+        
     }
 
     void Event_InsectSound(Vector3 pos)
     {
-        Debug.Log("🐛 Son d'insectes");
-        // Implémenter le son bourdonnant
+        Debug.Log(" Son d'insectes");
+        StartCoroutine(Insectsounds());
     }
 
     void Event_CrawlingEffect(Vector3 pos)
     {
-        Debug.Log("🐛 Effet de rampement");
+        Debug.Log(" Effet de rampement");
         // Implémenter l'effet de picotement/rampement
     }
 
@@ -144,39 +143,71 @@ public class HorrorEvents : MonoBehaviour
         Destroy(insectGO);
     }
 
-    IEnumerator InsectSwarmCoroutine()
+
+    IEnumerator Insectsounds()
     {
-        GameObject prefab = Resources.Load<GameObject>("SpiderAnimation");
-        if (prefab == null) yield break;
+        // Charger le clip audio
+        AudioClip cryingClip = Resources.Load<AudioClip>("Audios/BUG"); 
+        if (cryingClip == null)
+        {
+            Debug.LogWarning("🔊 Audio 'Crying' non trouvé !");
+            yield break;
+        }
 
-        List<GameObject> insects = new List<GameObject>();
+        // Créer un objet audio derrière le joueur
+        GameObject audioGO = new GameObject("BUG");
+        audioGO.transform.SetParent(playerCamera.transform);
+        audioGO.transform.localPosition = new Vector3(0, 0, -0.5f); // Derrière la tête
+
+
+        AudioSource source = audioGO.AddComponent<AudioSource>();
+        source.clip = cryingClip;
+        source.spatialBlend = 1f; // Son 3D
+        source.volume = 0.9f;
+        source.minDistance = 0.1f;
+        source.maxDistance = 2f;
+        source.Play();
+
         
-        // Créer plusieurs insectes
-        for (int i = 0; i < 5; i++)
-        {
-            GameObject insectGO = Instantiate(prefab);
-            insectGO.transform.SetParent(playerCamera.transform);
-            
-            // Positions aléatoires autour de l'écran
-            Vector3 randomPos = new Vector3(
-                UnityEngine.Random.Range(-1f, 1f),
-                UnityEngine.Random.Range(-1f, 1f),
-                2f
-            );
-            insectGO.transform.localPosition = randomPos;
-            insectGO.transform.localScale = Vector3.one * 0.5f;
-            insects.Add(insectGO);
-        }
-
-        yield return new WaitForSeconds(7f);
-
-        // Détruire tous les insectes
-        foreach (GameObject insect in insects)
-        {
-            if (insect != null) Destroy(insect);
-        }
+        yield return new WaitForSeconds(cryingClip.length);
+        Destroy(audioGO);
+    }
+    void Event_Spider(Vector3 pos)
+    {
+        Debug.Log("Insecte apparaît devant le joueur");
+        StartCoroutine(SpawnInsectInFrontOfPlayer());
     }
 
+    IEnumerator SpawnInsectInFrontOfPlayer()
+    {
+        GameObject prefab = Resources.Load<GameObject>("SpiderAnimation"); // Assure-toi que le prefab est bien dans Resources
+
+        if (prefab == null)
+        {
+            Debug.LogWarning("Prefab 'SpiderAnimation' non trouvé !");
+            yield break;
+        }
+
+        if (playerCamera == null)
+        {
+            Debug.LogWarning("Camera principale non trouvée !");
+            yield break;
+        }
+
+        // Instanciation du prefab comme enfant de la caméra pour suivre la tête
+        GameObject insectInstance = Instantiate(prefab);
+        insectInstance.transform.SetParent(playerCamera.transform);
+
+        // Positionner devant la caméra (ex: 2 mètres devant)
+        insectInstance.transform.localPosition = new Vector3(0f, 0f, 2f);
+        insectInstance.transform.localRotation = Quaternion.identity;
+        insectInstance.transform.localScale = Vector3.one * 0.8f;
+
+        // Afficher pendant 5 secondes puis détruire
+        yield return new WaitForSeconds(5f);
+
+        Destroy(insectInstance);
+    }
     #endregion
 
     #region Scopophobie Events

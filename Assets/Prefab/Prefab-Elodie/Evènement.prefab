@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 7323406098302875992}
   - component: {fileID: 893122033175142139}
   m_Layer: 0
-  m_Name: "Eve\u0300nement"
+  m_Name: "Ev\xE8nement"
   m_TagString: EventZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &361064838020706351
 Transform:
   m_ObjectHideFlags: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.856, y: 0.71, z: -0.498}
-  m_LocalScale: {x: 16.892336, y: 16.892336, z: 229.93848}
+  m_LocalScale: {x: 32.27112, y: 32.27112, z: 439.27448}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
