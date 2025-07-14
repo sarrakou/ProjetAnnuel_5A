@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlashLight : MonoBehaviour
@@ -7,10 +6,17 @@ public class FlashLight : MonoBehaviour
     private Light flashLight;
 
     [Header("Batterie")]
-    public float maxBatteryLife =  120f;
+    public float maxBatteryLife = 120f;
     public float currentBatteryLife;
     public float batteryDrainRate = 1f;
     public float rechargeAmount = 30f;
+
+    [Header("Musique dans le noir")]
+    public float timeBeforeMusic = 10f; // Temps avant déclenchement
+    public AudioClip darknessMusic;
+    private AudioSource audioSource;
+    private float timeInDark = 0f;
+    private bool musicPlaying = false;
 
     private Inventory inventory;
 
@@ -29,6 +35,12 @@ public class FlashLight : MonoBehaviour
         }
 
         currentBatteryLife = maxBatteryLife;
+
+        // Initialiser AudioSource
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = darknessMusic;
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
     }
 
     void Update()
@@ -36,6 +48,7 @@ public class FlashLight : MonoBehaviour
         HandleFlashlightToggle();
         HandleBatteryDrain();
         HandleBatteryRecharge();
+        HandleDarknessMusic(); // Gère le son selon la lumière
     }
 
     void HandleFlashlightToggle()
@@ -73,18 +86,41 @@ public class FlashLight : MonoBehaviour
                 currentBatteryLife = Mathf.Min(currentBatteryLife, maxBatteryLife);
 
                 inventory.RemoveItem("pile");
-                Debug.Log("🔋 Pile utilisée. Batterie rechargée !");
+                Debug.Log(" Pile utilisée. Batterie rechargée !");
 
                 if (flashLight != null && !flashLight.enabled)
                 {
                     flashLight.enabled = true;
-                    Debug.Log("💡 Lampe rallumée automatiquement !");
+                    Debug.Log(" Lampe rallumée automatiquement !");
                 }
             }
-
             else
             {
-                Debug.Log("❌ Pas de pile dans l'inventaire !");
+                Debug.Log(" Pas de pile dans l'inventaire !");
+            }
+        }
+    }
+
+    void HandleDarknessMusic()
+    {
+        if (flashLight == null || !flashLight.enabled)
+        {
+            timeInDark += Time.deltaTime;
+
+            if (!musicPlaying && timeInDark >= timeBeforeMusic)
+            {
+                audioSource.Play();
+                musicPlaying = true;
+            }
+        }
+        else
+        {
+            timeInDark = 0f;
+
+            if (musicPlaying)
+            {
+                audioSource.Stop();
+                musicPlaying = false;
             }
         }
     }
