@@ -1714,7 +1714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7465284611530647009, guid: ae3522ff4d36945f0b5ca3790b607990, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7465284611530647009, guid: ae3522ff4d36945f0b5ca3790b607990, type: 3}
       propertyPath: m_TagString
@@ -2087,7 +2087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7465284611530647009, guid: ae3522ff4d36945f0b5ca3790b607990, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7465284611530647009, guid: ae3522ff4d36945f0b5ca3790b607990, type: 3}
       propertyPath: m_TagString
@@ -3047,12 +3047,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.29
+  m_Radius: 0.38
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1, z: 0.12}
 --- !u!114 &1538537241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3074,7 +3074,7 @@ MonoBehaviour:
   minLookAngle: -90
   maxLookAngle: 90
   cameraHeight: 3.56
-  cameraOffset: 1.57
+  cameraOffset: 0.56
   groundCheck: {fileID: 1744847147}
   groundDistance: 0.2
   groundMask:

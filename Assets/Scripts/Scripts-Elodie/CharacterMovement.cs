@@ -87,7 +87,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (animator == null) return;
 
-        // Méthode 1: Utiliser un paramètre "isWalking" (bool)
+        
         if (animator.GetBool("isWalking") != hasInput)
         {
             animator.SetBool("isWalking", hasInput);
@@ -115,7 +115,9 @@ public class CharacterMovement : MonoBehaviour
         // Ne repositionner la caméra que si autorisé
         if (allowCameraRepositioning)
         {
-            Vector3 cameraPosition = transform.position + Vector3.up * cameraHeight + transform.forward * cameraOffset;
+            Vector3 cameraPosition = transform.position + Vector3.up * cameraHeight + transform.forward * (cameraOffset);
+
+
             cameraTransform.position = cameraPosition;
         }
     }

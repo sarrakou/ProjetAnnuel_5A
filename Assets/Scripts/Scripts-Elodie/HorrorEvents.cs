@@ -41,11 +41,10 @@ public class HorrorEvents : MonoBehaviour
 
         // Nyctophobie - Peur du noir
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
-        {
-           
+        { 
             Event_FlickeringLights,
             Event_TeleportToEmptyRoom,
-           
+            Event_PlayCreepyAudio,
         };
 
         // Scopophobie - Peur du regard des autres
@@ -433,12 +432,7 @@ public class HorrorEvents : MonoBehaviour
         StartCoroutine(FlickeringLightsCoroutine());
     }
 
-    void Event_ShadowMovement(Vector3 pos)
-    {
-        Debug.Log("🌑 Mouvement d'ombre");
-        StartCoroutine(ShadowMovementCoroutine());
-    }
-
+   
     void Event_LightFailure(Vector3 pos)
     {
         Debug.Log("🌑 Panne de lumière");
@@ -535,55 +529,42 @@ public class HorrorEvents : MonoBehaviour
         Debug.Log("💡 Fin du clignotement progressif");
     }
 
-
-
-    IEnumerator ShadowMovementCoroutine()
+    void Event_PlayCreepyAudio(Vector3 pos)
     {
-        // Créer des ombres mouvantes sur l'écran
-        Canvas canvas = FindObjectOfType<Canvas>();
-        if (canvas == null) yield break;
-
-        List<GameObject> shadows = new List<GameObject>();
-        
-        for (int i = 0; i < 3; i++)
-        {
-            GameObject shadowGO = new GameObject("MovingShadow");
-            shadowGO.transform.SetParent(canvas.transform, false);
-            
-            Image shadowImage = shadowGO.AddComponent<Image>();
-            shadowImage.color = new Color(0, 0, 0, 0.7f);
-            shadowImage.rectTransform.sizeDelta = new Vector2(200, 200);
-            
-            shadows.Add(shadowGO);
-        }
-
-        float duration = 8f;
-        float timer = 0f;
-
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            
-            foreach (GameObject shadow in shadows)
-            {
-                if (shadow != null)
-                {
-                    Vector2 newPos = new Vector2(
-                        Mathf.Sin(timer * 2f) * 100f,
-                        Mathf.Cos(timer * 1.5f) * 100f
-                    );
-                    shadow.GetComponent<RectTransform>().anchoredPosition = newPos;
-                }
-            }
-            
-            yield return null;
-        }
-
-        foreach (GameObject shadow in shadows)
-        {
-            if (shadow != null) Destroy(shadow);
-        }
+        Debug.Log("🔊 Lecture d'un son angoissant (Nyctophobie)");
+        StartCoroutine(PlayCreepyAudioCoroutine());
     }
+
+    IEnumerator PlayCreepyAudioCoroutine()
+    {
+        // Charger le clip audio depuis Resources
+        AudioClip creepyClip = Resources.Load<AudioClip>("Audios/whisper5-94457"); // Assurez-vous que le fichier se trouve dans Resources/Audio
+        if (creepyClip == null)
+        {
+            Debug.LogWarning("🎧 Audio 'NyctophobieAmbiance' introuvable !");
+            yield break;
+        }
+
+        // Vérifier ou créer un AudioSource
+        GameObject audioGO = new GameObject("CreepyAudioSource");
+        AudioSource source = audioGO.AddComponent<AudioSource>();
+        source.clip = creepyClip;
+        source.loop = false;
+        source.spatialBlend = 0f; // Son 2D
+        source.volume = 0.8f;
+
+        // Lecture
+        source.Play();
+        Debug.Log("🔊 Son angoissant en cours...");
+
+        yield return new WaitForSeconds(creepyClip.length);
+
+        // Nettoyage
+        Destroy(audioGO);
+    }
+
+
+   
 
     IEnumerator LightFailureCoroutine()
     {
