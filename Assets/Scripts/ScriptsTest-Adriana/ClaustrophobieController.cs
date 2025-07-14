@@ -2,45 +2,44 @@ using UnityEngine;
 
 public class ClaustrophobieController : MonoBehaviour
 {
-    [Header("Objeto que se va a escalar")]
-    public Transform targetToScale;
+    public Transform wallRight;   // Se moverá hacia la derecha
+    public Transform wallLeft;    // Se moverá hacia la izquierda
+    public Transform wallFront;   // Se moverá hacia atrás (hacia el jugador)
 
-    [Header("Escalado")]
-    public Vector2 targetXYScale = new Vector2(0.5f, 0.5f); // X e Y destino
-    public float duration = 10f;
+    public float moveDistance = 2f;
+    public float moveSpeed = 1f;
 
-    private Vector3 initialScale;
-    private float timer = 0f;
-    private bool isActive = false;
+    private Vector3 rightStartPos, leftStartPos, frontStartPos;
+    private bool isActivated = false;
 
-    void OnEnable()
+    void Start()
     {
-        if (targetToScale == null)
-        {
-            Debug.LogWarning("No se ha asignado el objeto a escalar.");
-            return;
-        }
-
-        initialScale = targetToScale.localScale;
-        timer = 0f;
-        isActive = true;
+        // Guardar las posiciones iniciales
+        rightStartPos = wallRight.position;
+        leftStartPos = wallLeft.position;
+        frontStartPos = wallFront.position;
     }
 
     void Update()
     {
-        if (!isActive || targetToScale == null)
-            return;
+        if (isActivated)
+        {
+            wallRight.position = Vector3.MoveTowards(wallRight.position, rightStartPos + Vector3.right * moveDistance, moveSpeed * Time.deltaTime);
+            wallLeft.position = Vector3.MoveTowards(wallLeft.position, leftStartPos + Vector3.left * moveDistance, moveSpeed * Time.deltaTime);
+            wallFront.position = Vector3.MoveTowards(wallFront.position, frontStartPos + Vector3.back * moveDistance, moveSpeed * Time.deltaTime);
+        }
+    }
 
-        timer += Time.deltaTime;
-        float t = Mathf.Clamp01(timer / duration);
+    public void ActivateEffect()
+    {
+        isActivated = true;
+    }
 
-        float newX = Mathf.Lerp(initialScale.x, targetXYScale.x, t);
-        float newY = Mathf.Lerp(initialScale.y, targetXYScale.y, t);
-        float z = initialScale.z;
-
-        targetToScale.localScale = new Vector3(newX, newY, z);
-
-        if (t >= 1f)
-            isActive = false;
+    public void ResetEffect()
+    {
+        isActivated = false;
+        wallRight.position = rightStartPos;
+        wallLeft.position = leftStartPos;
+        wallFront.position = frontStartPos;
     }
 }

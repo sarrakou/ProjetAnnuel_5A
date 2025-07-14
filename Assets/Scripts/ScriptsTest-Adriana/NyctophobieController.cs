@@ -1,103 +1,115 @@
 using System.Collections;
 using UnityEngine;
 
-public class NyctophobieController : MonoBehaviour
+public class NyctophobiaLightsAudio : MonoBehaviour
 {
-    public Light[] sceneLights;
-    public float fadeDuration = 5f;
+    public Light flashlight;            // Linterna que titila
+    public Light[] sceneLights;         // Array de luces tipo spotlight
+    public AudioSource scarySound;      // Sonido de miedo
 
-    public AudioSource scarySounds;
-    public GameObject shadowObject;
+    public float blinkInterval = 0.3f;       // Intervalo titileo linterna y spots
+    public float totalBlinkTime = 5f;        // Duración titileo linterna y spots
+    public float spotlightOffDelay = 1f;     // Tiempo entre apagado luces spots
 
-    public Light redLight;                     //  Luz roja al final
-    public float redLightFlashSpeed = 5f;
+    // Variables para guardar estado original
+    private bool flashlightOriginalEnabled;
+    private float flashlightOriginalIntensity;
 
-    public float cameraShakeDuration = 2f;     // Temblor de cámara
-    public float cameraShakeMagnitude = 0.1f;
+    private bool[] sceneLightsOriginalEnabled;
+    private float[] sceneLightsOriginalIntensity;
 
-    private Transform camTransform;
-    private Vector3 originalCamPosition;
-    private bool started = false;
+    private Coroutine sequenceCoroutine;
 
     void OnEnable()
     {
-        if (!started)
+        // Guardar estados originales
+        if (flashlight != null)
         {
-            started = true;
-            camTransform = Camera.main.transform;
-            originalCamPosition = camTransform.position;
-            StartCoroutine(RunNyctophobiaSequence());
+            flashlightOriginalEnabled = flashlight.enabled;
+            flashlightOriginalIntensity = flashlight.intensity;
+        }
+
+        sceneLightsOriginalEnabled = new bool[sceneLights.Length];
+        sceneLightsOriginalIntensity = new float[sceneLights.Length];
+        for (int i = 0; i < sceneLights.Length; i++)
+        {
+            if (sceneLights[i] != null)
+            {
+                sceneLightsOriginalEnabled[i] = sceneLights[i].enabled;
+                sceneLightsOriginalIntensity[i] = sceneLights[i].intensity;
+            }
+        }
+
+        // Iniciar secuencia
+        sequenceCoroutine = StartCoroutine(RunNyctophobiaSequence());
+    }
+
+    void OnDisable()
+    {
+        // Detener la coroutine si está corriendo
+        if (sequenceCoroutine != null)
+            StopCoroutine(sequenceCoroutine);
+
+        // Restaurar estados originales
+        if (flashlight != null)
+        {
+            flashlight.enabled = flashlightOriginalEnabled;
+            flashlight.intensity = flashlightOriginalIntensity;
+        }
+
+        for (int i = 0; i < sceneLights.Length; i++)
+        {
+            if (sceneLights[i] != null)
+            {
+                sceneLights[i].enabled = sceneLightsOriginalEnabled[i];
+                sceneLights[i].intensity = sceneLightsOriginalIntensity[i];
+            }
+        }
+
+        // Detener sonido si sigue activo
+        if (scarySound != null && scarySound.isPlaying)
+        {
+            scarySound.Stop();
         }
     }
 
     IEnumerator RunNyctophobiaSequence()
     {
-        // 0s–5s: Atenuar luces
         float timer = 0f;
-        float[] originalIntensities = new float[sceneLights.Length];
-        for (int i = 0; i < sceneLights.Length; i++)
-            originalIntensities[i] = sceneLights[i].intensity;
-
-        while (timer < fadeDuration)
+        while (timer < totalBlinkTime)
         {
-            float t = 1f - (timer / fadeDuration);
-            for (int i = 0; i < sceneLights.Length; i++)
-                sceneLights[i].intensity = originalIntensities[i] * t;
-            timer += Time.deltaTime;
-            yield return null;
+            bool enabledState = !flashlight.enabled;
+
+            if (flashlight != null)
+                flashlight.enabled = enabledState;
+
+            foreach (var light in sceneLights)
+            {
+                if (light != null)
+                    light.enabled = enabledState;
+            }
+
+            yield return new WaitForSeconds(blinkInterval);
+            timer += blinkInterval;
         }
 
-        // 5s–15s: Apagar luces una a una
-        for (int i = 0; i < sceneLights.Length; i++)
+        if (flashlight != null)
+            flashlight.enabled = false;
+
+        foreach (var light in sceneLights)
         {
-            sceneLights[i].enabled = false;
-            yield return new WaitForSeconds(3.3f);
+            if (light != null)
+                light.enabled = true; // las dejamos prendidas para apagar en orden
         }
 
-        // 15s–25s: Sonidos en oscuridad
-        if (scarySounds != null)
-            scarySounds.Play();
-
-        yield return new WaitForSeconds(10f);
-
-        // 25s–30s: Aparece sombra, luz roja y tiemblan cosas
-        if (shadowObject != null)
-            shadowObject.SetActive(true);
-
-        if (redLight != null)
-            StartCoroutine(FlashRedLight());
-
-        if (camTransform != null)
-            StartCoroutine(ShakeCamera());
-
-        yield return new WaitForSeconds(5f);
-
-        // Restaurar cámara al final
-        camTransform.position = originalCamPosition;
-    }
-
-    IEnumerator FlashRedLight()
-    {
-        redLight.enabled = true;
-        float time = 0f;
-        while (time < 5f)
+        foreach (var light in sceneLights)
         {
-            redLight.intensity = Mathf.PingPong(Time.time * redLightFlashSpeed, 1f);
-            time += Time.deltaTime;
-            yield return null;
+            if (light != null)
+                light.enabled = false;
+            yield return new WaitForSeconds(spotlightOffDelay);
         }
-        redLight.enabled = false;
-    }
 
-    IEnumerator ShakeCamera()
-    {
-        float elapsed = 0.0f;
-        while (elapsed < cameraShakeDuration)
-        {
-            Vector3 randomPoint = originalCamPosition + Random.insideUnitSphere * cameraShakeMagnitude;
-            camTransform.position = randomPoint;
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
+        if (scarySound != null)
+            scarySound.Play();
     }
 }
