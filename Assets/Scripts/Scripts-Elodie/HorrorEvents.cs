@@ -59,6 +59,8 @@ public class HorrorEvents : MonoBehaviour
         // Scopophobie - Peur du regard des autres
         phobiaEvents[PhobiaType.Scopophobie] = new List<Action<Vector3>>
         {
+            Event_PlayCreepyAudio,
+            Event_Crying,
             
         };
 

@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur
 - Active game object:
-  - Name: BeetleSpawn
-  - Tag: Untagged
+  - Name: EvènementMultiple
+  - Tag: EventZone
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
