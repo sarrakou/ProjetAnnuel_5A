@@ -6,9 +6,7 @@ public class CanvasActivator : MonoBehaviour
     public enum CanvasEventType
     {
         Hallucination,
-        Info,
-        Warning,
-        Custom
+        Eyes,
     }
 
     [Header("Paramètres de l'événement")]
@@ -22,6 +20,9 @@ public class CanvasActivator : MonoBehaviour
 
     [Tooltip("Nombre de clignotements (on/off alternés)")]
     public int flashCount = 2;
+
+    [Tooltip("Vitesse de déplacement du canvas si Eyes")]
+    public float moveSpeed = 1f;
 
     private GameObject canvasInstance;
     private bool triggered = false;
@@ -52,10 +53,27 @@ public class CanvasActivator : MonoBehaviour
             yield break;
         }
 
-        canvasInstance = Instantiate(canvasPrefab);
-        canvasInstance.SetActive(false); // On commence éteint
+        // Désactiver toutes les lumières si Eyes
+        Light[] allLights = null;
+        if (eventType == CanvasEventType.Eyes)
+        {
+            allLights = GameObject.FindObjectsOfType<Light>();
+            foreach (var light in allLights)
+                light.enabled = false;
+        }
 
-        float flashInterval = totalDuration / (flashCount * 2f); // On/off = 2 phases
+        // Créer le canvas
+        canvasInstance = Instantiate(canvasPrefab);
+        canvasInstance.SetActive(false);
+
+        float flashInterval = totalDuration / (flashCount * 2f);
+
+        // Démarre le déplacement si Eyes
+        Coroutine moveCoroutine = null;
+        if (eventType == CanvasEventType.Eyes)
+        {
+            moveCoroutine = StartCoroutine(MoveCanvasForward(canvasInstance.transform));
+        }
 
         for (int i = 0; i < flashCount; i++)
         {
@@ -65,6 +83,29 @@ public class CanvasActivator : MonoBehaviour
             yield return new WaitForSeconds(flashInterval);
         }
 
+        // Stop déplacement
+        if (moveCoroutine != null)
+            StopCoroutine(moveCoroutine);
+
         Destroy(canvasInstance);
+
+        // Rallumer les lumières
+        if (allLights != null)
+        {
+            foreach (var light in allLights)
+                light.enabled = true;
+        }
     }
+
+    // Mouvement progressif vers l'avant
+    private IEnumerator MoveCanvasForward(Transform canvasTransform)
+    {
+        while (true)
+        {
+            Vector3 forwardDir = -Camera.main.transform.forward; // vers la caméra
+            canvasTransform.position += forwardDir * moveSpeed * Time.deltaTime;
+            yield return null;
+        }
+    }
+
 }
