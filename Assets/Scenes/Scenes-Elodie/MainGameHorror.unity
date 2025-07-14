@@ -4026,6 +4026,8 @@ MonoBehaviour:
   currentBatteryLife: 0
   batteryDrainRate: 1
   rechargeAmount: 30
+  timeBeforeMusic: 10
+  darknessMusic: {fileID: 8300000, guid: cdc86422b04fc8e4a9bd58ad7073bf20, type: 3}
 --- !u!108 &1971615009
 Light:
   m_ObjectHideFlags: 0
