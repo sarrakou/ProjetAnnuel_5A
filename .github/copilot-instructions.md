@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur
 - Active game object:
-  - Name: ChambreVide
+  - Name: carlage.004
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
