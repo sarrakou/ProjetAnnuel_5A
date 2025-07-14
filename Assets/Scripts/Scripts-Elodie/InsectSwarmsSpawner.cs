@@ -2,40 +2,44 @@ using UnityEngine;
 
 public class InsectSwarmSpawner : MonoBehaviour
 {
-    [Header("Prefab d'insecte à cloner")]
-    public GameObject insectPrefab;
+    [Header("Prefab d'insecte à cloner depuis Resources")]
+    public string insectPrefabResourceName;
 
-    [Header("Nombre d'insectes")]
-    public int insectCount = 2;
+    [Header("Nombre d'insectes à créer")]
+    public int insectCount = 10;
 
-    [Header("Rayon autour du point de spawn")]
+    [Header("Rayon autour du prefab pour spawn")]
     public float spawnRadius = 5f;
 
-    [Header("Vitesse de déplacement des insectes (optionnel)")]
-    public float moveSpeed = 1f;
+    private GameObject insectPrefab;
 
-    private GameObject[] insects;
-
-    void Start()
+    private void Start()
     {
+        insectPrefab = Resources.Load<GameObject>(insectPrefabResourceName);
         if (insectPrefab == null)
         {
-            Debug.LogError("InsectSwarmSpawner : Pas de prefab d'insecte assigné !");
+            Debug.LogError("InsectSwarmSpawner : prefab introuvable dans Resources : " + insectPrefabResourceName);
             return;
         }
 
-        insects = new GameObject[insectCount];
+        SpawnInsects();
+    }
+
+    private void SpawnInsects()
+    {
+        Vector3 prefabPosition = insectPrefab.transform.position; 
 
         for (int i = 0; i < insectCount; i++)
         {
-            Vector3 randomPos = transform.position + Random.insideUnitSphere * spawnRadius;
-            randomPos.y = transform.position.y; 
+           
+            Vector2 randomPos = Random.insideUnitCircle * spawnRadius;
+            Vector3 spawnPos = new Vector3(
+                prefabPosition.x + randomPos.x,
+                prefabPosition.y,     
+                prefabPosition.z + randomPos.y
+            );
 
-            GameObject insect = Instantiate(insectPrefab, randomPos, Quaternion.identity);
-            insects[i] = insect;
+            Instantiate(insectPrefab, spawnPos, Quaternion.identity);
         }
     }
-
-    
-
 }
