@@ -33,6 +33,9 @@ public class CharacterMovement : MonoBehaviour
     private bool isGrounded;
     private Vector3 lastPosition;
     private bool isMoving = false;
+    
+    // Nouvelle variable pour contrôler le repositionnement de la caméra
+    private bool allowCameraRepositioning = true;
 
     void Start()
     {
@@ -89,13 +92,10 @@ public class CharacterMovement : MonoBehaviour
         {
             animator.SetBool("isWalking", hasInput);
         }
-
-       
     }
 
     void LateUpdate()
     {
-      
         if (cameraTransform == null) 
         {
             Debug.LogError("Camera Transform n'est pas assigné!");
@@ -105,19 +105,25 @@ public class CharacterMovement : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-       
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, minLookAngle, maxLookAngle);
         
-      
         transform.Rotate(Vector3.up * mouseX);
         
-  
         cameraTransform.rotation = transform.rotation * Quaternion.Euler(xRotation, 0f, 0f);
         
-    
-        Vector3 cameraPosition = transform.position + Vector3.up * cameraHeight + transform.forward * cameraOffset;
-        cameraTransform.position = cameraPosition;
+        // Ne repositionner la caméra que si autorisé
+        if (allowCameraRepositioning)
+        {
+            Vector3 cameraPosition = transform.position + Vector3.up * cameraHeight + transform.forward * cameraOffset;
+            cameraTransform.position = cameraPosition;
+        }
+    }
+
+    // Méthode pour désactiver/réactiver le repositionnement de la caméra
+    public void SetCameraRepositioning(bool enabled)
+    {
+        allowCameraRepositioning = enabled;
     }
 
     void OnDrawGizmosSelected()
