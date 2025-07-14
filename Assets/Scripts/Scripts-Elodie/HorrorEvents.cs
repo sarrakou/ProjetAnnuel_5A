@@ -19,13 +19,20 @@ public class HorrorEvents : MonoBehaviour
     
     [Header("Références")]
     public Canvas spiderCanvas;
+    public AnxietySystem anxietySystem; // Référence au système d'anxiété
     
     private Camera playerCamera;
     private Dictionary<PhobiaType, List<Action<Vector3>>> phobiaEvents;
-
     private void Awake()
     {
         playerCamera = Camera.main;
+        
+        // Trouver automatiquement AnxietySystem si non assigné
+        if (anxietySystem == null)
+        {
+            anxietySystem = FindObjectOfType<AnxietySystem>();
+        }
+        
         InitializePhobiaEvents();
     }
 
@@ -40,12 +47,15 @@ public class HorrorEvents : MonoBehaviour
         };
 
         // Nyctophobie - Peur du noir
+        // Nyctophobie - Peur du noir
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
         { 
-            Event_FlickeringLights,
+            /*Event_FlickeringLights,
             Event_TeleportToEmptyRoom,
-            Event_PlayCreepyAudio,
+            Event_PlayCreepyAudio,*/
+           Event_Crying
         };
+
 
         // Scopophobie - Peur du regard des autres
         phobiaEvents[PhobiaType.Scopophobie] = new List<Action<Vector3>>
@@ -428,14 +438,14 @@ public class HorrorEvents : MonoBehaviour
 
     void Event_FlickeringLights(Vector3 pos)
     {
-        Debug.Log("🌑 Lumières qui clignotent");
+        Debug.Log(" Lumières qui clignotent");
         StartCoroutine(FlickeringLightsCoroutine());
     }
 
    
     void Event_LightFailure(Vector3 pos)
     {
-        Debug.Log("🌑 Panne de lumière");
+        Debug.Log(" Panne de lumière");
         StartCoroutine(LightFailureCoroutine());
     }
 
@@ -497,7 +507,7 @@ public class HorrorEvents : MonoBehaviour
 
     IEnumerator FlickeringLightsCoroutine()
     {
-        Debug.Log("💡 Début du clignotement progressif...");
+        Debug.Log(" Début du clignotement progressif...");
         Light[] lights = FindObjectsOfType<Light>();
         Dictionary<Light, float> originalIntensities = new Dictionary<Light, float>();
 
@@ -526,26 +536,63 @@ public class HorrorEvents : MonoBehaviour
             timer += flickerInterval * 2;
         }
 
-        Debug.Log("💡 Fin du clignotement progressif");
+        Debug.Log(" Fin du clignotement progressif");
     }
 
     void Event_PlayCreepyAudio(Vector3 pos)
     {
-        Debug.Log("🔊 Lecture d'un son angoissant (Nyctophobie)");
+        Debug.Log(" Lecture d'un son angoissant (Nyctophobie)");
         StartCoroutine(PlayCreepyAudioCoroutine());
     }
-
-    IEnumerator PlayCreepyAudioCoroutine()
+    void Event_Crying(Vector3 pos)
     {
-        // Charger le clip audio depuis Resources
-        AudioClip creepyClip = Resources.Load<AudioClip>("Audios/whisper5-94457"); // Assurez-vous que le fichier se trouve dans Resources/Audio
-        if (creepyClip == null)
+        Debug.Log(" Respiration dans le cou");
+        StartCoroutine(CryingCoroutine());
+    }
+
+    IEnumerator CryingCoroutine()
+    {
+        // Charger le clip audio
+        AudioClip cryingClip = Resources.Load<AudioClip>("Audios/Crying"); 
+        if (cryingClip == null)
         {
-            Debug.LogWarning("🎧 Audio 'NyctophobieAmbiance' introuvable !");
+            Debug.LogWarning("🔊 Audio 'Crying' non trouvé !");
             yield break;
         }
 
-        // Vérifier ou créer un AudioSource
+        // Créer un objet audio derrière le joueur
+        GameObject audioGO = new GameObject("CryingAudio");
+        audioGO.transform.SetParent(playerCamera.transform);
+        audioGO.transform.localPosition = new Vector3(0, 0, -0.5f); // Derrière la tête
+
+
+        AudioSource source = audioGO.AddComponent<AudioSource>();
+        source.clip = cryingClip;
+        source.spatialBlend = 1f; // Son 3D
+        source.volume = 0.9f;
+        source.minDistance = 0.1f;
+        source.maxDistance = 2f;
+        source.Play();
+
+        
+        yield return new WaitForSeconds(cryingClip.length);
+        Destroy(audioGO);
+    }
+
+  
+
+
+    IEnumerator PlayCreepyAudioCoroutine()
+    {
+       
+        AudioClip creepyClip = Resources.Load<AudioClip>("Audios/whisper5-94457"); 
+        if (creepyClip == null)
+        {
+            Debug.LogWarning(" Audio 'NyctophobieAmbiance' introuvable !");
+            yield break;
+        }
+
+        
         GameObject audioGO = new GameObject("CreepyAudioSource");
         AudioSource source = audioGO.AddComponent<AudioSource>();
         source.clip = creepyClip;
@@ -553,13 +600,13 @@ public class HorrorEvents : MonoBehaviour
         source.spatialBlend = 0f; // Son 2D
         source.volume = 0.8f;
 
-        // Lecture
+       
         source.Play();
-        Debug.Log("🔊 Son angoissant en cours...");
+        Debug.Log(" Son angoissant en cours...");
 
         yield return new WaitForSeconds(creepyClip.length);
 
-        // Nettoyage
+     
         Destroy(audioGO);
     }
 
@@ -624,7 +671,7 @@ public class HorrorEvents : MonoBehaviour
 
     void Event_Vignette(Vector3 pos)
     {
-        Debug.Log("🎭 Vignette activée");
+        Debug.Log(" Vignette activée");
         StartCoroutine(VignetteCoroutine());
     }
 
