@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public enum PhobiaType
 {
@@ -49,18 +50,19 @@ public class HorrorEvents : MonoBehaviour
 
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
         { 
-            Event_FlickeringLights,
-            Event_TeleportToEmptyRoom,
-            Event_PlayCreepyAudio,
-              Event_Crying
+            //Event_FlickeringLights,
+            Event_TeleportToEmptyRoom
+            //Event_PlayCreepyAudio,
+              //Event_Crying
         };
 
 
         // Scopophobie - Peur du regard des autres
         phobiaEvents[PhobiaType.Scopophobie] = new List<Action<Vector3>>
         {
-            Event_PlayCreepyAudio,
-            Event_Crying,
+            //Event_PlayCreepyAudio,
+            //Event_Crying,
+            Event_TeleportWithMannequins,
             
         };
 
@@ -237,6 +239,137 @@ public class HorrorEvents : MonoBehaviour
         Debug.Log("👁️ Multiples yeux");
         StartCoroutine(MultipleEyesCoroutine());
     }
+void Event_TeleportWithMannequins(Vector3 pos)
+{
+    Debug.Log("👁️ Téléportation avec mannequins observateurs");
+    StartCoroutine(TeleportWithMannequinsCoroutine());
+}
+
+IEnumerator TeleportWithMannequinsCoroutine()
+{
+    
+    GameObject emptyRoomPrefab = Resources.Load<GameObject>("ChambreVide");
+    if (emptyRoomPrefab == null)
+    {
+        Debug.LogWarning("Prefab 'ChambreVide' non trouvé dans Resources !");
+        yield break;
+    }
+
+    // Charger le prefab Mannequin depuis Resources
+    GameObject mannequinPrefab = Resources.Load<GameObject>("mannequin");
+    if (mannequinPrefab == null)
+    {
+        Debug.LogWarning("Prefab 'mannequin' non trouvé dans Resources !");
+        yield break;
+    }
+
+    // Trouver le joueur
+    GameObject player = GameObject.FindGameObjectWithTag("Player");
+    if (player == null)
+    {
+        Debug.LogWarning("Joueur non trouvé dans la scène !");
+        yield break;
+    }
+
+    Vector3 originalPosition = player.transform.position;
+    Vector3 roomPosition = new Vector3(1000, -19.6f, 1000);
+
+    // Instancier la pièce à sa position définie
+    GameObject emptyRoomInstance = Instantiate(emptyRoomPrefab, roomPosition, Quaternion.identity);
+    Vector3 teleportOffset = roomPosition - originalPosition;
+
+    // Désactiver temporairement le CharacterController
+    CharacterController controller = player.GetComponent<CharacterController>();
+    bool wasEnabled = controller != null && controller.enabled;
+    if (controller != null) controller.enabled = false;
+
+    // Déplacer le joueur
+    player.transform.position += teleportOffset;
+
+    if (controller != null && wasEnabled) controller.enabled = true;
+
+ 
+    yield return new WaitForSeconds(0.5f);
+
+  
+    List<GameObject> mannequins = new List<GameObject>();
+    List<Vector3> usedPositions = new List<Vector3>();
+    int mannequinCount = 40;
+    float spawnRadius = 15.0f; 
+    float minDistance = 2.0f;
+    
+    for (int i = 0; i < mannequinCount; i++)
+    {
+        Vector3 mannequinPosition;
+        int attempts = 0;
+        
+       
+        do
+        {
+            Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
+            
+            mannequinPosition = new Vector3(
+                player.transform.position.x + randomCircle.x,
+                -39.2999992f, // Hauteur fixe
+                player.transform.position.z + randomCircle.y
+            );
+            
+            attempts++;
+        }
+        while (IsPositionTooClose(mannequinPosition, usedPositions, minDistance) && attempts < 50);
+        
+        // Ajouter la position à la liste des positions utilisées
+        usedPositions.Add(mannequinPosition);
+
+      
+        float randomZRotation = Random.Range(0f, 360f);
+        Quaternion randomRotation = Quaternion.Euler(
+            mannequinPrefab.transform.rotation.eulerAngles.x,
+            mannequinPrefab.transform.rotation.eulerAngles.y,
+            randomZRotation
+        );
+
+        // Instancier avec rotation aléatoire sur Z
+        GameObject mannequin = Instantiate(mannequinPrefab, 
+            mannequinPosition, 
+            randomRotation);
+
+        // Forcer l'échelle d'origine du prefab
+        mannequin.transform.localScale = mannequinPrefab.transform.localScale;
+
+        mannequins.Add(mannequin);
+    }
+
+    // Attendre 10 secondes
+    yield return new WaitForSeconds(10f);
+
+    // Revenir à la position d'origine
+    if (controller != null) controller.enabled = false;
+    player.transform.position = originalPosition;
+    if (controller != null && wasEnabled) controller.enabled = true;
+
+    // Détruire les mannequins
+    foreach (GameObject mannequin in mannequins)
+    {
+        if (mannequin != null) Destroy(mannequin);
+    }
+
+    // Détruire la pièce
+    Destroy(emptyRoomInstance);
+}
+
+// Fonction pour vérifier si une position est trop proche des autres
+bool IsPositionTooClose(Vector3 newPosition, List<Vector3> usedPositions, float minDistance)
+{
+    foreach (Vector3 usedPos in usedPositions)
+    {
+        if (Vector3.Distance(newPosition, usedPos) < minDistance)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
     IEnumerator WatchingEyesCoroutine()
     {

@@ -13,7 +13,7 @@ public class MissionObjects : MonoBehaviour, IInteractableBis
     void Start()
     {
         // Trouver l'inventaire dans la scène
-        inventory = FindObjectOfType<Inventory>();
+        inventory = FindFirstObjectByType<Inventory>();
         
         if (inventory == null)
         {
