@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: Character
-  - Tag: Player
-  - Layer: Default
+  - Name: porte_tirroir.008
+  - Tag: Untagged
+  - Layer: Tirroir
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
