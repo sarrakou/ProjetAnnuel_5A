@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: bouttonLight
-  - Tag: Untagged
+  - Name: Character
+  - Tag: Player
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
