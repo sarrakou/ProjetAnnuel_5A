@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 8308894420851630788}
   - component: {fileID: 6699648886526134909}
   - component: {fileID: 6076562462863418227}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Portes_Armoir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 8790654888985824392}
   - component: {fileID: 1860149782312474242}
   - component: {fileID: 8613818703020895755}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Portes_Armoir.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,8 +12,12 @@ public class MyPlayerMovement : MonoBehaviour
     private float xRotation = 0f;
     private Vector3 moveInput;
 
+    private Animator animator;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
+
         rb = GetComponent<Rigidbody>();
         if (rb == null)
             rb = gameObject.AddComponent<Rigidbody>();
@@ -40,6 +44,14 @@ public class MyPlayerMovement : MonoBehaviour
         // Entrée joueur
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
+
+        // Animation
+        bool isMoving = (x != 0 || z != 0);
+        if (animator != null)
+        {
+            animator.SetBool("isWalking", isMoving); 
+        }
+
         moveInput = (transform.right * x + transform.forward * z).normalized * moveSpeed;
     }
 
