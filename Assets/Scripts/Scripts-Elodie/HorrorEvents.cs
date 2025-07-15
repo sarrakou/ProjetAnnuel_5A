@@ -69,9 +69,10 @@ public class HorrorEvents : MonoBehaviour
         // Claustrophobie - Peur des espaces clos
         phobiaEvents[PhobiaType.Claustrophobie] = new List<Action<Vector3>>
         {
-           Event_ClaustroFOV,
-           Event_TeleportToEmptyRoom,
-           Event_FlickeringLights,
+           //Event_ClaustroFOV,
+           //Event_TeleportToEmptyRoom,
+           //Event_FlickeringLights,
+           Event_TightSpace
         };
     }
 
@@ -475,7 +476,82 @@ bool IsPositionTooClose(Vector3 newPosition, List<Vector3> usedPositions, float 
     void Event_TightSpace(Vector3 pos)
     {
         Debug.Log("🚪 Espace réduit");
-        // Implémenter l'effet d'espace réduit
+        StartCoroutine(TeleportElevator()); 
+    }
+    IEnumerator TeleportElevator()
+    {
+        // Charger le prefab ChambreVide depuis Resources
+        GameObject emptyRoomPrefab = Resources.Load<GameObject>("ChambreVide");
+        if (emptyRoomPrefab == null)
+        {
+            Debug.LogWarning("Prefab 'ChambreVide' non trouvé dans Resources !");
+            yield break;
+        }
+
+        // Trouver le joueur
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogWarning("Joueur non trouvé dans la scène !");
+            yield break;
+        }
+
+   
+        Vector3 originalPosition = player.transform.position;
+    
+
+        Vector3 roomPosition = new Vector3(1000, 0, 1000);
+    
+  
+        GameObject emptyRoomInstance = Instantiate(emptyRoomPrefab, roomPosition, Quaternion.identity);
+
+    
+        Vector3 teleportOffset = roomPosition - originalPosition + new Vector3(0, 1, 0);
+    
+   
+        CharacterController controller = player.GetComponent<CharacterController>();
+        bool wasEnabled = controller != null && controller.enabled;
+        if (controller != null)
+        {
+            controller.enabled = false;
+        }
+
+        player.transform.Translate(teleportOffset, Space.World);
+    
+        Debug.Log($"Joueur téléporté vers {player.transform.position}");
+
+ 
+        if (controller != null && wasEnabled)
+        {
+            controller.enabled = true;
+        }
+
+        // Désactiver les lumières
+        Light[] lights = emptyRoomInstance.GetComponentsInChildren<Light>();
+        foreach (Light light in lights)
+        {
+            light.enabled = false;
+        }
+
+        yield return new WaitForSeconds(8f);
+
+        // Retour à la position originale
+        if (controller != null)
+        {
+            controller.enabled = false;
+        }
+
+        player.transform.position = originalPosition;
+
+        if (controller != null && wasEnabled)
+        {
+            controller.enabled = true;
+        }
+
+        // Détruire la chambre
+        Destroy(emptyRoomInstance);
+
+        Debug.Log("Fin de la téléportation dans ChambreVide");
     }
 
     IEnumerator ClaustroFOVCoroutine()
