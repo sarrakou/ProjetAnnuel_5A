@@ -3,21 +3,21 @@ using UnityEngine;
 public class MissionObjects : MonoBehaviour, IInteractableBis
 {
     [Header("Configuration de l'objet")]
-    public string objectName = "Objet"; // Nom de l'objet à afficher dans l'inventaire
-    public bool canBePickedUp = true; // Si l'objet peut être ramassé
-    public bool destroyAfterPickup = true; // Si l'objet doit être détruit après ramassage
+    public string objectName = "Objet"; 
+    public bool canBePickedUp = true; 
+    public bool destroyAfterPickup = true; 
     
     private Inventory inventory;
     private bool hasBeenPickedUp = false;
 
     void Start()
     {
-        // Trouver l'inventaire dans la scène
+      
         inventory = FindFirstObjectByType<Inventory>();
         
         if (inventory == null)
         {
-            Debug.LogError(" Aucun Inventory trouvé dans la scène !");
+            Debug.LogError("❌ Aucun Inventory trouvé dans la scène !");
         }
     }
 
@@ -25,31 +25,44 @@ public class MissionObjects : MonoBehaviour, IInteractableBis
     {
         if (!canBePickedUp)
         {
-            Debug.Log($" {objectName} ne peut pas être ramassé.");
+            Debug.Log($"⚠️ {objectName} ne peut pas être ramassé.");
             return;
         }
         
         if (hasBeenPickedUp)
         {
-            Debug.Log($" {objectName} a déjà été ramassé.");
+            Debug.Log($"⚠️ {objectName} a déjà été ramassé.");
             return;
         }
         
         if (inventory != null)
         {
-            
+            // Déterminer le nom de l'objet
             string itemName = objectName;
             if (objectName == "Objet")
             {
                 itemName = gameObject.name; 
             }
             
+         
+            if (!inventory.CanPlayerTakeItem(itemName))
+            {
+                string restrictionMessage = inventory.GetItemRestrictionMessage(itemName);
+                Debug.Log($"🚫 {restrictionMessage}");
+                
+              
+                StartCoroutine(ShowCantTakeEffect());
+                
+                return; 
+            }
+            
+        
             inventory.AddItem(itemName);
             hasBeenPickedUp = true;
             
             Debug.Log($"✅ Vous avez ramassé : {objectName}");
             
-            // Détruire l'objet si configuré pour cela
+           
             if (destroyAfterPickup)
             {
                 Destroy(gameObject);
@@ -57,13 +70,63 @@ public class MissionObjects : MonoBehaviour, IInteractableBis
             else
             {
                
-                GetComponent<Renderer>().enabled = false;
-                GetComponent<Collider>().enabled = false;
+                if (GetComponent<Renderer>() != null)
+                    GetComponent<Renderer>().enabled = false;
+                if (GetComponent<Collider>() != null)
+                    GetComponent<Collider>().enabled = false;
             }
         }
         else
         {
-            Debug.LogError("Impossible de trouver l'inventaire !");
+            Debug.LogError("❌ Impossible de trouver l'inventaire !");
         }
+    }
+    
+   
+    private System.Collections.IEnumerator ShowCantTakeEffect()
+    {
+        Renderer objectRenderer = GetComponent<Renderer>();
+        if (objectRenderer != null)
+        {
+            Color originalColor = objectRenderer.material.color;
+            
+           
+            for (int i = 0; i < 3; i++)
+            {
+                objectRenderer.material.color = Color.red;
+                yield return new WaitForSeconds(0.1f);
+                objectRenderer.material.color = originalColor;
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+    }
+    
+ 
+    public bool CanBePickedUpNow()
+    {
+        if (!canBePickedUp || hasBeenPickedUp || inventory == null)
+            return false;
+            
+        string itemName = objectName;
+        if (objectName == "Objet")
+        {
+            itemName = gameObject.name;
+        }
+        
+        return inventory.CanPlayerTakeItem(itemName);
+    }
+    
+    
+    public string GetRestrictionMessage()
+    {
+        if (inventory == null) return "";
+        
+        string itemName = objectName;
+        if (objectName == "Objet")
+        {
+            itemName = gameObject.name;
+        }
+        
+        return inventory.GetItemRestrictionMessage(itemName);
     }
 }

@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         
         // Ne pas afficher l'inventaire au démarrage
-        Debug.Log(" Inventaire initialisé. Appuyez sur 'I' pour l'ouvrir.");
+        Debug.Log("🎒 Inventaire initialisé. Appuyez sur 'I' pour l'ouvrir.");
     }
 
     void Update()
@@ -39,13 +39,19 @@ public class Inventory : MonoBehaviour
         }
     }
     
-    // Ajouter un objet à l'inventaire
+    // Ajouter un objet à l'inventaire avec vérification de quête
     public void AddItem(string itemName)
     {
         if (!items.Contains(itemName))
         {
+            // Vérifier si le joueur peut prendre cet objet
+            if (!CanTakeItem(itemName))
+            {
+                return; // Sortir si l'objet ne peut pas être pris
+            }
+            
             items.Add(itemName);
-            Debug.Log($" Objet ajouté à l'inventaire : {itemName}");
+            Debug.Log($"✅ Objet ajouté à l'inventaire : {itemName}");
             DisplayInventory();
             
             // Vérifier si cet objet complète une quête
@@ -53,8 +59,94 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Debug.Log($"️ Objet déjà dans l'inventaire : {itemName}");
+            Debug.Log($"⚠️ Objet déjà dans l'inventaire : {itemName}");
         }
+    }
+    
+    // Vérifier si le joueur peut prendre un objet selon les quêtes disponibles
+    private bool CanTakeItem(string itemName)
+    {
+        if (gameManager == null) 
+        {
+            Debug.LogError("❌ GameManager non trouvé !");
+            return false;
+        }
+        
+        string itemLower = itemName.ToLower();
+        
+        // Vérifications pour chaque type d'objet
+        
+        // 1. Clé de la chambre principale (Quête 2)
+        if (itemLower.Contains("clé") || itemLower.Contains("cle"))
+        {
+            if (!IsQuestAvailable("Trouver la clé de la chambre principale"))
+            {
+                Debug.Log("🔒 Vous ne pouvez pas encore prendre cette clé. Explorez d'abord la maison !");
+                return false;
+            }
+        }
+        
+        // 2. Journal du propriétaire (Quête 3)
+        if (itemLower.Contains("journal"))
+        {
+            if (!IsQuestAvailable("Trouver le journal du propriétaire"))
+            {
+                Debug.Log("🔒 Vous ne pouvez pas encore prendre ce journal. Trouvez d'abord la clé de la chambre !");
+                return false;
+            }
+        }
+        
+        // 3. Clé du coffre-fort / Clé secrète (Quête 5)
+        if (itemLower.Contains("chambresecrete") || itemLower.Contains("coffre"))
+        {
+            if (!IsQuestAvailable("Récupérer la clé"))
+            {
+                Debug.Log("🔒 Vous ne pouvez pas encore accéder à cette clé. Trouvez d'abord le coffre-fort !");
+                return false;
+            }
+        }
+        
+        // 4. Poupée Annabelle (Quête 6)
+        if (itemLower.Contains("annabelle") || itemLower.Contains("poupée") || itemLower.Contains("poupee"))
+        {
+            if (!IsQuestAvailable("D'où vient ce bruit ?"))
+            {
+                Debug.Log("🔒 Cette poupée vous fait peur... Vous n'osez pas la toucher maintenant.");
+                return false;
+            }
+        }
+        
+        // 5. Objets génériques (toujours autorisés)
+        // Comme les indices, notes, etc.
+        
+        Debug.Log($"✅ Vous pouvez prendre : {itemName}");
+        return true;
+    }
+    
+    // Vérifier si une quête est disponible (peut être complétée)
+    private bool IsQuestAvailable(string questName)
+    {
+        if (gameManager == null || gameManager.quests == null) return false;
+        
+        for (int i = 0; i < gameManager.quests.Count; i++)
+        {
+            if (gameManager.quests[i].questName == questName)
+            {
+                // Vérifier que toutes les quêtes précédentes sont complétées
+                for (int j = 0; j < i; j++)
+                {
+                    if (!gameManager.quests[j].isCompleted)
+                    {
+                        return false; // Une quête précédente n'est pas complétée
+                    }
+                }
+                
+                // La quête est disponible si elle n'est pas déjà complétée
+                return !gameManager.quests[i].isCompleted;
+            }
+        }
+        
+        return false; // Quête non trouvée
     }
     
     // Vérifier si un objet est dans l'inventaire
@@ -69,7 +161,7 @@ public class Inventory : MonoBehaviour
         if (items.Contains(itemName))
         {
             items.Remove(itemName);
-            Debug.Log($"️ Objet retiré de l'inventaire : {itemName}");
+            Debug.Log($"➖ Objet retiré de l'inventaire : {itemName}");
             DisplayInventory();
         }
     }
@@ -79,7 +171,7 @@ public class Inventory : MonoBehaviour
     {
         if (isInventoryOpen) // Afficher seulement si l'inventaire est ouvert
         {
-            Debug.Log(" === INVENTAIRE ===");
+            Debug.Log("🎒 === INVENTAIRE ===");
             if (items.Count == 0)
             {
                 Debug.Log("   (Vide)");
@@ -100,36 +192,82 @@ public class Inventory : MonoBehaviour
     {
         if (gameManager == null) 
         {
-            Debug.LogError(" GameManager non trouvé !");
+            Debug.LogError("❌ GameManager non trouvé !");
             return;
         }
         
-        Debug.Log($" Vérification de quête pour l'objet : {itemName}");
+        Debug.Log($"🎯 Vérification de quête pour l'objet : {itemName}");
         
-       
-        if (itemName.ToLower().Contains("clé") || itemName.ToLower().Contains("cle"))
+        string itemLower = itemName.ToLower();
+        
+        // Clé de la chambre principale
+        if (itemLower.Contains("clé") || itemLower.Contains("cle"))
         {
-            Debug.Log("️ Clé détectée ! Tentative de complétion de la quête 2...");
+            Debug.Log("🗝️ Clé détectée ! Tentative de complétion de la quête 2...");
             gameManager.CompleteQuestByName("Trouver la clé de la chambre principale");
         }
         
-        if (itemName.ToLower().Contains("journal"))
+        // Journal du propriétaire
+        if (itemLower.Contains("journal"))
         {
+            Debug.Log("📖 Journal détecté ! Tentative de complétion de la quête 3...");
             gameManager.CompleteQuestByName("Trouver le journal du propriétaire");
         }
-        if (itemName.ToLower().Contains("chambresecrete"))
+        
+        // Clé du coffre-fort
+        if (itemLower.Contains("chambresecrete") || itemLower.Contains("coffre"))
         {
+            Debug.Log("🔑 Clé secrète détectée ! Tentative de complétion de la quête 5...");
             gameManager.CompleteQuestByName("Récupérer la clé");
         }
-        if (itemName.ToLower().Contains("annabelle"))
+        
+        // Poupée Annabelle
+        if (itemLower.Contains("annabelle") || itemLower.Contains("poupée") || itemLower.Contains("poupee"))
         {
+            Debug.Log("🪆 Poupée Annabelle détectée ! Tentative de complétion de la quête 6...");
             gameManager.CompleteQuestByName("D'où vient ce bruit ?");
         }
+    }
+    
+    // Méthode publique pour tester si un objet peut être pris (utilisable par d'autres scripts)
+    public bool CanPlayerTakeItem(string itemName)
+    {
+        return CanTakeItem(itemName);
     }
     
     // Getter pour la liste des objets (utile pour d'autres scripts)
     public List<string> GetItems()
     {
         return new List<string>(items); // Retourne une copie pour éviter les modifications externes
+    }
+    
+    // Méthode pour obtenir des messages d'aide sur pourquoi un objet ne peut pas être pris
+    public string GetItemRestrictionMessage(string itemName)
+    {
+        if (CanTakeItem(itemName)) return "";
+        
+        string itemLower = itemName.ToLower();
+        
+        if (itemLower.Contains("clé") || itemLower.Contains("cle"))
+        {
+            return "🔒 Vous devez d'abord explorer la maison et allumer les lumières.";
+        }
+        
+        if (itemLower.Contains("journal"))
+        {
+            return "🔒 Vous devez d'abord trouver la clé de la chambre principale.";
+        }
+        
+        if (itemLower.Contains("chambresecrete") || itemLower.Contains("coffre"))
+        {
+            return "🔒 Vous devez d'abord trouver le coffre-fort.";
+        }
+        
+        if (itemLower.Contains("annabelle") || itemLower.Contains("poupée") || itemLower.Contains("poupee"))
+        {
+            return "🔒 Cette poupée vous effraie... Attendez d'entendre quelque chose.";
+        }
+        
+        return "🔒 Vous ne pouvez pas prendre cet objet maintenant.";
     }
 }

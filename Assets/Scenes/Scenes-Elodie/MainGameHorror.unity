@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8267ebda0efa4326a6efaeeadab662b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 2
+  moveDistance: 3
   moveSpeed: 2
   questToComplete: "Trouver la porte secr\xE8te"
 --- !u!1 &51553816 stripped
@@ -1071,6 +1071,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &358670182 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 59768188e6a5e294381d9538ba6e4437, type: 3}
+  m_PrefabInstance: {fileID: 1858703947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &383397379 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8553467756812942680, guid: 42a636b7184a0624790c1abc07b5acb8, type: 3}
@@ -5435,12 +5440,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 5b0b620a912a7d84985364225d1155bf, type: 3}
     - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: phoneRingClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ff3d77861429d53418c69b0e86245d59, type: 3}
+    - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: phoneTransform
+      value: 
+      objectReference: {fileID: 358670182}
+    - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: closedGameObject
       value: 
       objectReference: {fileID: 1923923415}
     - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: phoneRingDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: dollAudioResourcePath
       value: Audios/babycrying
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: phoneRingResourcePath
+      value: Audios/Ring
       objectReference: {fileID: 0}
     - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: dollPrefabResourcePath
