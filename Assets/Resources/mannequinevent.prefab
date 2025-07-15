@@ -119,5 +119,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
   speed: 2
-  lookThreshold: 0.95
+  lookThreshold: 0.8
   lifeTime: 30

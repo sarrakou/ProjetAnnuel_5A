@@ -2158,7 +2158,10 @@ MonoBehaviour:
   activeDuration: 90
   moveSpeed: 2
   animatorController: {fileID: 0}
-  useMoveWhenNotLookedAt: 1
+  spawnPosition: 0
+  distanceBehindPlayer: 3
+  shouldMove: 1
+  movementType: 1
 --- !u!1 &1094798938 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3593965557622779940, guid: 671e4e6c3504e43cdb663d444f60ec54, type: 3}

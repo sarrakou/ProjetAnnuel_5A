@@ -53,8 +53,11 @@ public class MoveWhenNotLookedAt : MonoBehaviour
             return;
         }
 
-        Vector3 toObject = (transform.position - playerCamera.position).normalized;
-        float dot = Vector3.Dot(playerCamera.forward, toObject);
+
+        Vector3 directionToObject = (transform.position - playerCamera.position).normalized;
+        float dot = Vector3.Dot(playerCamera.forward, directionToObject);
+
+        Debug.Log($"Dot product: {dot}, Threshold: {lookThreshold}, Is looking: {dot > lookThreshold}");
 
         if (dot < lookThreshold) 
         {
@@ -62,7 +65,8 @@ public class MoveWhenNotLookedAt : MonoBehaviour
         }
         else
         {
-            // Ne bouge pas
+            // Ne bouge pas - on regarde l'objet
+            Debug.Log("Joueur regarde l'objet - arrêt du mouvement");
         }
     }
 
@@ -80,5 +84,7 @@ public class MoveWhenNotLookedAt : MonoBehaviour
         newPosition.y = originalY;
         
         transform.position = newPosition;
+        
+        Debug.Log("Mannequin bouge vers le joueur");
     }
 }

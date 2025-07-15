@@ -9,15 +9,37 @@ public class PrefabActivator : MonoBehaviour
     [Tooltip("Durée pendant laquelle le prefab reste actif")]
     public float activeDuration = 2f;
 
-    [Tooltip("Vitesse de déplacement en unités/seconde (si pas de MoveWhenNotLookedAt)")]
+    [Tooltip("Vitesse de déplacement en unités/seconde (si mouvement basique)")]
     public float moveSpeed = 2f;
 
     [Tooltip("AnimatorController à glisser (pour jouer l'animation)")]
     public RuntimeAnimatorController animatorController;
 
-    [Header("Comportement")]
-    [Tooltip("Cocher si ce prefab doit utiliser MoveWhenNotLookedAt au lieu du mouvement basique")]
-    public bool useMoveWhenNotLookedAt = false;
+    [Header("Position d'apparition")]
+    [Tooltip("Où faire apparaître le prefab")]
+    public SpawnPosition spawnPosition = SpawnPosition.PrefabOriginalPosition;
+    
+    [Tooltip("Distance derrière le joueur (si SpawnBehindPlayer)")]
+    public float distanceBehindPlayer = 3f;
+
+    [Header("Comportement de mouvement")]
+    [Tooltip("Cocher si le prefab doit bouger")]
+    public bool shouldMove = true;
+    
+    [Tooltip("Type de mouvement (seulement si shouldMove = true)")]
+    public MovementType movementType = MovementType.BasicTowardPlayer;
+
+    public enum SpawnPosition
+    {
+        PrefabOriginalPosition,  // Position d'origine du prefab
+        SpawnBehindPlayer        // Derrière le joueur
+    }
+
+    public enum MovementType
+    {
+        BasicTowardPlayer,      // Mouvement basique vers le joueur
+        MoveWhenNotLookedAt     // Script MoveWhenNotLookedAt
+    }
 
     private bool triggered = false;
     private GameObject instance;
@@ -46,6 +68,28 @@ public class PrefabActivator : MonoBehaviour
         }
     }
 
+    private Vector3 GetSpawnPosition(GameObject prefab)
+    {
+        if (spawnPosition == SpawnPosition.SpawnBehindPlayer && player != null)
+        {
+            // Calculer la position derrière le joueur
+            Vector3 behindDirection = -player.forward; // Direction opposée à celle du joueur
+            Vector3 spawnPos = player.position + behindDirection * distanceBehindPlayer;
+            
+            // Garder la même hauteur Y que le joueur (ou ajuster selon vos besoins)
+            spawnPos.y = player.position.y;
+            
+            Debug.Log("Spawn derrière le joueur à : " + spawnPos);
+            return spawnPos;
+        }
+        else
+        {
+            // Position d'origine du prefab
+            Debug.Log("Spawn à la position d'origine : " + prefab.transform.position);
+            return prefab.transform.position;
+        }
+    }
+
     private IEnumerator ActivatePrefab()
     {
         Debug.Log("Début de ActivatePrefab()");
@@ -65,11 +109,15 @@ public class PrefabActivator : MonoBehaviour
         }
 
         Debug.Log("Prefab trouvé, instanciation...");
-        instance = Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
+        
+        // Calculer la position d'spawn
+        Vector3 spawnPos = GetSpawnPosition(prefab);
+        
+        instance = Instantiate(prefab, spawnPos, prefab.transform.rotation);
         Debug.Log("Prefab instancié à la position : " + instance.transform.position);
 
         // Ajouter le script MoveWhenNotLookedAt seulement si demandé
-        if (useMoveWhenNotLookedAt)
+        if (shouldMove && movementType == MovementType.MoveWhenNotLookedAt)
         {
             MoveWhenNotLookedAt moveScript = instance.GetComponent<MoveWhenNotLookedAt>();
             if (moveScript == null)
@@ -95,14 +143,23 @@ public class PrefabActivator : MonoBehaviour
             Debug.Log("Pas d'Animator sur le prefab");
         }
 
-        // Si on utilise MoveWhenNotLookedAt, on attend juste
-        if (useMoveWhenNotLookedAt)
+        // Gestion du mouvement selon les paramètres
+        if (!shouldMove)
         {
+            // Pas de mouvement, juste attendre
+            Debug.Log("Pas de mouvement, attente de " + activeDuration + " secondes");
+            yield return new WaitForSeconds(activeDuration);
+        }
+        else if (movementType == MovementType.MoveWhenNotLookedAt)
+        {
+            // MoveWhenNotLookedAt s'occupe du mouvement
+            Debug.Log("MoveWhenNotLookedAt gère le mouvement, attente de " + activeDuration + " secondes");
             yield return new WaitForSeconds(activeDuration);
         }
         else
         {
-            // Sinon, mouvement basique vers le joueur
+            // Mouvement basique vers le joueur
+            Debug.Log("Mouvement basique vers le joueur");
             float elapsed = 0f;
             while (elapsed < activeDuration && instance != null && player != null)
             {
