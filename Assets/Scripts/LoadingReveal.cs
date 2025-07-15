@@ -13,7 +13,7 @@ public class LoadingReveal : MonoBehaviour
     void Start()
     {
         targetHeight = maskTransform.rect.height;
-        startHeight = -1;
+        startHeight = 0;
         SetMaskHeight(startHeight);
     }
 
