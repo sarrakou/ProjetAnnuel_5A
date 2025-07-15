@@ -3111,7 +3111,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6576362059755730047, guid: 1bde81696e434432f82e5737f32db915, type: 3}
   m_PrefabInstance: {fileID: 3920833633542294581}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1815005059}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec645c62de68d4fb7b139b6fba9bfcfc, type: 3}
@@ -3220,6 +3220,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openAngle: 90
   speed: 2
+--- !u!1 &1815005059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2461398162351272817, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+  m_PrefabInstance: {fileID: 3920833633542294581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1815005066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815005059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de1614a0dc664e4a8afdf4f5d245861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefabName: ghostGirl
+  monsterSound: {fileID: 8300000, guid: 8b731524aa4232445af069f7e3afa958, type: 3}
+  minTimeBetweenAppearances: 40
+  maxTimeBetweenAppearances: 90
+  distanceBehindPlayer: 10
+  positionVariation: 2
+  monsterLifetime: 10
+  chanceMonsterWithSound: 40
+  chanceMonsterWithoutSound: 30
+  chanceSoundOnly: 30
+  soundVolume: 0.8
 --- !u!114 &1833743287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5286,7 +5314,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2461398162351272817, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1815005066}
   m_SourcePrefab: {fileID: 100100000, guid: 1bde81696e434432f82e5737f32db915, type: 3}
 --- !u!1001 &4047460649298190699
 PrefabInstance:
