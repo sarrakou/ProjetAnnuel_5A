@@ -4,11 +4,11 @@
 - Active scene:
   - Name: MainGameHorror
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, DetectorPiece, ouverture, EventZone, Library, CoffreFort, BigPiece
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, DetectorPiece, ouverture, EventZone, Library, CoffreFort, BigPiece, Sole
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur
+    - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: GameManager
+  - Name: EventsClaustrophobie
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

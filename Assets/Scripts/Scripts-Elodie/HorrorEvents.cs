@@ -44,24 +44,24 @@ public class HorrorEvents : MonoBehaviour
         // Entomophobie - Peur des insectes
         phobiaEvents[PhobiaType.Entomophobie] = new List<Action<Vector3>>
         {
-            //Event_InsectOnScreen,
+            Event_InsectOnScreen,
             Event_InsectSound
         };
 
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
         { 
-            //Event_FlickeringLights,
-            Event_TeleportToEmptyRoom
-            //Event_PlayCreepyAudio,
-              //Event_Crying
+            Event_FlickeringLights,
+            Event_TeleportToEmptyRoom,
+            Event_PlayCreepyAudio,
+              Event_Crying
         };
 
 
         // Scopophobie - Peur du regard des autres
         phobiaEvents[PhobiaType.Scopophobie] = new List<Action<Vector3>>
         {
-            //Event_PlayCreepyAudio,
-            //Event_Crying,
+            Event_PlayCreepyAudio,
+            Event_Crying,
             Event_TeleportWithMannequins,
             
         };
@@ -69,7 +69,9 @@ public class HorrorEvents : MonoBehaviour
         // Claustrophobie - Peur des espaces clos
         phobiaEvents[PhobiaType.Claustrophobie] = new List<Action<Vector3>>
         {
-           
+           Event_ClaustroFOV,
+           Event_TeleportToEmptyRoom,
+           Event_FlickeringLights,
         };
     }
 

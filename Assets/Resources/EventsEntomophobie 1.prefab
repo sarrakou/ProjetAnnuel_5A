@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7924027209060449260
 Transform:
   m_ObjectHideFlags: 0
@@ -301,3 +301,7 @@ MonoBehaviour:
   activeDuration: 10
   moveSpeed: 2
   animatorController: {fileID: 9100000, guid: ca2237f50392d9446a4c04bb2e9f641e, type: 2}
+  spawnPosition: 0
+  distanceBehindPlayer: 3
+  shouldMove: 1
+  movementType: 0
