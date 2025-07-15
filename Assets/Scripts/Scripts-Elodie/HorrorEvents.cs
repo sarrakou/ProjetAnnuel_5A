@@ -69,9 +69,9 @@ public class HorrorEvents : MonoBehaviour
         // Claustrophobie - Peur des espaces clos
         phobiaEvents[PhobiaType.Claustrophobie] = new List<Action<Vector3>>
         {
-           //Event_ClaustroFOV,
-           //Event_TeleportToEmptyRoom,
-           //Event_FlickeringLights,
+           Event_ClaustroFOV,
+           Event_TeleportToEmptyRoom, 
+           Event_FlickeringLights, 
            Event_TightSpace
         };
     }
