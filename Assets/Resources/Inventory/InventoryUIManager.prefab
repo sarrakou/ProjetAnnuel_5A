@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4038223423442818362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2004674559882026280}
+  - component: {fileID: 8455002732609548005}
+  m_Layer: 0
+  m_Name: InventoryUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2004674559882026280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038223423442818362}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 533.1956, y: 57.829132, z: 63.755474}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8455002732609548005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038223423442818362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b3a7e1191e3b842a775070af2b585e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPanel: {fileID: 0}
+  itemContainer: {fileID: 0}
+  itemPrefab: {fileID: 6229774236551383861, guid: bd07b3450e38ab340b1430fdb129cbbf, type: 3}
+  notificationText: {fileID: 0}
+  inventoryKey: 105
+  notificationDuration: 2
+  itemIcons:
+  - itemName: "cl\xE9"
+    icon: {fileID: 21300000, guid: 69aad9fbd7091b74d800c06e5d6e7040, type: 3}
+  - itemName: pile
+    icon: {fileID: 21300000, guid: babc339bc83a55b4bbfaab49d604ba7f, type: 3}
+  - itemName: journal
+    icon: {fileID: 21300000, guid: 037dec01f62984b40983fb6248ad775b, type: 3}
+  - itemName: pillule
+    icon: {fileID: 21300000, guid: 243dacd7fe014c44693a92052442eec6, type: 3}
+  defaultIcon: {fileID: 21300000, guid: 243dacd7fe014c44693a92052442eec6, type: 3}
