@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
         {
             inventoryCanvas.SetActive(false);
         }
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindFirstObjectByType<GameManager>();
         
         // Ne pas afficher l'inventaire au démarrage
         Debug.Log(" Inventaire initialisé. Appuyez sur 'I' pour l'ouvrir.");

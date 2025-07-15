@@ -13,7 +13,7 @@ public class MissionObjects : MonoBehaviour, IInteractableBis
     void Start()
     {
         // Trouver l'inventaire dans la scène
-        inventory = FindObjectOfType<Inventory>();
+        inventory = FindFirstObjectByType<Inventory>();
         
         if (inventory == null)
         {
@@ -45,6 +45,13 @@ public class MissionObjects : MonoBehaviour, IInteractableBis
             }
             
             inventory.AddItem(itemName);
+
+            InventoryUI inventoryUI = FindFirstObjectByType<InventoryUI>();
+            if (inventoryUI != null)
+            {
+                inventoryUI.OnItemAdded();
+            }
+
             hasBeenPickedUp = true;
             
             Debug.Log($"✅ Vous avez ramassé : {objectName}");

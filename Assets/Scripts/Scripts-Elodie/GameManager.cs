@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Référence au LightManager dans la scène
-        lightManager = FindObjectOfType<LightManager>();
+        lightManager = FindFirstObjectByType<LightManager>();
 
         // Initialisation des quêtes
         quests.Add(new Quest("Trouver un moyen d'allumer les lumières", "Explorer la maison pour rétablir l'électricité."));
