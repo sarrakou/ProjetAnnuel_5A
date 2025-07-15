@@ -5,11 +5,15 @@ public class GameManager : MonoBehaviour
 {
     public List<Quest> quests = new List<Quest>();
     private LightManager lightManager;
+    private HorrorEvents horrorEvents; // Référence au HorrorEvents
 
     void Start()
     {
         // Référence au LightManager dans la scène
         lightManager = FindObjectOfType<LightManager>();
+        
+        // Référence au HorrorEvents dans la scène
+        horrorEvents = FindObjectOfType<HorrorEvents>();
 
         // Initialisation des quêtes
         quests.Add(new Quest("Trouver un moyen d'allumer les lumières", "Explorer la maison pour rétablir l'électricité."));
@@ -23,7 +27,28 @@ public class GameManager : MonoBehaviour
         quests.Add(new Quest("Appeler la police", "Il faut de l'aide immédiatement."));
         quests.Add(new Quest("Il faut sortir. Maintenant !", "Quitte la maison au plus vite !"));
 
+        // Vérifier si c'est la Nyctophobie pour auto-compléter la quête des lumières
+        CheckNyctophobiaQuest();
+        
         AfficherToutesLesQuetes();
+    }
+
+    void CheckNyctophobiaQuest()
+    {
+        if (horrorEvents != null && horrorEvents.currentPhobia == PhobiaType.Nyctophobie)
+        {
+            Debug.Log("🌙 Nyctophobie détectée - La quête des lumières est automatiquement passée");
+            
+            // Compléter automatiquement la première quête (lumières)
+            if (quests.Count > 0 && !quests[0].isCompleted)
+            {
+                quests[0].CompleteQuest();
+                Debug.Log("✅ Quête 'Trouver un moyen d'allumer les lumières' complétée automatiquement");
+                
+                // NE PAS allumer les lumières car c'est la Nyctophobie
+                // Les lumières restent éteintes pour maintenir l'ambiance sombre
+            }
+        }
     }
 
     void Update()
@@ -38,7 +63,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha7)) CompleterQuete(6);
         if (Input.GetKeyDown(KeyCode.Alpha8)) CompleterQuete(7);
         if (Input.GetKeyDown(KeyCode.Alpha9)) CompleterQuete(8);
-        if (Input.GetKeyDown(KeyCode.Alpha9)) CompleterQuete(9);
+        if (Input.GetKeyDown(KeyCode.Alpha0)) CompleterQuete(9); // Corrigé : Alpha0 pour la 10ème quête
     }
 
     void CompleterQuete(int index)
@@ -48,15 +73,23 @@ public class GameManager : MonoBehaviour
             quests[index].CompleteQuest();
             AfficherToutesLesQuetes();
 
-            // Allumer les lumières si la 1ʳᵉ quête est complétée
+            // Allumer les lumières si la 1ʳᵉ quête est complétée ET si ce n'est PAS la Nyctophobie
             if (index == 0 && lightManager != null)
             {
-                lightManager.SetAllLights(true);
+                if (horrorEvents != null && horrorEvents.currentPhobia == PhobiaType.Nyctophobie)
+                {
+                    Debug.Log("🌙 Nyctophobie active - Les lumières restent éteintes");
+                    // Ne pas allumer les lumières
+                }
+                else
+                {
+                    lightManager.SetAllLights(true);
+                    Debug.Log("💡 Lumières allumées");
+                }
             }
         }
     }
     
-  
     public void CompleteQuestByName(string questName)
     {
         Debug.Log($" Tentative de complétion de la quête : {questName}");
@@ -69,10 +102,19 @@ public class GameManager : MonoBehaviour
                 quests[i].CompleteQuest();
                 AfficherToutesLesQuetes();
                 
-                // Allumer les lumières si la 1ʳᵉ quête est complétée
+                // Allumer les lumières si la 1ʳᵉ quête est complétée ET si ce n'est PAS la Nyctophobie
                 if (i == 0 && lightManager != null)
                 {
-                    lightManager.SetAllLights(true);
+                    if (horrorEvents != null && horrorEvents.currentPhobia == PhobiaType.Nyctophobie)
+                    {
+                        Debug.Log("🌙 Nyctophobie active - Les lumières restent éteintes");
+                        // Ne pas allumer les lumières
+                    }
+                    else
+                    {
+                        lightManager.SetAllLights(true);
+                        Debug.Log("💡 Lumières allumées");
+                    }
                 }
                 return;
             }
@@ -90,7 +132,4 @@ public class GameManager : MonoBehaviour
             Debug.Log($"{i + 1}. {status} {quests[i].questName} - {quests[i].description}");
         }
     }
-
-
-    
 }
