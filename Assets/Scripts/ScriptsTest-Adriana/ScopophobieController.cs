@@ -6,8 +6,8 @@ public class ScopophobieController : MonoBehaviour
 {
     public List<Transform> statues;
     public Transform player;
-    public float rotationSpeed = 1f;
-    public float interval = 5f; // cada 5s gira un grupo
+    public float rotationSpeed = 2f;
+    public float interval = 3f; // cada 5s gira un grupo
     public int statuesPerWave = 3;
 
     private int currentIndex = 0;

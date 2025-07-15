@@ -30,6 +30,8 @@ public class SimpleExperimentManager : MonoBehaviour
 
     [Header("Setup stages")]
     public GameObject trainingGameObject;
+    public GameObject restingGameObject;
+    public TextMeshProUGUI textMeshProUGUI;
     public List<GameObject> experimentStages;
     public bool randomizeStages = true;
 
@@ -319,7 +321,7 @@ public class SimpleExperimentManager : MonoBehaviour
         /// not running (like in videos360), or putting back
         /// the objects in their initial transforms...
         RenderSettings.skybox = restingSkybox;
-
+        Debug.Log("RestingTime");
         if (trainingGameObject != null) trainingGameObject.SetActive(false);
         foreach (GameObject go in experimentStages)
             if (go != null) go.SetActive(false);
@@ -360,6 +362,8 @@ public class SimpleExperimentManager : MonoBehaviour
 
     public void LoadAndPlayExperimentalStage()
     {
+        if (restingGameObject != null)
+            restingGameObject.SetActive(false);
         // Get an experimental stage from the ones that are available.
         currentExperimentalStage = GetExperimentalStage();
 
@@ -494,7 +498,39 @@ public class SimpleExperimentManager : MonoBehaviour
     {
         CurrentState = ExperimentState.RestBetweenStages;
         ConfigureDefaultEnvironment();
+
+        if (restingGameObject != null)
+            restingGameObject.SetActive(true);
+
+        // Mostrar mensaje base
+        if (textMeshProUGUI != null)
+            textMeshProUGUI.text = "Resting time, next test begins in...";
+
+        // Empieza la cuenta regresiva visual
+        StartCoroutine(ShowCountdown(restingTimeSeconds));
+
+        // Ya existente: espera y lanza siguiente test
         StartCoroutine(WaitingTime(restingTimeSeconds, LoadAndPlayExperimentalStage));
+    }
+
+    IEnumerator ShowCountdown(float time)
+    {
+        float remaining = time;
+
+        while (remaining > 0)
+        {
+            if (textMeshProUGUI != null)
+            {
+                textMeshProUGUI.text = $"Resting time, next test begins in {Mathf.CeilToInt(remaining)} seconds...";
+            }
+
+            yield return new WaitForSeconds(1f);
+            remaining -= 1f;
+        }
+
+        // Mensaje final antes de cambiar de escena
+        if (textMeshProUGUI != null)
+            textMeshProUGUI.text = "Starting next test...";
     }
 
     IEnumerator WaitingTime(float time, Action action)

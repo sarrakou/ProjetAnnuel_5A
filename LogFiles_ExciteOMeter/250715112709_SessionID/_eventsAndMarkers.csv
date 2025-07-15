@@ -1,0 +1,17 @@
+datetime,sessionTime,type,message,details
+250715112709.364,0.000,ManualMarkers,ExperimentStarted,CUSTOM_MARKER
+250715112709.406,0.000,Screenshots,screen_1920x1080_0.jpg,NONE
+250715112709.407,0.000,ManualMarkers,BaselineCollectionStarted,CUSTOM_MARKER
+250715112709.439,0.000,Screenshots,screen_1920x1080_1.jpg,NONE
+250715112719.443,8.220,ManualMarkers,BaselineCollectionEnded,CUSTOM_MARKER
+250715112719.476,8.220,Screenshots,screen_1920x1080_2.jpg,NONE
+250715112719.755,8.220,ManualMarkers,PhobiaTest_Entomophobia_Started,CUSTOM_MARKER
+250715112719.780,8.220,Screenshots,screen_1920x1080_3.jpg,NONE
+250715112719.781,8.220,ManualMarkers,ExperimentalStageStarted:0,CUSTOM_MARKER
+250715112719.805,8.220,Screenshots,screen_1920x1080_4.jpg,NONE
+250715112731.278,20.000,Screenshots,screen_1920x1080_5.jpg,NONE
+250715112751.284,40.000,Screenshots,screen_1920x1080_6.jpg,NONE
+250715112754.483,43.240,ManualMarkers,PhobiaTest_Entomophobia_Ended,CUSTOM_MARKER
+250715112754.520,43.240,Screenshots,screen_1920x1080_7.jpg,NONE
+250715112754.520,43.240,ManualMarkers,ExperimentalStageEnded:0,CUSTOM_MARKER
+250715112754.551,43.240,Screenshots,screen_1920x1080_8.jpg,NONE
