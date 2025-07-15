@@ -7,10 +7,13 @@ public class FlickeringMaterialLight : MonoBehaviour
     public Light lightSource;
 
     public Color normalColor = Color.white;
-    public Color dangerColor = new Color(1f, 0.1f, 0.1f);
+    public Color dangerColor = new Color(0.509804f, 0.1f, 0.1f);
 
-    public float baseIntensity = 0.02f;
+    public float baseIntensity = 0.002f;
     private bool alarmStarted = false;
+
+    private bool flickerStarted = false;
+
 
     void Start()
     {
@@ -38,9 +41,13 @@ public class FlickeringMaterialLight : MonoBehaviour
             }
             else if (t < 40f)
             {
-                lightSource.color = normalColor;
-                lightSource.intensity = Random.Range(baseIntensity * 0.4f, baseIntensity);
+                if (!flickerStarted)
+                {
+                    flickerStarted = true;
+                    StartCoroutine(WhiteFlickerRoutine());
+                }
             }
+
             else
             {
                 if (!alarmStarted)
@@ -50,7 +57,23 @@ public class FlickeringMaterialLight : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator WhiteFlickerRoutine()
+    {
+        while (!alarmStarted)
+        {
+            lightSource.color = normalColor;
+
+            // Éteint
+            lightSource.intensity = 0.0009f;
+            yield return new WaitForSeconds(0.4f);
+
+            // Allumé faible blanc
+            lightSource.intensity = baseIntensity;
+            yield return new WaitForSeconds(0.3f);
         }
     }
 
@@ -61,12 +84,12 @@ public class FlickeringMaterialLight : MonoBehaviour
             lightSource.color = dangerColor;
 
             // Phase 1 - faible rouge
-            lightSource.intensity = 0.02f;
-            yield return new WaitForSeconds(0.1f);
+            lightSource.intensity = 0.0009f;
+            yield return new WaitForSeconds(0.5f);
 
             // Phase 2 - flash rouge plus fort
-            lightSource.intensity = 0.1f;
-            yield return new WaitForSeconds(0.1f);
+            lightSource.intensity = 0.01f;
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

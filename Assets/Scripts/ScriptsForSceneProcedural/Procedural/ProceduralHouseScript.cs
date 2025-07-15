@@ -6,8 +6,9 @@ public class ProceduralHouseScript : MonoBehaviour
 {
     public GameObject[] largeRoomModules;
     public GameObject corridorModules;
+    public GameObject CouloirDebut;
     public GameObject[] coinModules;
-    string tagRecherche = "ouverture"; // Remplace par le tag que tu veux
+    string tagRecherche = "ouverture"; 
     int nbCouloir = 50;
     int nbCorridor = 5;
     int maxnbCorridor = 5;
@@ -16,12 +17,15 @@ public class ProceduralHouseScript : MonoBehaviour
     public GameObject BigRoomCreator;
     private Stack<GameObject> corridorsEnAttente = new Stack<GameObject>();
 
+    private GameObject dernierCouloir;
+    public GameObject DoorRed;
+
     private void Start()
     {
 
 
         GameObject randomModule = largeRoomModules[Random.Range(0, largeRoomModules.Length)];
-        GameObject firstModule = Instantiate(corridorModules, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject firstModule = Instantiate(CouloirDebut, new Vector3(0, 0, 0), Quaternion.identity);
 
         corridorsEnAttente.Push(firstModule);
 
@@ -54,7 +58,7 @@ public class ProceduralHouseScript : MonoBehaviour
 
                     corridorsEnAttente.Push(corridor);
 
-
+                    dernierCouloir = corridor;
                 }
 
                 if (nbCorridor == 0)
@@ -64,11 +68,26 @@ public class ProceduralHouseScript : MonoBehaviour
                 }
             }
 
+            
+
             nbCouloir--;
 
         }
 
-        // Attente de 2 secondes après toute la génération
+        if (dernierCouloir != null)
+        {
+            foreach (Transform child in dernierCouloir.transform)
+            {
+                if (child.CompareTag(tagRecherche))
+                {
+                    // Ici tu instancies ta prefab à l'ouverture
+                    GameObject nouvellePrefab = DoorRed; // remplace par ce que tu veux instancier
+                    Instantiate(nouvellePrefab, child.position, child.rotation);
+                    break; // On ne le fait qu'une fois
+                }
+            }
+        }
+
 
 
         Debug.Log("Génération terminée. Pause de 2 secondes effectuée.");
