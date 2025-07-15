@@ -4,11 +4,11 @@
 - Active scene:
   - Name: MainGameHorror
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, DetectorPiece, ouverture, EventZone, Library, CoffreFort, BigPiece, Sole
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, DetectorPiece, ouverture, EventZone, Library, CoffreFort, BigPiece, Sole, Elevator
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: Character
-  - Tag: Player
-  - Layer: Default
+  - Name: Annabelle(Clone)
+  - Tag: Untagged
+  - Layer: Interactable
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

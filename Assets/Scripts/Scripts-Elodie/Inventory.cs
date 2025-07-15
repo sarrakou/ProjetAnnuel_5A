@@ -121,6 +121,10 @@ public class Inventory : MonoBehaviour
         {
             gameManager.CompleteQuestByName("Récupérer la clé");
         }
+        if (itemName.ToLower().Contains("annabelle"))
+        {
+            gameManager.CompleteQuestByName("D'où vient ce bruit ?");
+        }
     }
     
     // Getter pour la liste des objets (utile pour d'autres scripts)
