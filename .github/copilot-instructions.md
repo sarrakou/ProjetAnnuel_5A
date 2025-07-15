@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: Annabelle(Clone)
+  - Name: bouttonLight
   - Tag: Untagged
-  - Layer: Interactable
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

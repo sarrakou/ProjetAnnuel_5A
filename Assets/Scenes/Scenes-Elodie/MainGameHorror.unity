@@ -1850,6 +1850,81 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 8bb4dbf6445aa2c469c2e657393c39f0, type: 2}
+--- !u!1001 &1103502246
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.57573
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.57573
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.57573
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -32.559025
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.1089687
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -24.52214
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.47870374
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.53307647
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.4798255
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5063988
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.095
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -250.313
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 161.779
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      propertyPath: m_Name
+      value: bouttonLight
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2089461554}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2089461557}
+  m_SourcePrefab: {fileID: 100100000, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
 --- !u!1 &1169337876
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,6 +4126,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openAngle: 90
   speed: 2
+--- !u!1 &2089461553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c54c86c4ea5ac74a88104649fa23a4b, type: 3}
+  m_PrefabInstance: {fileID: 1103502246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2089461554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089461553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5c0b6b046ad334e825e1b1be41a735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questToComplete: "Trouver un moyen d'allumer les lumi\xE8res"
+  switchSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  showDebugLogs: 1
+--- !u!65 &2089461557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089461553}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2111468463
 GameObject:
   m_ObjectHideFlags: 0
@@ -5499,6 +5616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Interaction
       objectReference: {fileID: 0}
+    - target: {fileID: 7915586818119567647, guid: bc3d236b292344cdaa06d171a9d16191, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5969,3 +6090,4 @@ SceneRoots:
   - {fileID: 446415917622976884}
   - {fileID: 1234601042}
   - {fileID: 1343614428}
+  - {fileID: 1103502246}
