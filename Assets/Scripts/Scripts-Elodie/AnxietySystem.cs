@@ -8,7 +8,9 @@ public class AnxietySystem : MonoBehaviour
     [Header("Anxiety Settings")]
     public float anxiety = 0f;
     public float maxAnxiety = 100f;
-    public float increaseRate = 2f;
+    public float baseIncreaseRate = 0.5f; // Augmentation de base plus lente
+    public float acceleratedIncreaseRate = 4f; // Augmentation rapide quand le rythme est élevé
+    public float heartRateThreshold = 90f; // Seuil à partir duquel l'anxiété monte plus vite
 
     [Header("Camera Shake Settings")]
     public Camera playerCamera;
@@ -21,6 +23,30 @@ public class AnxietySystem : MonoBehaviour
     public float pillEffectAmount = 100f; 
     public string pillItemName = "pillule"; 
     private Inventory inventory;
+
+    [Header("Critical Danger Settings")]
+    public float criticalHeartRate = 150f; // Seuil de danger critique
+    public GameObject criticalDangerPanel; // Panel noir avec le message
+    public TMP_Text criticalDangerText; // Texte du message
+    public float normalHeartRate = 110f; // Seuil pour revenir à la normale
+    private bool isInCriticalDanger = false;
+    private bool gameWasPaused = false;
+
+    [Header("Audio Settings")]
+    public AudioSource heartbeatAudioSource; // Source audio pour les battements
+    public AudioClip heartbeatClip; // Son d'un battement de cœur
+    public float heartbeatVolumeThreshold = 85f; // Seuil où les battements deviennent audibles
+    public float maxHeartbeatVolume = 0.8f; // Volume maximum des battements
+    
+    public AudioSource breathingAudioSource; // Source audio pour la respiration
+    public AudioClip breathingClip; // Son de respiration
+    public float baseBreathingRate = 12f; // Respirations par minute au repos (normal)
+    public float breathingAccelerationThreshold = 90f; // Seuil où la respiration accélère
+    public float maxBreathingRate = 30f; // Respirations par minute maximum (stress)
+    public float breathingVolume = 0.4f; // Volume constant de la respiration
+    
+    private float lastHeartbeatTime = 0f;
+    private float lastBreathingTime = 0f;
 
     public CharacterMovement characterMovement;
 
@@ -53,16 +79,69 @@ public class AnxietySystem : MonoBehaviour
         // Initialize heart rate values
         currentHeartRate = 70f;
         targetHeartRate = 70f;
+
+        // Initialize critical danger UI
+        if (criticalDangerPanel != null)
+            criticalDangerPanel.SetActive(false);
+        
+        if (criticalDangerText != null)
+            criticalDangerText.text = "Le jeu reprendra lorsque votre rythme sera revenu à la normale";
+
+        // Setup audio sources
+        SetupAudioSources();
+    }
+
+    void SetupAudioSources()
+    {
+        // Setup heartbeat audio source
+        if (heartbeatAudioSource == null)
+        {
+            GameObject heartbeatObj = new GameObject("HeartbeatAudio");
+            heartbeatObj.transform.SetParent(transform);
+            heartbeatAudioSource = heartbeatObj.AddComponent<AudioSource>();
+        }
+        
+        heartbeatAudioSource.playOnAwake = false;
+        heartbeatAudioSource.loop = false;
+        heartbeatAudioSource.volume = 0f;
+        heartbeatAudioSource.clip = heartbeatClip;
+
+        // Setup breathing audio source
+        if (breathingAudioSource == null)
+        {
+            GameObject breathingObj = new GameObject("BreathingAudio");
+            breathingObj.transform.SetParent(transform);
+            breathingAudioSource = breathingObj.AddComponent<AudioSource>();
+        }
+        
+        breathingAudioSource.playOnAwake = false;
+        breathingAudioSource.loop = false;
+        breathingAudioSource.volume = 0f;
     }
 
     void Update()
     {
-        anxiety += increaseRate * Time.deltaTime;
+        // Calculer le taux d'augmentation de l'anxiété en fonction du rythme cardiaque
+        float currentIncreaseRate = CalculateAnxietyIncreaseRate();
+        
+        anxiety += currentIncreaseRate * Time.deltaTime;
         anxiety = Mathf.Clamp(anxiety, 0f, maxAnxiety);
 
         if (useSimulation)
         {
             SimulateHeartRate();
+        }
+
+        // Gérer les sons audio
+        UpdateAudioEffects();
+
+        // Vérifier le danger critique
+        CheckCriticalDanger();
+
+        // Si on est en danger critique, on arrête le reste du gameplay
+        if (isInCriticalDanger)
+        {
+            return;
         }
 
         if (anxiety > 70f)
@@ -83,6 +162,139 @@ public class AnxietySystem : MonoBehaviour
         }
     }
 
+    private void UpdateAudioEffects()
+    {
+        UpdateHeartbeatAudio();
+        UpdateBreathingAudio();
+    }
+
+    private void UpdateHeartbeatAudio()
+    {
+        if (heartbeatAudioSource == null || heartbeatClip == null) return;
+
+        // Calculer l'intervalle entre les battements basé sur le BPM
+        float heartbeatInterval = 60f / currentHeartRate; // Intervalle en secondes
+        
+        // Vérifier si c'est le moment de jouer un battement
+        if (Time.time - lastHeartbeatTime >= heartbeatInterval)
+        {
+            lastHeartbeatTime = Time.time;
+            
+            // Jouer le battement seulement si le rythme dépasse le seuil
+            if (currentHeartRate > heartbeatVolumeThreshold)
+            {
+                // Calculer le volume basé sur le rythme cardiaque
+                float volumeIntensity = (currentHeartRate - heartbeatVolumeThreshold) / (200f - heartbeatVolumeThreshold);
+                volumeIntensity = Mathf.Clamp01(volumeIntensity);
+                
+                heartbeatAudioSource.volume = volumeIntensity * maxHeartbeatVolume;
+                heartbeatAudioSource.pitch = 1f + (volumeIntensity * 0.3f); // Légère augmentation du pitch
+                heartbeatAudioSource.Play();
+            }
+        }
+    }
+
+    private void UpdateBreathingAudio()
+    {
+        if (breathingAudioSource == null)
+        {
+            Debug.LogWarning("breathingAudioSource is null!");
+            return;
+        }
+        
+        if (breathingClip == null)
+        {
+            Debug.LogWarning("breathingClip is null! Assigne ton clip audio dans l'inspector.");
+            return;
+        }
+
+        // Calculer la fréquence de respiration actuelle
+        float currentBreathingRate = baseBreathingRate; // Commencer par la fréquence de base
+        
+        // Si le rythme cardiaque dépasse le seuil, accélérer la respiration
+        if (currentHeartRate > breathingAccelerationThreshold)
+        {
+            float accelerationFactor = (currentHeartRate - breathingAccelerationThreshold) / (200f - breathingAccelerationThreshold);
+            accelerationFactor = Mathf.Clamp01(accelerationFactor);
+            currentBreathingRate = Mathf.Lerp(baseBreathingRate, maxBreathingRate, accelerationFactor);
+        }
+        
+        // Calculer l'intervalle de respiration
+        float breathingInterval = 60f / currentBreathingRate; // Intervalle en secondes
+        
+        // Vérifier si c'est le moment de jouer une respiration
+        if (Time.time - lastBreathingTime >= breathingInterval)
+        {
+            lastBreathingTime = Time.time;
+            
+            breathingAudioSource.volume = breathingVolume;
+            breathingAudioSource.clip = breathingClip;
+            breathingAudioSource.pitch = 0.8f; // Pitch plus bas pour ralentir le son
+            
+            breathingAudioSource.Play();
+            
+            Debug.Log($"Playing breathing - HR: {currentHeartRate}, Rate: {currentBreathingRate}/min, Interval: {breathingInterval}s");
+        }
+    }
+
+    private float CalculateAnxietyIncreaseRate()
+    {
+        // Si le rythme cardiaque dépasse le seuil, augmentation accélérée
+        if (currentHeartRate > heartRateThreshold)
+        {
+            // Plus le rythme cardiaque est élevé, plus l'anxiété monte vite
+            float exceedAmount = currentHeartRate - heartRateThreshold;
+            float multiplier = 1f + (exceedAmount / 50f); // Multiplier qui augmente progressivement
+            return baseIncreaseRate + (acceleratedIncreaseRate * multiplier);
+        }
+        else
+        {
+            // Augmentation normale (plus lente)
+            return baseIncreaseRate;
+        }
+    }
+
+    private void CheckCriticalDanger()
+    {
+        if (!isInCriticalDanger && currentHeartRate >= criticalHeartRate)
+        {
+            // Entrer en danger critique
+            isInCriticalDanger = true;
+            gameWasPaused = Time.timeScale > 0;
+            
+            // Pause le jeu
+            Time.timeScale = 0f;
+            
+            // Afficher l'écran noir
+            if (criticalDangerPanel != null)
+                criticalDangerPanel.SetActive(true);
+            
+            // Désactiver les contrôles du joueur
+            if (characterMovement != null)
+                characterMovement.enabled = false;
+            
+            Debug.Log("DANGER CRITIQUE! Rythme cardiaque trop élevé: " + currentHeartRate);
+        }
+        else if (isInCriticalDanger && currentHeartRate <= normalHeartRate)
+        {
+            // Sortir du danger critique
+            isInCriticalDanger = false;
+            
+            // Reprendre le jeu si il était en cours
+            if (gameWasPaused)
+                Time.timeScale = 1f;
+            
+            // Masquer l'écran noir
+            if (criticalDangerPanel != null)
+                criticalDangerPanel.SetActive(false);
+            
+            // Réactiver les contrôles du joueur
+            if (characterMovement != null)
+                characterMovement.enabled = true;
+            
+            Debug.Log("Retour à la normale. Rythme cardiaque: " + currentHeartRate);
+        }
+    }
 
     private void OnEnable()
     {
@@ -181,6 +393,4 @@ public class AnxietySystem : MonoBehaviour
             Debug.Log("Pas de pilule dans l'inventaire !");
         }
     }
-
-    
 }
