@@ -582,6 +582,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 203890806818757094}
+  - {fileID: 9163590915505435992}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &1938574455290635429
@@ -2699,6 +2700,71 @@ Transform:
   - {fileID: 2686076331363355220}
   m_Father: {fileID: 1857730830769237099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7344085707471347841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9163590915505435992}
+  - component: {fileID: 4350193735899961995}
+  m_Layer: 0
+  m_Name: SoundRandom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9163590915505435992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344085707471347841}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6896420643509874010}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4350193735899961995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344085707471347841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c48f2066e7900a43a1770849602f825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 203890806818757094}
+  soundClips:
+  - {fileID: 8300000, guid: a9c0ed75e661b494f8fb39e33e5cdeb3, type: 3}
+  - {fileID: 8300000, guid: 571134c4548131b46a57063401845d15, type: 3}
+  - {fileID: 8300000, guid: 77a8bdacc57cc1d49b921cce7df23089, type: 3}
+  - {fileID: 8300000, guid: 35bbc1b185397f34fabeed773f859e8a, type: 3}
+  - {fileID: 8300000, guid: 8b731524aa4232445af069f7e3afa958, type: 3}
+  - {fileID: 8300000, guid: 4127cecbc1bb001478bfe68bae79c1b6, type: 3}
+  - {fileID: 8300000, guid: d5ce2e3a553b15846b5153c721c64731, type: 3}
+  - {fileID: 8300000, guid: 315af92483cbbdb4ea5b983a6ca80832, type: 3}
+  - {fileID: 8300000, guid: 0f5de0997c40931498fce8021a04ab1d, type: 3}
+  - {fileID: 8300000, guid: 007429879e94081448a6befeac78c760, type: 3}
+  - {fileID: 8300000, guid: e20f4a068a3584c48b151f2315a7b05c, type: 3}
+  - {fileID: 8300000, guid: 007429879e94081448a6befeac78c760, type: 3}
+  - {fileID: 8300000, guid: 5b2099b43ea6b004289a51e8f9031aca, type: 3}
+  - {fileID: 8300000, guid: e2a401c0fa472fe4ba4d85151a28c6ec, type: 3}
+  minDelay: 2
+  maxDelay: 5
+  distanceFromPlayer: 8
+  volume: 1
+  stereoChance: 0.2
 --- !u!1 &7394250167194241953
 GameObject:
   m_ObjectHideFlags: 0

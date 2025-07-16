@@ -837,6 +837,7 @@ MonoBehaviour:
   - {fileID: 6304075517466915764, guid: 753f1ab8ffa8403419e240e0d89c3e9d, type: 3}
   BigRoomCreator: {fileID: 228480320}
   DoorRed: {fileID: 8286380796852904986, guid: 6b9b52187ef80a0408dc783a0c08673b, type: 3}
+  dollPrefab: {fileID: 5473671633468713300, guid: 3a3e3f1165d5c294c9da0e64d9515de5, type: 3}
 --- !u!1 &728953397
 GameObject:
   m_ObjectHideFlags: 0

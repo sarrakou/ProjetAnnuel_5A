@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +19,8 @@ public class ProceduralHouseScript : MonoBehaviour
 
     private GameObject dernierCouloir;
     public GameObject DoorRed;
+    public GameObject dollPrefab;
+
 
     private void Start()
     {
@@ -80,7 +82,7 @@ public class ProceduralHouseScript : MonoBehaviour
             {
                 if (child.CompareTag(tagRecherche))
                 {
-                    // Ici tu instancies ta prefab � l'ouverture
+                    // Ici tu instancies ta prefab à l'ouverture
                     GameObject nouvellePrefab = DoorRed; // remplace par ce que tu veux instancier
                     Instantiate(nouvellePrefab, child.position, child.rotation);
                     break; // On ne le fait qu'une fois
@@ -90,9 +92,24 @@ public class ProceduralHouseScript : MonoBehaviour
 
 
 
-        Debug.Log("G�n�ration termin�e. Pause de 2 secondes effectu�e.");
+        Debug.Log("Génération terminée. Pause de 2 secondes effectuée.");
 
         BigRoomCreator.GetComponent<CreatorBigRoom>().createBigRoom();
+
+        // Spawn de la poupée dans un point "DollSpot"
+        GameObject[] dollSpots = GameObject.FindGameObjectsWithTag("DollSpot");
+
+        if (dollSpots.Length > 0)
+        {
+            GameObject chosenSpot = dollSpots[Random.Range(0, dollSpots.Length)];
+            Instantiate(dollPrefab, chosenSpot.transform.position, chosenSpot.transform.rotation);
+            Debug.Log("👻 Poupée instanciée à " + chosenSpot.name);
+        }
+        else
+        {
+            Debug.LogWarning("Aucun point de poupée (tag DollSpot) trouvé !");
+        }
+
 
     }
 }

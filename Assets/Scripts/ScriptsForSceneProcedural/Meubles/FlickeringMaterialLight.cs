@@ -7,12 +7,17 @@ public class FlickeringMaterialLight : MonoBehaviour
     public Light lightSource;
 
     public Color normalColor = Color.white;
-    public Color dangerColor = new Color(0.509804f, 0.1f, 0.1f);
+    public Color dangerColor = new Color(130f / 255f, 26f / 255f, 26f / 255f); // #821A1A
+
 
     public float baseIntensity = 0.002f;
     private bool alarmStarted = false;
 
     private bool flickerStarted = false;
+
+    public AudioSource audioSource;
+    public AudioClip flickerSound;
+    public AudioClip alarmSound;
 
 
     void Start()
@@ -67,29 +72,51 @@ public class FlickeringMaterialLight : MonoBehaviour
         {
             lightSource.color = normalColor;
 
-            // Éteint
-            lightSource.intensity = 0.0009f;
-            yield return new WaitForSeconds(0.4f);
+            // OFF (flicker)
+            lightSource.intensity = 0f;
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.25f));
 
-            // Allumé faible blanc
+            // ON
             lightSource.intensity = baseIntensity;
-            yield return new WaitForSeconds(0.3f);
+
+            if (flickerSound != null && audioSource != null)
+            {
+                audioSource.clip = flickerSound;
+                audioSource.loop = false;
+                audioSource.Play();
+            }
+
+            yield return new WaitForSeconds(Random.Range(0.15f, 0.3f));
         }
     }
+
 
     IEnumerator AlarmRoutine()
     {
         while (true)
         {
+            if (alarmSound != null && audioSource != null && !audioSource.isPlaying)
+            {
+                audioSource.clip = alarmSound;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+
             lightSource.color = dangerColor;
 
-            // Phase 1 - faible rouge
-            lightSource.intensity = 0.0009f;
-            yield return new WaitForSeconds(0.5f);
+            // Effet clignotant irrégulier
+            float offTime = Random.Range(0.1f, 0.3f);
+            float onTime = Random.Range(0.1f, 0.5f);
+            float intensity = Random.Range(0.008f, 0.02f); // Variabilité lumineuse
 
-            // Phase 2 - flash rouge plus fort
-            lightSource.intensity = 0.01f;
-            yield return new WaitForSeconds(0.5f);
+            // OFF
+            lightSource.intensity = 0f;
+            yield return new WaitForSeconds(offTime);
+
+            // ON
+            lightSource.intensity = intensity;
+            yield return new WaitForSeconds(onTime);
         }
     }
+
 }
