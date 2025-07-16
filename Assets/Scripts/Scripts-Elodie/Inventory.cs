@@ -1,10 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
     public GameObject inventoryCanvas; 
     private bool isInventoryOpen = false;
+    
+    [Header("Image Display System")]
+    public GameObject imageDisplayCanvas; // Canvas pour afficher les images
+    public Image displayImage; // Component Image qui va afficher l'image
+    public float imageDisplayDuration = 3f; // Durée d'affichage de l'image
+    public string imageResourcePath = "Images/"; // Chemin vers les images dans Resources
+    
+    [Header("Objects with Images")]
+    public List<string> objectsWithImages = new List<string>(); // Liste des objets qui ont une image à afficher
     
     // Liste des objets dans l'inventaire
     private List<string> items = new List<string>();
@@ -18,9 +28,15 @@ public class Inventory : MonoBehaviour
         {
             inventoryCanvas.SetActive(false);
         }
+        
+        // Désactiver le canvas d'affichage des images au démarrage
+        if (imageDisplayCanvas != null)
+        {
+            imageDisplayCanvas.SetActive(false);
+        }
+        
         gameManager = FindObjectOfType<GameManager>();
         
-        // Ne pas afficher l'inventaire au démarrage
         Debug.Log("🎒 Inventaire initialisé. Appuyez sur 'I' pour l'ouvrir.");
     }
 
@@ -34,12 +50,20 @@ public class Inventory : MonoBehaviour
                 inventoryCanvas.SetActive(isInventoryOpen);
             }
             
-            // Afficher l'inventaire dans la console quand on l'ouvre
             DisplayInventory();
+        }
+        
+        // Fermer l'affichage d'image avec Echap ou clic
+        if (imageDisplayCanvas != null && imageDisplayCanvas.activeInHierarchy)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(0))
+            {
+                HideItemImage();
+            }
         }
     }
     
-    // Ajouter un objet à l'inventaire avec vérification de quête
+    // Ajouter un objet à l'inventaire avec vérification de quête et affichage d'image
     public void AddItem(string itemName)
     {
         if (!items.Contains(itemName))
@@ -52,6 +76,10 @@ public class Inventory : MonoBehaviour
             
             items.Add(itemName);
             Debug.Log($"✅ Objet ajouté à l'inventaire : {itemName}");
+            
+            // Afficher l'image de l'objet récupéré
+            ShowItemImage(itemName);
+            
             DisplayInventory();
             
             // Vérifier si cet objet complète une quête
@@ -61,6 +89,74 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log($"⚠️ Objet déjà dans l'inventaire : {itemName}");
         }
+    }
+    
+    // Afficher l'image correspondant à l'objet récupéré
+    private void ShowItemImage(string itemName)
+    {
+        // Vérifier si cet objet doit afficher une image
+        if (!ShouldShowImage(itemName))
+        {
+            Debug.Log($"📷 Pas d'image configurée pour : {itemName}");
+            return;
+        }
+        
+        if (imageDisplayCanvas == null || displayImage == null)
+        {
+            Debug.LogWarning("⚠️ Canvas ou Image component manquant pour l'affichage !");
+            return;
+        }
+        
+        // Charger l'image depuis Resources
+        string imagePath = imageResourcePath + itemName;
+        Sprite itemSprite = Resources.Load<Sprite>(imagePath);
+        
+        if (itemSprite != null)
+        {
+            // Afficher l'image
+            displayImage.sprite = itemSprite;
+            imageDisplayCanvas.SetActive(true);
+            
+            Debug.Log($"📷 Image affichée pour : {itemName}");
+            
+            // Cacher automatiquement après la durée définie
+            Invoke(nameof(HideItemImage), imageDisplayDuration);
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ Image non trouvée à : Resources/{imagePath}");
+            
+            // Fallback : afficher le canvas avec une image par défaut ou vide
+            imageDisplayCanvas.SetActive(true);
+            Invoke(nameof(HideItemImage), imageDisplayDuration);
+        }
+    }
+    
+    // Vérifier si un objet doit afficher une image
+    private bool ShouldShowImage(string itemName)
+    {
+        // Vérifier si l'objet est dans la liste des objets avec images
+        foreach (string objectWithImage in objectsWithImages)
+        {
+            if (string.Equals(itemName, objectWithImage, System.StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Cacher l'affichage de l'image
+    private void HideItemImage()
+    {
+        if (imageDisplayCanvas != null)
+        {
+            imageDisplayCanvas.SetActive(false);
+            Debug.Log("📷 Image cachée");
+        }
+        
+        // Annuler l'invoke automatique si l'utilisateur ferme manuellement
+        CancelInvoke(nameof(HideItemImage));
     }
     
     // Vérifier si le joueur peut prendre un objet selon les quêtes disponibles
@@ -229,19 +325,18 @@ public class Inventory : MonoBehaviour
         }
     }
     
-    // Méthode publique pour tester si un objet peut être pris (utilisable par d'autres scripts)
+   
     public bool CanPlayerTakeItem(string itemName)
     {
         return CanTakeItem(itemName);
     }
     
-    // Getter pour la liste des objets (utile pour d'autres scripts)
     public List<string> GetItems()
     {
-        return new List<string>(items); // Retourne une copie pour éviter les modifications externes
+        return new List<string>(items); 
     }
     
-    // Méthode pour obtenir des messages d'aide sur pourquoi un objet ne peut pas être pris
+    
     public string GetItemRestrictionMessage(string itemName)
     {
         if (CanTakeItem(itemName)) return "";

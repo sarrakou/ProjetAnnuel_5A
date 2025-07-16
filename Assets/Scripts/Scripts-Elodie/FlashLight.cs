@@ -80,25 +80,47 @@ public class FlashLight : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (inventory != null && inventory.HasItem("pile"))
+            // Trouver la première pile dans l'inventaire
+            string batteryItem = FindBatteryInInventory();
+            
+            if (batteryItem != null)
             {
                 currentBatteryLife += rechargeAmount;
                 currentBatteryLife = Mathf.Min(currentBatteryLife, maxBatteryLife);
 
-                inventory.RemoveItem("pile");
-                Debug.Log(" Pile utilisée. Batterie rechargée !");
+                inventory.RemoveItem(batteryItem);
+                Debug.Log($"🔋 {batteryItem} utilisée. Batterie rechargée !");
 
                 if (flashLight != null && !flashLight.enabled)
                 {
                     flashLight.enabled = true;
-                    Debug.Log(" Lampe rallumée automatiquement !");
+                    Debug.Log("💡 Lampe rallumée automatiquement !");
                 }
             }
             else
             {
-                Debug.Log(" Pas de pile dans l'inventaire !");
+                Debug.Log("❌ Pas de pile dans l'inventaire !");
             }
         }
+    }
+
+    // Méthode pour trouver n'importe quelle pile dans l'inventaire
+    private string FindBatteryInInventory()
+    {
+        if (inventory == null) return null;
+        
+        var items = inventory.GetItems();
+        
+        foreach (string item in items)
+        {
+            // Vérifier si l'objet contient "pile" (insensible à la casse)
+            if (item.ToLower().Contains("pile"))
+            {
+                return item; // Retourner le nom exact de la pile trouvée
+            }
+        }
+        
+        return null; // Aucune pile trouvée
     }
 
     void HandleDarknessMusic()
