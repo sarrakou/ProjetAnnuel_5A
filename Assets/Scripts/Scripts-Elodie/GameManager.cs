@@ -30,16 +30,26 @@ public class GameManager : MonoBehaviour
     [Header("Final Quest Configuration")]
     public GameObject finalQuestPrefab; // Prefab à activer pour la dernière quête
     public Transform finalQuestSpawnPoint; // Point où spawner le prefab (optionnel)
+    [Header("Black Screen Configuration")]
+    public float blackScreenFadeDuration = 1f; // Durée du fade vers le noir
+    public GameObject blackScreenUI; // UI Panel noir (optionnel)
+    [Header("End Camera Configuration")]
+    public GameObject characterPrefab; // Le prefab du joueur à désactiver
+    public string victoryPrefabPath = "cercueil"; // Chemin du prefab cercueil dans Resources
+    public float victoryDezoomHeight = 20f; // Hauteur finale de la caméra
+    public float victoryDezoomDuration = 3f; // Durée de l'animation
+    public AnimationCurve dezoomCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // Courbe d'animation
 
-    
-    [Header("End Game Configuration")]
+    private GameObject spawnedVictoryPrefab;
+    private Camera victoryCamera;
+    [Header("Victory Game Configuration")]
     public GameObject gameOverUI; // UI à afficher pour Game Over
     public GameObject victoryUI; // UI à afficher pour la victoire
     public AudioClip gameOverSound; // Son de Game Over
     public AudioClip victorySound; // Son de victoire
     public string gameOverSoundPath = "Audio/GameOver"; // Chemin Resources pour Game Over
     public string victorySoundPath = "Audio/Victory";
-// Variables privées à ajouter
+
     private GameObject spawnedFinalQuestObject;
     private int finalQuestIndex = 10;
     private LightManager lightManager;
@@ -178,31 +188,455 @@ public class GameManager : MonoBehaviour
 
     private void TriggerGameOver()
     {
-        Debug.Log("💀 GAME OVER - Vous avez appelé la police mais il était trop tard...");
+        Debug.Log("💀 DÉFAITE - Vous avez appelé la police mais il était trop tard...");
     
-   
-        if (gameOverUI != null)
+       
+        AnxietySystem anxietyManager = FindObjectOfType<AnxietySystem>();
+        if (anxietyManager != null)
         {
-            gameOverUI.SetActive(true);
-            Debug.Log("🖥️ UI Game Over activée");
+            anxietyManager.enabled = false;
+            Debug.Log("💔 AnxietySystem désactivé");
         }
     
-       
-    }
-
-
-    private void TriggerVictory()
+ 
+    GameObject victoryPrefab = Resources.Load<GameObject>(victoryPrefabPath);
+    if (victoryPrefab != null)
     {
-        Debug.Log("🏆 VICTOIRE - Vous avez réussi à vous échapper à temps !");
-    
+        Vector3 spawnPosition = player != null ? player.position : Vector3.zero;
+        spawnedVictoryPrefab = Instantiate(victoryPrefab, spawnPosition, Quaternion.identity);
+        
        
-        if (victoryUI != null)
+        Light victoryLight = spawnedVictoryPrefab.GetComponentInChildren<Light>();
+        if (victoryLight != null)
         {
-            victoryUI.SetActive(true);
-            Debug.Log("🖥️ UI Victoire activée");
+            victoryLight.enabled = true;
+            Debug.Log("💡 Lumière du cercueil activée");
         }
         
+   
+        victoryCamera = spawnedVictoryPrefab.GetComponentInChildren<Camera>();
+        
+        if (victoryCamera != null)
+        {
+
+            victoryCamera.enabled = true;
+            
+          
+            Camera playerCamera = Camera.main;
+            if (playerCamera == null)
+            {
+                playerCamera = FindObjectOfType<Camera>();
+            }
+            if (playerCamera != null && playerCamera != victoryCamera)
+            {
+                playerCamera.enabled = false;
+                Debug.Log("📹 Caméra du joueur désactivée");
+            }
+            
+           
+            if (characterPrefab != null)
+            {
+                characterPrefab.SetActive(false);
+                Debug.Log("🚶‍♂️ Prefab joueur désactivé");
+            }
+            else
+            {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                {
+                    playerObj.SetActive(false);
+                    Debug.Log("🚶‍♂️ Joueur trouvé par tag et désactivé");
+                }
+            }
+            
+          
+            StartCoroutine(DefeatCameraRise());
+            Debug.Log($"📹 Animation démarrée");
+        }
     }
+    
+       
+    }
+
+private void TriggerVictory() // VICTOIRE - avec fade vers le noir
+{
+    Debug.Log("🏆 VICTOIRE - Vous avez réussi à vous échapper à temps !");
+    
+    
+    AnxietySystem anxietyManager = FindObjectOfType<AnxietySystem>();
+    if (anxietyManager != null)
+    {
+        anxietyManager.enabled = false;
+        Debug.Log("💔 AnxietySystem désactivé");
+    }
+    
+
+    if (characterPrefab != null)
+    {
+        characterPrefab.SetActive(false);
+        Debug.Log("🚶‍♂️ Prefab joueur désactivé");
+    }
+    else
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            playerObj.SetActive(false);
+            Debug.Log("🚶‍♂️ Joueur trouvé par tag et désactivé");
+        }
+    }
+    
+  
+    StartCoroutine(VictoryFadeToBlack());
+}
+
+private System.Collections.IEnumerator VictoryFadeToBlack()
+{
+  
+    if (blackScreenUI != null)
+    {
+        blackScreenUI.SetActive(true);
+        
+        UnityEngine.UI.Image blackImage = blackScreenUI.GetComponent<UnityEngine.UI.Image>();
+        if (blackImage != null)
+        {
+            Color startColor = blackImage.color;
+            startColor.a = 0f;
+            blackImage.color = startColor;
+            
+            float elapsedTime = 0f;
+            while (elapsedTime < blackScreenFadeDuration)
+            {
+                float alpha = elapsedTime / blackScreenFadeDuration;
+                Color newColor = startColor;
+                newColor.a = alpha;
+                blackImage.color = newColor;
+                
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            startColor.a = 1f;
+            blackImage.color = startColor;
+        }
+        
+        Debug.Log("⚫ Écran noir activé pour la victoire");
+    }
+    else
+    {
+        yield return StartCoroutine(CreateAndFadeBlackScreen());
+    }
+    
+  
+    yield return new WaitForSeconds(2f);
+    
+
+    CreateVictoryText();
+}
+
+private void CreateVictoryText()
+{
+    Debug.Log("🎉 Création du texte VICTOIRE!");
+    
+    // Créer un Canvas pour le texte de victoire
+    GameObject victoryCanvas = new GameObject("VictoryTextCanvas");
+    Canvas canvas = victoryCanvas.AddComponent<Canvas>();
+    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+    canvas.sortingOrder = 1100;
+    
+    victoryCanvas.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+    
+
+    GameObject textObj = new GameObject("VictoryText");
+    textObj.transform.SetParent(victoryCanvas.transform, false);
+    
+    UnityEngine.UI.Text victoryText = textObj.AddComponent<UnityEngine.UI.Text>();
+    victoryText.text = "VICTOIRE!";
+    victoryText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+    victoryText.fontSize = 72;
+    victoryText.color = Color.white;
+    victoryText.alignment = TextAnchor.MiddleCenter;
+    
+    RectTransform textRect = victoryText.rectTransform;
+    textRect.anchorMin = Vector2.zero;
+    textRect.anchorMax = Vector2.one;
+    textRect.offsetMin = Vector2.zero;
+    textRect.offsetMax = Vector2.zero;
+    
+    
+    StartCoroutine(FadeInText(victoryText));
+    
+    Debug.Log("✅ Texte VICTOIRE! créé et fade démarré");
+}
+
+private void ActivateVictoryUI()
+{
+    if (victoryUI != null)
+    {
+        try
+        {
+           
+            victoryUI.SetActive(true);
+            
+          
+            Transform current = victoryUI.transform;
+            while (current != null)
+            {
+                if (!current.gameObject.activeSelf)
+                {
+                    current.gameObject.SetActive(true);
+                    Debug.Log($"🔧 Activé: {current.name}");
+                }
+                current = current.parent;
+            }
+            
+            Debug.Log("✅ UI Victoire activée avec succès");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"❌ Erreur lors de l'activation de l'UI: {e.Message}");
+            CreateEmergencyVictoryUI();
+        }
+    }
+    else
+    {
+        Debug.LogWarning("⚠️ victoryUI est null, création automatique...");
+        CreateEmergencyVictoryUI();
+    }
+}
+
+private void CreateEmergencyVictoryUI()
+{
+    Debug.Log("🚨 Création d'un UI de victoire d'urgence");
+    
+  
+    GameObject canvasObj = new GameObject("VictoryCanvas");
+    Canvas canvas = canvasObj.AddComponent<Canvas>();
+    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+    canvas.sortingOrder = 100;
+    
+    canvasObj.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+    
+ 
+    GameObject panelObj = new GameObject("VictoryPanel");
+    panelObj.transform.SetParent(canvasObj.transform, false);
+    
+    UnityEngine.UI.Image panelImage = panelObj.AddComponent<UnityEngine.UI.Image>();
+    panelImage.color = new Color(0, 0, 0, 0.7f);
+    
+    RectTransform panelRect = panelImage.rectTransform;
+    panelRect.anchorMin = Vector2.zero;
+    panelRect.anchorMax = Vector2.one;
+    panelRect.offsetMin = Vector2.zero;
+    panelRect.offsetMax = Vector2.zero;
+    
+    
+    GameObject textObj = new GameObject("VictoryText");
+    textObj.transform.SetParent(panelObj.transform, false);
+    
+    UnityEngine.UI.Text victoryText = textObj.AddComponent<UnityEngine.UI.Text>();
+    victoryText.text = "VICTOIRE !";
+    victoryText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+    victoryText.fontSize = 72;
+    victoryText.color = Color.white;
+    victoryText.alignment = TextAnchor.MiddleCenter;
+    
+    RectTransform textRect = victoryText.rectTransform;
+    textRect.anchorMin = Vector2.zero;
+    textRect.anchorMax = Vector2.one;
+    textRect.offsetMin = Vector2.zero;
+    textRect.offsetMax = Vector2.zero;
+    
+    Debug.Log("✅ UI de victoire d'urgence créé");
+}
+private System.Collections.IEnumerator DefeatCameraRise()
+{
+    if (victoryCamera == null) yield break;
+    
+  
+    Vector3 startPosition = victoryCamera.transform.position;
+    Vector3 endPosition = new Vector3(startPosition.x, startPosition.y + victoryDezoomHeight, startPosition.z);
+    
+    Debug.Log($"🎬 Début de la montée de la caméra de {startPosition.y:F1} vers {endPosition.y:F1}");
+    
+    float elapsedTime = 0f;
+    bool fadeStarted = false;
+    
+    while (elapsedTime < victoryDezoomDuration)
+    {
+        float progress = elapsedTime / victoryDezoomDuration;
+        float curveValue = dezoomCurve.Evaluate(progress);
+        
+       
+        Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, curveValue);
+        victoryCamera.transform.position = currentPosition;
+        
+      if (!fadeStarted && progress >= 0.3f)
+        {
+            fadeStarted = true;
+            Debug.Log("🎬 Début du fade vers le noir (30% de la montée)");
+            StartCoroutine(FadeToBlack());
+        }
+        
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+    
+    
+    victoryCamera.transform.position = endPosition;
+    
+    Debug.Log("🎬 Montée de la caméra terminée");
+    
+   
+    if (!fadeStarted)
+    {
+        StartCoroutine(FadeToBlack());
+    }
+}
+
+public void CleanupVictoryPrefab()
+{
+    if (spawnedVictoryPrefab != null)
+    {
+        Destroy(spawnedVictoryPrefab);
+        spawnedVictoryPrefab = null;
+        victoryCamera = null;
+        Debug.Log("🗑️ Prefab cercueil supprimé");
+    }
+}
+private System.Collections.IEnumerator FadeToBlack()
+{
+    if (blackScreenUI != null)
+    {
+        blackScreenUI.SetActive(true);
+        
+        UnityEngine.UI.Image blackImage = blackScreenUI.GetComponent<UnityEngine.UI.Image>();
+        if (blackImage != null)
+        {
+            Color startColor = blackImage.color;
+            startColor.a = 0f;
+            blackImage.color = startColor;
+            
+            float elapsedTime = 0f;
+            while (elapsedTime < blackScreenFadeDuration)
+            {
+                float alpha = elapsedTime / blackScreenFadeDuration;
+                Color newColor = startColor;
+                newColor.a = alpha;
+                blackImage.color = newColor;
+                
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            startColor.a = 1f;
+            blackImage.color = startColor;
+        }
+        
+        Debug.Log("⚫ Écran noir activé");
+    }
+    else
+    {
+        yield return StartCoroutine(CreateAndFadeBlackScreen());
+    }
+    
+    
+    yield return new WaitForSeconds(5f);
+    
+   
+    if (spawnedVictoryPrefab != null)
+    {
+        UnityEngine.UI.Text victoryText = spawnedVictoryPrefab.GetComponentInChildren<UnityEngine.UI.Text>();
+        if (victoryText != null)
+        {
+            Debug.Log("📝 Texte trouvé dans le prefab, début du fade in");
+            yield return StartCoroutine(FadeInText(victoryText));
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Aucun texte trouvé dans le prefab cercueil");
+        }
+    }
+ 
+    if (victoryUI != null)
+    {
+        victoryUI.SetActive(true);
+        Debug.Log("✅ UI Victoire de fallback activée");
+    }
+}
+
+private System.Collections.IEnumerator FadeInText(UnityEngine.UI.Text textComponent)
+{
+  
+    textComponent.gameObject.SetActive(true);
+    
+
+    Color textColor = textComponent.color;
+    textColor.a = 0f;
+    textComponent.color = textColor;
+    
+    Debug.Log($"📝 Fade in du texte: '{textComponent.text}'");
+    
+    float fadeDuration = 2f; 
+    float elapsedTime = 0f;
+    
+    while (elapsedTime < fadeDuration)
+    {
+        float alpha = elapsedTime / fadeDuration;
+        Color newColor = textColor;
+        newColor.a = alpha;
+        textComponent.color = newColor;
+        
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+    
+    
+    textColor.a = 1f;
+    textComponent.color = textColor;
+    
+    Debug.Log("✅ Fade in du texte terminé");
+}
+private System.Collections.IEnumerator CreateAndFadeBlackScreen()
+{
+   
+    GameObject blackScreenCanvas = new GameObject("BlackScreenCanvas");
+    Canvas canvas = blackScreenCanvas.AddComponent<Canvas>();
+    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+    canvas.sortingOrder = 1000; 
+    
+    blackScreenCanvas.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+    
+    
+    GameObject blackPanel = new GameObject("BlackPanel");
+    blackPanel.transform.SetParent(blackScreenCanvas.transform, false);
+    
+    UnityEngine.UI.Image blackImage = blackPanel.AddComponent<UnityEngine.UI.Image>();
+    blackImage.color = new Color(0, 0, 0, 0);
+    
+    
+    RectTransform rectTransform = blackImage.rectTransform;
+    rectTransform.anchorMin = Vector2.zero;
+    rectTransform.anchorMax = Vector2.one;
+    rectTransform.offsetMin = Vector2.zero;
+    rectTransform.offsetMax = Vector2.zero;
+    
+   
+    float elapsedTime = 0f;
+    while (elapsedTime < blackScreenFadeDuration)
+    {
+        float alpha = elapsedTime / blackScreenFadeDuration;
+        blackImage.color = new Color(0, 0, 0, alpha);
+        
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+    
+   
+    blackImage.color = Color.black;
+    
+    Debug.Log("⚫ Écran noir créé et fade terminé");
+}
 
     void CheckPhoneDistance()
     {
@@ -653,12 +1087,14 @@ public void RemoveFinalQuestPrefab()
         {
             Destroy(spawnedDoll);
         }
-    
+
         if (spawnedFinalQuestObject != null)
         {
             Destroy(spawnedFinalQuestObject);
         }
     
+       
+
         StopPhoneRinging();
     }
 }

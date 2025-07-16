@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 6244041130077954019}
   - component: {fileID: 8179183662564826889}
   - component: {fileID: 6576362059755730047}
+  - component: {fileID: 7095700414925273639}
+  - component: {fileID: 3009850186767014396}
+  - component: {fileID: 7842467565418488396}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -62,7 +65,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e5149c271f44291aa64c4645200b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPhobia: 1
   spiderCanvas: {fileID: 5289582543861298705, guid: 437b8706a310e4e57bbf1abb476dee4c, type: 3}
+  anxietySystem: {fileID: 0}
 --- !u!114 &8253499643237917598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +94,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quests: []
+  dollPrefabResourcePath: annabelle
+  dollAudioClip: {fileID: 8300000, guid: 5b0b620a912a7d84985364225d1155bf, type: 3}
+  dollAudioResourcePath: Audios/babycrying
+  closedGameObject: {fileID: 0}
+  claustrophobiaActiveDuration: 10
+  phoneTransform: {fileID: 0}
+  phoneRingClip: {fileID: 8300000, guid: ff3d77861429d53418c69b0e86245d59, type: 3}
+  phoneRingResourcePath: Audios/Ring
+  phoneRingDistance: 30
+  phoneCheckInterval: 1
+  audioSource: {fileID: 0}
+  phoneAudioSource: {fileID: 0}
+  dollAudioVolume: 1
+  phoneRingVolume: 0.8
+  finalQuestPrefab: {fileID: 0}
+  finalQuestSpawnPoint: {fileID: 0}
+  characterPrefab: {fileID: 0}
+  victoryPrefabPath: cercueil
+  victoryDezoomHeight: 10
+  victoryDezoomDuration: 3
+  dezoomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.2864584
+      value: 0.05191011
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gameOverUI: {fileID: 0}
+  victoryUI: {fileID: 0}
+  gameOverSound: {fileID: 0}
+  victorySound: {fileID: 0}
+  gameOverSoundPath: Audio/GameOver
+  victorySoundPath: Audio/Victory
 --- !u!114 &8179183662564826889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,8 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractorSource: {fileID: 0}
-  InteractRange: 1.5
-  SphereRadius: 0.3
+  InteractRange: 5
+  SphereRadius: 0.5
   interactPromptUI: {fileID: 0}
 --- !u!114 &6576362059755730047
 MonoBehaviour:
@@ -135,3 +190,84 @@ MonoBehaviour:
   correctCode: 1998
   maxCodeLength: 4
   targetObject: {fileID: 0}
+--- !u!114 &7095700414925273639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461398162351272817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de1614a0dc664e4a8afdf4f5d245861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefabName: ghostGirl
+  monsterSound: {fileID: 8300000, guid: 8b731524aa4232445af069f7e3afa958, type: 3}
+  minTimeBetweenAppearances: 40
+  maxTimeBetweenAppearances: 90
+  distanceBehindPlayer: 5
+  positionVariation: 2
+  monsterLifetime: 10
+  chanceMonsterWithSound: 40
+  chanceMonsterWithoutSound: 30
+  chanceSoundOnly: 30
+  soundVolume: 0.8
+--- !u!114 &3009850186767014396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461398162351272817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b3a7e1191e3b842a775070af2b585e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPanelResourcePath: Inventory/InventoryPanel
+  itemPrefabResourcePath: Inventory/ItemPrefab
+  inventoryPanel: {fileID: 0}
+  itemContainer: {fileID: 0}
+  itemPrefab: {fileID: 6229774236551383861, guid: bd07b3450e38ab340b1430fdb129cbbf, type: 3}
+  notificationText: {fileID: 4794251645107071982, guid: a90b1a1c9c06be7498e109c3b88f818e, type: 3}
+  inventoryKey: 105
+  notificationDuration: 2
+  itemIcons:
+  - itemName: "cl\xE9"
+    icon: {fileID: 21300000, guid: 69aad9fbd7091b74d800c06e5d6e7040, type: 3}
+  - itemName: pile
+    icon: {fileID: 21300000, guid: babc339bc83a55b4bbfaab49d604ba7f, type: 3}
+  - itemName: journal
+    icon: {fileID: 21300000, guid: 037dec01f62984b40983fb6248ad775b, type: 3}
+  - itemName: pillule
+    icon: {fileID: 21300000, guid: 243dacd7fe014c44693a92052442eec6, type: 3}
+  defaultIcon: {fileID: 21300000, guid: 243dacd7fe014c44693a92052442eec6, type: 3}
+--- !u!114 &7842467565418488396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461398162351272817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b7b8998a75e6e4ba41f5d48d0c7609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenuPanel: {fileID: 0}
+  questPanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
+  menuPanel: {fileID: 0}
+  currentQuestTitle: {fileID: 0}
+  currentQuestDescription: {fileID: 0}
+  resumeButton: {fileID: 0}
+  settingsButton: {fileID: 0}
+  exitGameButton: {fileID: 0}
+  masterVolumeSlider: {fileID: 0}
+  musicVolumeSlider: {fileID: 0}
+  qualityDropdown: {fileID: 0}
+  backButton: {fileID: 0}
+  masterMixer: {fileID: 0}
+  musicMixer: {fileID: 0}
+  pauseKey: 27
