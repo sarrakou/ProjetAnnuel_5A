@@ -27,7 +27,14 @@ public class AnxietySystem : MonoBehaviour
     public TMP_Text heartRateText;
     public TMP_Text breathingRateText;
     private float currentHeartRate = 0f;
+    private float targetHeartRate = 70f;
     private float breathingRate = 0f;
+
+    public bool useSimulation = false; 
+
+    private float simulationTimer = 0f;
+    private float heartRateUpdateTimer = 0f;
+    private float heartRateUpdateInterval = 2f; 
 
     void Start()
     {
@@ -42,6 +49,10 @@ public class AnxietySystem : MonoBehaviour
         inventory = FindObjectOfType<Inventory>();
         if (inventory == null)
             Debug.LogError("Inventaire non trouvé !");
+
+        // Initialize heart rate values
+        currentHeartRate = 70f;
+        targetHeartRate = 70f;
     }
 
     void Update()
@@ -49,7 +60,10 @@ public class AnxietySystem : MonoBehaviour
         anxiety += increaseRate * Time.deltaTime;
         anxiety = Mathf.Clamp(anxiety, 0f, maxAnxiety);
 
-
+        if (useSimulation)
+        {
+            SimulateHeartRate();
+        }
 
         if (anxiety > 70f)
         {
@@ -82,7 +96,7 @@ public class AnxietySystem : MonoBehaviour
 
     private void UpdateHeartRateDisplay(DataType dataType, float timestamp, float value)
     {
-        if (dataType == DataType.HeartRate && value >= 30f && value <= 220f)
+        if (!useSimulation && dataType == DataType.HeartRate && value >= 30f && value <= 220f)
         {
             currentHeartRate = value;
             heartRateText.text = $"{Mathf.RoundToInt(currentHeartRate)} BPM";
@@ -90,6 +104,40 @@ public class AnxietySystem : MonoBehaviour
             breathingRate = currentHeartRate / 4f;
             breathingRateText.text = $"{Mathf.RoundToInt(breathingRate)} Breaths/Min";
         }
+    }
+
+    private void SimulateHeartRate()
+    {
+        simulationTimer += Time.deltaTime;
+        heartRateUpdateTimer += Time.deltaTime;
+
+        // Update target heart rate every second
+        if (heartRateUpdateTimer >= heartRateUpdateInterval)
+        {
+            heartRateUpdateTimer = 0f;
+
+            // Base heart rate around 70 BPM
+            float baseHeartRate = 70f;
+
+            // Every 10 seconds, spike to high heart rate
+            if (simulationTimer % 10f < 2f) // High for 4 seconds every 10 seconds
+            {
+                targetHeartRate = baseHeartRate + 40f + Random.Range(-3f, 3f); // Spike to ~110 BPM with slight variation
+            }
+            else
+            {
+                targetHeartRate = baseHeartRate + Random.Range(-5f, 5f); // Normal variation
+            }
+        }
+
+        // Smoothly interpolate current heart rate towards target
+        float lerpSpeed = 2f; // Adjust this to control how fast the heart rate changes
+        currentHeartRate = Mathf.Lerp(currentHeartRate, targetHeartRate, Time.deltaTime * lerpSpeed);
+
+        breathingRate = currentHeartRate / 4f;
+
+        heartRateText.text = $"{Mathf.RoundToInt(currentHeartRate)} BPM";
+        breathingRateText.text = $"{Mathf.RoundToInt(breathingRate)} Breaths/Min";
     }
 
     void ApplyCameraShake()

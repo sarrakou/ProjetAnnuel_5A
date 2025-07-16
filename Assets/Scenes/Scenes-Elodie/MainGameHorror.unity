@@ -2501,6 +2501,7 @@ MonoBehaviour:
   characterMovement: {fileID: 0}
   heartRateText: {fileID: 0}
   breathingRateText: {fileID: 0}
+  useSimulation: 0
 --- !u!1 &1317309218 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7177361029705015739, guid: 2884601e683d29746b17c3442353b884, type: 3}
@@ -5820,6 +5821,10 @@ PrefabInstance:
       propertyPath: heartRateText
       value: 
       objectReference: {fileID: 1421107705}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: useSimulation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
       propertyPath: maxShakeAmount
       value: 0.1
