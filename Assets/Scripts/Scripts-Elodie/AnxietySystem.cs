@@ -1,3 +1,5 @@
+using ExciteOMeter;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +8,7 @@ public class AnxietySystem : MonoBehaviour
     [Header("Anxiety Settings")]
     public float anxiety = 0f;
     public float maxAnxiety = 100f;
-    public float increaseRate = 5f;
+    public float increaseRate = 2f;
 
     [Header("Camera Shake Settings")]
     public Camera playerCamera;
@@ -22,8 +24,16 @@ public class AnxietySystem : MonoBehaviour
 
     public CharacterMovement characterMovement;
 
+    public TMP_Text heartRateText;
+    public TMP_Text breathingRateText;
+    private float currentHeartRate = 0f;
+    private float breathingRate = 0f;
+
     void Start()
     {
+        heartRateText.text = "0 BPM";
+        breathingRateText.text = "0 Breaths/Min";
+
         if (playerCamera != null)
             originalLocalPos = playerCamera.transform.localPosition;
         else
@@ -39,7 +49,7 @@ public class AnxietySystem : MonoBehaviour
         anxiety += increaseRate * Time.deltaTime;
         anxiety = Mathf.Clamp(anxiety, 0f, maxAnxiety);
 
-        
+
 
         if (anxiety > 70f)
         {
@@ -59,6 +69,28 @@ public class AnxietySystem : MonoBehaviour
         }
     }
 
+
+    private void OnEnable()
+    {
+        EoM_Events.OnDataReceived += UpdateHeartRateDisplay;
+    }
+
+    private void OnDisable()
+    {
+        EoM_Events.OnDataReceived -= UpdateHeartRateDisplay;
+    }
+
+    private void UpdateHeartRateDisplay(DataType dataType, float timestamp, float value)
+    {
+        if (dataType == DataType.HeartRate && value >= 30f && value <= 220f)
+        {
+            currentHeartRate = value;
+            heartRateText.text = $"{Mathf.RoundToInt(currentHeartRate)} BPM";
+
+            breathingRate = currentHeartRate / 4f;
+            breathingRateText.text = $"{Mathf.RoundToInt(breathingRate)} Breaths/Min";
+        }
+    }
 
     void ApplyCameraShake()
     {
