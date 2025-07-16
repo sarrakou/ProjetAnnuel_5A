@@ -24,6 +24,7 @@ public class HorrorEvents : MonoBehaviour
     
     private Camera playerCamera;
     private Dictionary<PhobiaType, List<Action<Vector3>>> phobiaEvents;
+    private HashSet<string> playedEvents = new HashSet<string>();
     private void Awake()
     {
         playerCamera = Camera.main;
@@ -86,11 +87,68 @@ public class HorrorEvents : MonoBehaviour
         }
 
         var events = phobiaEvents[currentPhobia];
-        if (events.Count == 0) return;
+        if (events.Count == 0)
+        {
+            Debug.LogWarning($"Aucun événement disponible pour {currentPhobia}");
+            return;
+        }
 
-        int eventIndex = UnityEngine.Random.Range(0, events.Count);
-        Debug.Log($"🎭 Déclenchement événement {currentPhobia} : {events[eventIndex].Method.Name}");
-        events[eventIndex].Invoke(position);
+        // NOUVEAU : Filtrer les événements non encore joués
+        List<Action<Vector3>> availableEvents = new List<Action<Vector3>>();
+        foreach (var eventAction in events)
+        {
+            string eventKey = $"{currentPhobia}_{eventAction.Method.Name}";
+            if (!playedEvents.Contains(eventKey))
+            {
+                availableEvents.Add(eventAction);
+            }
+        }
+
+        // Vérifier s'il reste des événements disponibles
+        if (availableEvents.Count == 0)
+        {
+            Debug.LogWarning($"⚠️ Tous les événements de {currentPhobia} ont déjà été joués !");
+            return;
+        }
+
+        // Choisir un événement aléatoire parmi ceux disponibles
+        int eventIndex = UnityEngine.Random.Range(0, availableEvents.Count);
+        Action<Vector3> selectedEvent = availableEvents[eventIndex];
+        
+        // Marquer l'événement comme joué
+        string selectedEventKey = $"{currentPhobia}_{selectedEvent.Method.Name}";
+        playedEvents.Add(selectedEventKey);
+        
+        Debug.Log($"🎭 Déclenchement événement {currentPhobia} : {selectedEvent.Method.Name} ({availableEvents.Count - 1} restants)");
+        selectedEvent.Invoke(position);
+    }
+    public int GetRemainingEventsCount(PhobiaType phobiaType)
+    {
+        if (!phobiaEvents.ContainsKey(phobiaType)) return 0;
+        
+        int totalEvents = phobiaEvents[phobiaType].Count;
+        int playedCount = 0;
+        
+        foreach (string eventKey in playedEvents)
+        {
+            if (eventKey.StartsWith($"{phobiaType}_"))
+            {
+                playedCount++;
+            }
+        }
+        
+        return totalEvents - playedCount;
+    }
+
+    public void LogEventStatus()
+    {
+        Debug.Log("📊 Status des événements :");
+        foreach (var phobia in phobiaEvents.Keys)
+        {
+            int remaining = GetRemainingEventsCount(phobia);
+            int total = phobiaEvents[phobia].Count;
+            Debug.Log($"   {phobia}: {remaining}/{total} événements restants");
+        }
     }
 
     public void SetPhobia(PhobiaType newPhobia)
@@ -148,11 +206,7 @@ public class HorrorEvents : MonoBehaviour
         StartCoroutine(Insectsounds());
     }
 
-    void Event_CrawlingEffect(Vector3 pos)
-    {
-        Debug.Log(" Effet de rampement");
-        // Implémenter l'effet de picotement/rampement
-    }
+
 
     IEnumerator InsectCoroutine()
     {
