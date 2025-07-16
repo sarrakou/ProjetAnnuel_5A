@@ -199,5 +199,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - {fileID: 8300000, guid: 8b731524aa4232445af069f7e3afa958, type: 3}
-  interval: 3
+  - {fileID: 8300000, guid: ee96657c0cfdf294f86d37e1f6392f44, type: 3}
+  - {fileID: 8300000, guid: 4a3073dd060881e4ead3521f45efe526, type: 3}
+  - {fileID: 8300000, guid: 52beae1a67c30c64084d3578f74c7678, type: 3}
+  - {fileID: 8300000, guid: 4f004739994ec8c41aac117b00fe615d, type: 3}
+  interval: 5
   volume: 1

@@ -57,7 +57,7 @@ public class GameTimer : MonoBehaviour
         //Debug.Log("Temps restant : " + Mathf.Ceil(currentTime) + " secondes");
 
         if (timerText != null)
-            timerText.text = "Temps restant : " + Mathf.Ceil(currentTime).ToString() + "s";
+            timerText.text = "Time : " + Mathf.Ceil(currentTime).ToString() + "s";
 
 
         if (currentTime <= 0)

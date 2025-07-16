@@ -93,30 +93,30 @@ public class FlickeringMaterialLight : MonoBehaviour
 
     IEnumerator AlarmRoutine()
     {
+        // Boucle infinie
         while (true)
         {
-            if (alarmSound != null && audioSource != null && !audioSource.isPlaying)
+            lightSource.color = dangerColor;
+
+            // ✅ Lancer l’alarme en boucle à chaque clignotement, si pas déjà lancée
+            if (alarmSound != null && audioSource != null && audioSource.clip != alarmSound)
             {
                 audioSource.clip = alarmSound;
                 audioSource.loop = true;
                 audioSource.Play();
             }
 
-            lightSource.color = dangerColor;
-
-            // Effet clignotant irrégulier
-            float offTime = Random.Range(0.1f, 0.3f);
-            float onTime = Random.Range(0.1f, 0.5f);
-            float intensity = Random.Range(0.008f, 0.02f); // Variabilité lumineuse
-
-            // OFF
+            // 🔴 OFF rouge
             lightSource.intensity = 0f;
-            yield return new WaitForSeconds(offTime);
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.25f));
 
-            // ON
-            lightSource.intensity = intensity;
-            yield return new WaitForSeconds(onTime);
+            // 🔴 ON rouge
+            lightSource.intensity = Random.Range(0.008f, 0.02f);
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.4f));
+
+            // ❌ Aucun grésillement ici !
         }
     }
+
 
 }

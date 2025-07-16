@@ -1,81 +1,86 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(AudioSource))]
 public class DirectionalSoundEmitter : MonoBehaviour
 {
-    [Header("Référence au joueur")]
+    [Header("RÃ©fÃ©rence au joueur")]
     public Transform player;
 
-    [Header("Clips audio")]
-    public List<AudioClip> soundClips;
-
-    [Header("Paramètres de timing")]
-    public float minDelay = 3f;
-    public float maxDelay = 8f;
+    [Header("Clips audio (stress faible / moyen / fort)")]
+    public List<AudioClip> calmClips;
+    public List<AudioClip> mediumClips;
+    public List<AudioClip> intenseClips;
 
     [Header("Rayon autour du joueur")]
     public float distanceFromPlayer = 8f;
 
-    [Header("Volume & stéréo")]
+    [Header("Volume & stÃ©rÃ©o")]
     public float volume = 1f;
-    [Range(0f, 1f)] public float stereoChance = 0.2f; // 20% des sons sont non-spatialisés
+    [Range(0, 1)] public float stereoChance = 0.2f;
 
-    private string lastDirection = "";
+    // bornes de BPM pour mapping
+    public float minBPM = 60f;
+    public float maxBPM = 160f;
 
-    private readonly string[] directions = new string[] { "front", "back", "left", "right" };
+    private string lastDir = "";
+    private readonly string[] dirs = { "front", "back", "left", "right" };
 
     void Start()
     {
-        if (player == null || soundClips.Count == 0)
-        {
-            Debug.LogWarning("Player ou AudioClips non assignés.");
-            return;
-        }
-
-        StartCoroutine(PlayDirectionalSounds());
+        if (player == null) player = Camera.main.transform;          // secours
+        StartCoroutine(PlayLoop());
     }
 
-    IEnumerator PlayDirectionalSounds()
+    IEnumerator PlayLoop()
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+            /* ----------- 1.  RÃ©cupÃ¨re la FC actuelle ---------------- */
+            float bpm = HeartRateReader.Instance != null
+                        ? HeartRateReader.Instance.currentHeartRate
+                        : 70f;
 
-            // Choisir un clip aléatoire
-            AudioClip clip = soundClips[Random.Range(0, soundClips.Count)];
+            /* ----------- 2.  Choisis la liste de sons ---------------- */
+            List<AudioClip> list;
+            if (bpm < 85f) list = calmClips;
+            else if (bpm < 120f) list = mediumClips;
+            else list = intenseClips;
 
-            // Décider si stéréo ou directionnel
-            bool isStereo = Random.value < stereoChance;
-            if (isStereo)
+            if (list.Count == 0) yield break; // sÃ©curitÃ©
+
+            /* ----------- 3.  Calcule le dÃ©lai ------------------------ */
+            // bpm bas  â†’ dÃ©lai long ; bpm haut â†’ dÃ©lai court
+            float t = Mathf.InverseLerp(minBPM, maxBPM, bpm);   // 0â€‘1
+            float delay = Mathf.Lerp(8f, 2f, t);                // 8s â†’ 2s
+            yield return new WaitForSeconds(delay);
+
+            /* ----------- 4.  Choix clip & position ------------------- */
+            AudioClip clip = list[Random.Range(0, list.Count)];
+
+            bool stereo = Random.value < stereoChance;
+            if (stereo)
             {
-                AudioSource.PlayClipAtPoint(clip, player.position, volume); // Son "dans la tête"
+                AudioSource.PlayClipAtPoint(clip, player.position, volume);
                 continue;
             }
 
-            // Choisir une direction différente de la précédente
-            string chosenDirection;
-            do
+            // direction â‰  de la prÃ©cÃ©dente
+            string dir;
+            do { dir = dirs[Random.Range(0, dirs.Length)]; } while (dir == lastDir);
+            lastDir = dir;
+
+            Vector3 offset = dir switch
             {
-                chosenDirection = directions[Random.Range(0, directions.Length)];
-            } while (chosenDirection == lastDirection);
-            lastDirection = chosenDirection;
+                "front" => player.forward,
+                "back" => -player.forward,
+                "left" => -player.right,
+                _ => player.right
+            };
+            Vector3 pos = player.position + offset.normalized * distanceFromPlayer;
 
-            // Calculer la position relative
-            Vector3 dirOffset = Vector3.zero;
-
-            switch (chosenDirection)
-            {
-                case "front": dirOffset = player.forward; break;
-                case "back": dirOffset = -player.forward; break;
-                case "left": dirOffset = -player.right; break;
-                case "right": dirOffset = player.right; break;
-            }
-
-            Vector3 soundPos = player.position + dirOffset.normalized * distanceFromPlayer;
-
-            // Jouer le son dans la direction choisie
-            AudioSource.PlayClipAtPoint(clip, soundPos, volume);
+            AudioSource.PlayClipAtPoint(clip, pos, volume);
         }
     }
 }
