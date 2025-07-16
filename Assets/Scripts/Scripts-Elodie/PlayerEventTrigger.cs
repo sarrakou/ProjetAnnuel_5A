@@ -9,6 +9,7 @@ public class PlayerEventTrigger : MonoBehaviour
     private HorrorEvents horrorEvents;
     private GameManager gameManager;
     private bool coffreMissionValidee = false; // Pour éviter de valider plusieurs fois
+    private bool finMissionValidee = false; // Pour éviter de valider plusieurs fois la mission finale
 
     private void Start()
     {
@@ -17,13 +18,13 @@ public class PlayerEventTrigger : MonoBehaviour
 
         if (gameManager == null)
         {
-            Debug.LogError(" GameManager non trouvé !");
+            Debug.LogError("❌ GameManager non trouvé !");
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Zone d'horreur
+       
         if (other.CompareTag("EventZone"))
         {
             Debug.Log("🎯 Zone d'event touchée, déclenchement !");
@@ -32,13 +33,11 @@ public class PlayerEventTrigger : MonoBehaviour
             other.gameObject.SetActive(false);
         }
 
-
-        // Zone du coffre-fort
         if (other.CompareTag("CoffreFort") || 
             (coffreFortGameObject != null && other.gameObject == coffreFortGameObject) ||
             other.gameObject.name.ToLower().Contains("coffre"))
         {
-            Debug.Log(" Coffre-fort détecté !");
+            Debug.Log("🔐 Coffre-fort détecté !");
 
             if (!coffreMissionValidee && gameManager != null)
             {
@@ -46,18 +45,18 @@ public class PlayerEventTrigger : MonoBehaviour
                 coffreMissionValidee = true;
             }
 
-            //  Activer le Digicode
+            
             if (digiCodeManager != null)
             {
                 digiCodeManager.ShowDigiCode();
             }
         }
         
+
         if (other.CompareTag("Library") || 
-            (coffreFortGameObject != null && other.gameObject == coffreFortGameObject) ||
             other.gameObject.name.ToLower().Contains("library"))
         {
-            Debug.Log(" Librairie détecté !");
+            Debug.Log("📚 Librairie détectée !");
 
             if (!coffreMissionValidee && gameManager != null)
             {
@@ -65,17 +64,35 @@ public class PlayerEventTrigger : MonoBehaviour
                 coffreMissionValidee = true;
             }
 
-            //  Activer le Digicode
+          
             if (digiCodeManager != null)
             {
                 digiCodeManager.ShowDigiCode();
+            }
+        }
+
+       
+        if (other.CompareTag("Fin"))
+        {
+            Debug.Log("🚪 Zone de fin détectée - Validation de la mission finale !");
+            
+            if (!finMissionValidee && gameManager != null)
+            {
+                gameManager.CompleteQuestByName("Il faut sortir. Maintenant !");
+                finMissionValidee = true;
+                
+                
+            }
+            else if (finMissionValidee)
+            {
+                Debug.Log("✅ Mission finale déjà validée !");
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //  Fermer le Digicode quand on sort
+   
         if (other.CompareTag("CoffreFort") ||
             (coffreFortGameObject != null && other.gameObject == coffreFortGameObject) ||
             other.gameObject.name.ToLower().Contains("coffre"))
@@ -85,5 +102,31 @@ public class PlayerEventTrigger : MonoBehaviour
                 digiCodeManager.HideDigiCode();
             }
         }
+
+       
+        if (other.CompareTag("Library") ||
+            other.gameObject.name.ToLower().Contains("library"))
+        {
+            if (digiCodeManager != null)
+            {
+                digiCodeManager.HideDigiCode();
+            }
+        }
+    }
+
+  
+    private System.Collections.IEnumerator DisableFinObjectAfterDelay(GameObject finObject, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        finObject.SetActive(false);
+        Debug.Log("🚪 Objet de fin désactivé après " + delay + " secondes");
+    }
+
+ 
+    public void ResetMissionStates()
+    {
+        coffreMissionValidee = false;
+        finMissionValidee = false;
+        Debug.Log("🔄 États des missions réinitialisés");
     }
 }

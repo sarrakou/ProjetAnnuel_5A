@@ -184,11 +184,7 @@ public class CharacterMovement : MonoBehaviour
         }
         
         
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && hasInput && !isCrouching;
-        if (animator.GetBool("isSprinting") != isSprinting)
-        {
-            animator.SetBool("isSprinting", isSprinting);
-        }
+       
     }
 
     void LateUpdate()

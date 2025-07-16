@@ -27,15 +27,29 @@ public class GameManager : MonoBehaviour
     public AudioSource phoneAudioSource; // AudioSource dédié pour le téléphone
     public float dollAudioVolume = 1f; 
     public float phoneRingVolume = 0.8f;
+    [Header("Final Quest Configuration")]
+    public GameObject finalQuestPrefab; // Prefab à activer pour la dernière quête
+    public Transform finalQuestSpawnPoint; // Point où spawner le prefab (optionnel)
+
     
+    [Header("End Game Configuration")]
+    public GameObject gameOverUI; // UI à afficher pour Game Over
+    public GameObject victoryUI; // UI à afficher pour la victoire
+    public AudioClip gameOverSound; // Son de Game Over
+    public AudioClip victorySound; // Son de victoire
+    public string gameOverSoundPath = "Audio/GameOver"; // Chemin Resources pour Game Over
+    public string victorySoundPath = "Audio/Victory";
+// Variables privées à ajouter
+    private GameObject spawnedFinalQuestObject;
+    private int finalQuestIndex = 10;
     private LightManager lightManager;
     private HorrorEvents horrorEvents; 
     private GameObject spawnedDoll; 
     private int dollQuestIndex = 4; 
     private int dollSoundQuestIndex = 5;
-    private int policeQuest1Index = 8; 
-    private int phoneWorkingQuestIndex = 9; 
-    private int policeQuest2Index = 10; // 
+    private int policeQuest1Index = 7; 
+    private int phoneWorkingQuestIndex = 8; 
+    private int policeQuest2Index = 9; // 
     
     private Transform player;
     private bool isMonitoringPhoneDistance = false;
@@ -79,7 +93,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha9)) CompleterQuete(8); 
         if (Input.GetKeyDown(KeyCode.Alpha0)) CompleterQuete(9);
         if (Input.GetKeyDown(KeyCode.L)) CompleterQuete(10);
-        
+
        
         if (isMonitoringPhoneDistance && !hasPhoneRung)
         {
@@ -143,6 +157,52 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void CheckEndGameCondition()
+    {
+        Debug.Log("🎯 Vérification des conditions de fin de jeu...");
+    
+   
+        bool policeQuestCompleted = quests[policeQuest2Index].isCompleted;
+    
+        if (policeQuestCompleted)
+        {
+            Debug.Log("📞 La police a été appelée - GAME OVER !");
+            TriggerGameOver();
+        }
+        else
+        {
+            Debug.Log("🎉 Vous avez réussi à vous échapper sans appeler la police - VICTOIRE !");
+            TriggerVictory();
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        Debug.Log("💀 GAME OVER - Vous avez appelé la police mais il était trop tard...");
+    
+   
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+            Debug.Log("🖥️ UI Game Over activée");
+        }
+    
+       
+    }
+
+
+    private void TriggerVictory()
+    {
+        Debug.Log("🏆 VICTOIRE - Vous avez réussi à vous échapper à temps !");
+    
+       
+        if (victoryUI != null)
+        {
+            victoryUI.SetActive(true);
+            Debug.Log("🖥️ UI Victoire activée");
+        }
+        
+    }
 
     void CheckPhoneDistance()
     {
@@ -205,7 +265,6 @@ public class GameManager : MonoBehaviour
         quests.Add(new Quest("Trouver le coffre-fort", "Localiser l'endroit où il est caché."));
         quests.Add(new Quest("Récupérer la clé", "Elle est probablement dans le coffre-fort.")); 
         quests.Add(new Quest("D'où vient ce bruit ?", "Je dois récupérer cette poupée.")); 
-        quests.Add(new Quest("Récupérer la poupée", "Aller chercher cette poupée mystérieuse.")); 
         quests.Add(new Quest("Trouver la porte secrète", "Quelque chose cloche dans cette maison."));
         quests.Add(new Quest("Appeler la police1", "Il faut de l'aide immédiatement."));
         quests.Add(new Quest("Trouver un moyen de faire fonctionner le téléphone", "Il est hors-service."));
@@ -258,77 +317,105 @@ public class GameManager : MonoBehaviour
         Debug.Log(" Effet claustrophobie terminé - 'Closed' désactivé");
     }
 
-    void CompleterQuete(int index)
+  void CompleterQuete(int index)
+{
+    if (index >= 0 && index < quests.Count && !quests[index].isCompleted)
     {
-        if (index >= 0 && index < quests.Count && !quests[index].isCompleted)
+       
+        if (!CanCompleteQuest(index))
         {
-           
-            if (!CanCompleteQuest(index))
+            if (index == finalQuestIndex)
             {
-                Debug.LogWarning($" Impossible de compléter la quête {index + 1}. Vous devez d'abord compléter les quêtes précédentes !");
-                ShowQuestProgression(index);
-                return;
+                Debug.LogWarning($"⚠️ Impossible de compléter la quête finale. Vous devez d'abord compléter 'Appeler la police1' !");
             }
+            else
+            {
+                Debug.LogWarning($"⚠️ Impossible de compléter la quête {index + 1}. Vous devez d'abord compléter les quêtes précédentes !");
+            }
+            ShowQuestProgression(index);
+            return;
+        }
 
-            quests[index].CompleteQuest();
-            AfficherToutesLesQuetes();
+        quests[index].CompleteQuest();
+        AfficherToutesLesQuetes();
 
+        
+        if (index == dollQuestIndex)
+        {
+            PlayDollAudio();
+            SpawnDoll();
+        }
+
+        if (index == dollSoundQuestIndex)
+        {
+            StopDollAudio();
+            TriggerClaustrophobiaEffect();
+        }
+
+        if (index == policeQuest1Index)
+        {
+            Debug.Log("📞 Quête 'Appeler la police1' complétée - Début de la surveillance du téléphone");
+            isMonitoringPhoneDistance = true;
+            hasPhoneRung = false;
             
-            if (index == dollQuestIndex)
-            {
-                PlayDollAudio();
-                SpawnDoll();
-            }
-
-            if (index == dollSoundQuestIndex)
-            {
-                StopDollAudio();
-                TriggerClaustrophobiaEffect();
-            }
-
             
-            if (index == policeQuest1Index)
-            {
-                Debug.Log(" Quête 'Appeler la police1' complétée - Début de la surveillance du téléphone");
-                isMonitoringPhoneDistance = true;
-                hasPhoneRung = false;
-            }
+            ActivateFinalQuestPrefab();
+        }
+
+        if (index == policeQuest2Index)
+        {
+            Debug.Log("📞 Quête 'Appeler la police' complétée - Arrêt de la sonnerie du téléphone");
+            StopPhoneRinging();
+            isMonitoringPhoneDistance = false;
+        }
+
+      
+        if (index == finalQuestIndex)
+        {
+            Debug.Log("🏁 Quête finale complétée - Vérification des conditions de fin...");
+            CheckEndGameCondition();
+        }
 
        
-            if (index == policeQuest2Index)
-            {
-                Debug.Log(" Quête 'Appeler la police' complétée - Arrêt de la sonnerie du téléphone");
-                StopPhoneRinging();
-                isMonitoringPhoneDistance = false; 
-            }
-
-            
-            if (index == 0 && lightManager != null)
-            {
-                if (horrorEvents != null && horrorEvents.currentPhobia == PhobiaType.Nyctophobie)
-                {
-                    Debug.Log(" Nyctophobie active - Les lumières restent éteintes");
-                }
-                else
-                {
-                    lightManager.SetAllLights(true);
-                    Debug.Log(" Lumières allumées");
-                }
-            }
-        }
-        else if (index >= 0 && index < quests.Count && quests[index].isCompleted)
+        if (index == 0 && lightManager != null)
         {
-            Debug.Log($"✅ La quête {index + 1} est déjà complétée !");
+            if (horrorEvents != null && horrorEvents.currentPhobia == PhobiaType.Nyctophobie)
+            {
+                Debug.Log("🌑 Nyctophobie active - Les lumières restent éteintes");
+            }
+            else
+            {
+                lightManager.SetAllLights(true);
+                Debug.Log("💡 Lumières allumées");
+            }
         }
     }
+    else if (index >= 0 && index < quests.Count && quests[index].isCompleted)
+    {
+        Debug.Log($"✅ La quête {index + 1} est déjà complétée !");
+    }
+}
 
+    
+ 
     
     bool CanCompleteQuest(int questIndex)
     {
-       
-        if (questIndex == 0) return true;
-
       
+        
+        if (questIndex == 0) return true;
+    
+        
+        
+        if (questIndex == finalQuestIndex) 
+            
+        {
+            return quests[policeQuest1Index].isCompleted; 
+            
+        }
+    
+       
+        
         for (int i = 0; i < questIndex; i++)
         {
             if (!quests[i].isCompleted)
@@ -370,25 +457,32 @@ public class GameManager : MonoBehaviour
     public void CompleteQuestByName(string questName)
     {
         Debug.Log($"🎯 Tentative de complétion de la quête : {questName}");
-        
+    
         for (int i = 0; i < quests.Count; i++)
         {
             if (quests[i].questName == questName && !quests[i].isCompleted)
             {
-              
+                
                 if (!CanCompleteQuest(i))
                 {
-                    Debug.LogWarning($"⚠ Impossible de compléter '{questName}'. Progression séquentielle requise !");
-                    ShowQuestProgression(i);
+                    if (i == finalQuestIndex)
+                    {
+                        Debug.LogWarning($"⚠ Impossible de compléter '{questName}'. Vous devez d'abord compléter 'Appeler la police1' !");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"⚠ Impossible de compléter '{questName}'. Progression séquentielle requise !");
+                        ShowQuestProgression(i);
+                    }
                     return;
                 }
-                
-                Debug.Log($" Quête trouvée et complétée : {questName}");
-                CompleterQuete(i); 
+            
+                Debug.Log($"✅ Quête trouvée et complétée : {questName}");
+                CompleterQuete(i);
                 return;
             }
         }
-        
+    
         Debug.LogWarning($"⚠ Quête non trouvée ou déjà complétée : {questName}");
     }
 
@@ -444,7 +538,37 @@ public class GameManager : MonoBehaviour
             Debug.Log(" Poupée supprimée");
         }
     }
+void ActivateFinalQuestPrefab()
+{
+    Debug.Log(" Activation du prefab pour la quête finale - Il faut sortir !");
+    
+    
+    if (finalQuestPrefab != null)
+    {
+        finalQuestPrefab.SetActive(true);
+        Debug.Log(" Prefab final activé dans la scène");
+        return;
+    }
+    
+    
+}
 
+
+public void RemoveFinalQuestPrefab()
+{
+    if (spawnedFinalQuestObject != null)
+    {
+        Destroy(spawnedFinalQuestObject);
+        spawnedFinalQuestObject = null;
+        Debug.Log("🗑️ Prefab final supprimé");
+    }
+    
+    if (finalQuestPrefab != null)
+    {
+        finalQuestPrefab.SetActive(false);
+        Debug.Log("🗑️ Prefab final désactivé");
+    }
+}
     public bool IsDollSpawned()
     {
         return spawnedDoll != null;
@@ -456,40 +580,85 @@ public class GameManager : MonoBehaviour
     }
 
     void AfficherToutesLesQuetes()
+{
+    Debug.Log("📋 Liste des quêtes :");
+    for (int i = 0; i < quests.Count; i++)
     {
-        Debug.Log("📋 Liste des quêtes :");
-        for (int i = 0; i < quests.Count; i++)
+        string status = quests[i].isCompleted ? "✅" : "❌";
+        string dollIndicator = (i == dollQuestIndex) ? " 🪆🔊" : "";
+        string phoneIndicator = (i == policeQuest1Index) ? " 📞" : "";
+        
+   
+        string keyIndicator;
+        if (i == 10)
         {
-            string status = quests[i].isCompleted ? "✅" : "❌";
-            string dollIndicator = (i == dollQuestIndex) ? " 🪆🔊" : "";
-            string phoneIndicator = (i == policeQuest1Index) ? " 📞" : "";
-            string keyIndicator = $"[Touche {i + 1}]";
-            
-            // Indicateur de disponibilité
-            string availabilityIndicator = "";
-            if (!quests[i].isCompleted)
+            keyIndicator = "[Touche L]";
+        }
+        else if (i < 9)
+        {
+            keyIndicator = $"[Touche {i + 1}]";
+        }
+        else if (i == 9)
+        {
+            keyIndicator = "[Touche 0]";
+        }
+        else
+        {
+            keyIndicator = $"[Touche {i + 1}]";
+        }
+        
+        
+        string availabilityIndicator = "";
+        if (!quests[i].isCompleted)
+        {
+           
+            if (i == 10) 
             {
-                if (CanCompleteQuest(i))
+                if (CanCompleteFinalQuest())
                 {
-                    availabilityIndicator = " 🟢 DISPONIBLE";
+                    availabilityIndicator = "  DISPONIBLE (Sortie d'urgence)";
                 }
                 else
                 {
-                    availabilityIndicator = " 🔒 VERROUILLÉE";
+                    availabilityIndicator = "  VERROUILLÉE (Complétez 'Appeler la police1' d'abord)";
                 }
             }
-            
-            Debug.Log($"{keyIndicator} {status} {quests[i].questName}{dollIndicator}{phoneIndicator}{availabilityIndicator} - {quests[i].description}");
+            else
+            { 
+                if (CanCompleteQuest(i))
+                {
+                    availabilityIndicator = "  DISPONIBLE";
+                }
+                else
+                {
+                    availabilityIndicator = "  VERROUILLÉE";
+                }
+            }
         }
+        
+        
+        string finalQuestIndicator = (i == 10) ? " 🏃‍♂️" : "";
+        
+        Debug.Log($"{keyIndicator} {status} {quests[i].questName}{dollIndicator}{phoneIndicator}{finalQuestIndicator}{availabilityIndicator} - {quests[i].description}");
     }
-
+}
+    private bool CanCompleteFinalQuest()
+    {
+        
+        return quests[policeQuest1Index].isCompleted;
+    }
     void OnDestroy()
     {
         if (spawnedDoll != null)
         {
             Destroy(spawnedDoll);
         }
-        
+    
+        if (spawnedFinalQuestObject != null)
+        {
+            Destroy(spawnedFinalQuestObject);
+        }
+    
         StopPhoneRinging();
     }
 }

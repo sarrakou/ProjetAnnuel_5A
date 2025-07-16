@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: Library_
-  - Tag: Library
-  - Layer: Mur
+  - Name: Fin
+  - Tag: Fin
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

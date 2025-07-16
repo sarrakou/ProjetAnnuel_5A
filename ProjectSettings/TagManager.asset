@@ -12,6 +12,7 @@ TagManager:
   - BigPiece
   - Sole
   - Elevator
+  - Fin
   layers:
   - Default
   - TransparentFX
