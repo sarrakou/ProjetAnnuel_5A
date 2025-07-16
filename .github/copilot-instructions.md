@@ -4,11 +4,11 @@
 - Active scene:
   - Name: MainGameHorror
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, DetectorPiece, ouverture, EventZone, Library, CoffreFort, BigPiece, Sole, Elevator
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, DetectorPiece, ouverture, EventZone, Library, CoffreFort, BigPiece, Sole, Elevator, Fin
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: Library_
-  - Tag: Library
-  - Layer: Mur
+  - Name: CléQUEST1
+  - Tag: Untagged
+  - Layer: Interactable
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
