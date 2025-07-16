@@ -3,7 +3,42 @@ guid: 54db0bd398b75684183363ffa5e10799
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DiningTable
+    second: {fileID: 8394448462728930191, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dry_Palm_Mat
+    second: {fileID: -4709166702500328448, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marble
+    second: {fileID: -5758955834144789715, guid: 6287de1d8ed1c43439e617cc55c500c4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VASE_CYL_CERAMIC
+    second: {fileID: -2678499583385818325, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: canape
+    second: {fileID: -6683778863475504237, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lumiere
+    second: {fileID: 1585901590389371489, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tissusCanape
+    second: {fileID: -3554330035857643164, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +51,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

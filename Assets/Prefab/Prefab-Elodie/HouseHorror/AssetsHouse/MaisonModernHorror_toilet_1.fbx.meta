@@ -3,7 +3,67 @@ guid: 9c873ea22b70d834ba9885249e43a080
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: -3846018093981099296, guid: 6a71f0a91919ac34cb01dd8069c602ce, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 4874126678125670354, guid: 9eca9dc4e9f7013499cd2461d10cfb40, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.012
+    second: {fileID: 880774007180850119, guid: c3cd7c10146738044b269569ba89470e, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.016
+    second: {fileID: 637949407474519127, guid: d3be3c821fe3feb469419603409995fc, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.017
+    second: {fileID: 99656467281103303, guid: d3be3c821fe3feb469419603409995fc, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.028
+    second: {fileID: 1110233775959259594, guid: d3be3c821fe3feb469419603409995fc, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.061
+    second: {fileID: 5024317788110480505, guid: d3be3c821fe3feb469419603409995fc, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood.001
+    second: {fileID: 2295699958525706655, guid: 785ecc573e6504344a66fb351c2b5649, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cabinet black
+    second: {fileID: -5797993188065670479, guid: d3be3c821fe3feb469419603409995fc, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cabinet grey
+    second: {fileID: -3280140244163853186, guid: 64f4356fe2f868d49884d2d511f8259d, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: led
+    second: {fileID: 8520362078576983545, guid: 9a2b3d74946f3184dbd98ba2949803d4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: miroirr
+    second: {fileID: 2100000, guid: 7c6d2e32d8a191048aaa62564a22d5db, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +76,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

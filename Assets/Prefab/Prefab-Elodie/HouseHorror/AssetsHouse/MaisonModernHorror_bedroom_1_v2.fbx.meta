@@ -3,7 +3,77 @@ guid: 6461cea9efb74ff40a2c95579d4160cd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BedFrame
+    second: {fileID: -6798840126733954888, guid: 676b37f15ada3416e8460e29cb01602d, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Carpet.001
+    second: {fileID: -7806516636734824802, guid: 0c35bdaee2f8f3d409a13477df318224, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chair
+    second: {fileID: 4250217304232768913, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Duvet
+    second: {fileID: 1833264983932922233, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EndLamps
+    second: {fileID: -674624656565469416, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EndTables
+    second: {fileID: 2261036925466204140, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FRAME_01_Mat
+    second: {fileID: -3305859348840468796, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FRAME_02_Mat
+    second: {fileID: -360243253915858724, guid: 0c35bdaee2f8f3d409a13477df318224, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LAMP_PINK_mat
+    second: {fileID: -8468159599835130457, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Meshes
+    second: {fileID: 101373894340516989, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Painting
+    second: {fileID: -4063941617850863595, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pillows
+    second: {fileID: 7155051522043260022, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SIDEBOARD_Mat
+    second: {fileID: -1059131650905036463, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Simple grey marble
+    second: {fileID: 2100000, guid: 25de7e5596feee94a8a4163faf32bf14, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

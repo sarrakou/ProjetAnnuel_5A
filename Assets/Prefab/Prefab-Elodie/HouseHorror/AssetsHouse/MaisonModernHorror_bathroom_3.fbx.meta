@@ -3,7 +3,77 @@ guid: 6fc419ec75686df4bb69c6c6f1b0e06c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bath
+    second: {fileID: 4575046316866837397, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Carpet.002
+    second: {fileID: 3193837875279974444, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marble
+    second: {fileID: -5758955834144789715, guid: 6287de1d8ed1c43439e617cc55c500c4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shower
+    second: {fileID: -8420189413687768099, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sink
+    second: {fileID: 6278467140953041797, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SoapsShower
+    second: {fileID: -7592825804951846886, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SoapsSink
+    second: {fileID: 1712175813404709897, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Structure
+    second: {fileID: 1714937686816420233, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Toilet
+    second: {fileID: 1594048070546970594, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToiletRoll
+    second: {fileID: -481516930664085731, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToiletRug
+    second: {fileID: -4153381604527970885, guid: e317bacde5e0c254d9115b6d52c525e4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallSconces
+    second: {fileID: 2100000, guid: 689ccf3ce532182428b95690cdc013cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: 616d77b55e7e22244abcf636f2fc1437, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: miroir
+    second: {fileID: 2100000, guid: 7c6d2e32d8a191048aaa62564a22d5db, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +86,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

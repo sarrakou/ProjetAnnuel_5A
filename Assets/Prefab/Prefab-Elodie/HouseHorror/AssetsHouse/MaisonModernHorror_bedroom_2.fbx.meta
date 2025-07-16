@@ -3,7 +3,32 @@ guid: abb585b9f4329fb4c886f83dbbd5be80
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BedFrame
+    second: {fileID: -6798840126733954888, guid: 676b37f15ada3416e8460e29cb01602d, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Duvet
+    second: {fileID: 1833264983932922233, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EndLamps
+    second: {fileID: -674624656565469416, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EndTables
+    second: {fileID: 2261036925466204140, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pillows
+    second: {fileID: 7155051522043260022, guid: bdfffa9baa17efb469d1903f3fb89b1f, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +41,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

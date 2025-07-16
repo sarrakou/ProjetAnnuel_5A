@@ -3,7 +3,62 @@ guid: bca03e67ca863de4b839dd06d644b5d6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 3300k
+    second: {fileID: 4983970736818419062, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light grey marble
+    second: {fileID: -3086387016303368676, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Merged_materials
+    second: {fileID: -60488788118341644, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lumiere
+    second: {fileID: 1585901590389371489, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0166
+    second: {fileID: 6072027855146709147, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0167
+    second: {fileID: 1738157844251509640, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0169
+    second: {fileID: 48007138483622989, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0171
+    second: {fileID: 6618980005341130573, guid: ca2552185dc5abc4c8cde4a7ccdac755, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0175
+    second: {fileID: 2695200309712420009, guid: ca2552185dc5abc4c8cde4a7ccdac755, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0176
+    second: {fileID: 6710345976014084803, guid: ca2552185dc5abc4c8cde4a7ccdac755, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: py0177
+    second: {fileID: 2273912570056652233, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

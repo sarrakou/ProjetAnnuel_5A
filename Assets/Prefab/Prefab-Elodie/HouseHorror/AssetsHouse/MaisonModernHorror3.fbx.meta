@@ -3,7 +3,27 @@ guid: ec9c66738cfe2e949abd7c9ae3137e45
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Marble
+    second: {fileID: -5758955834144789715, guid: 6287de1d8ed1c43439e617cc55c500c4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White leather
+    second: {fileID: 3093451335427229594, guid: 6287de1d8ed1c43439e617cc55c500c4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: -1444460858095362738, guid: 6287de1d8ed1c43439e617cc55c500c4, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plafond white
+    second: {fileID: -1847210902438035129, guid: 6287de1d8ed1c43439e617cc55c500c4, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +36,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

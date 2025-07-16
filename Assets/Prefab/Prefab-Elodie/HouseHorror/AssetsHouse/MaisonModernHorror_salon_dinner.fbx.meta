@@ -3,7 +3,42 @@ guid: 987b0d6fbe2ec6f4094818235f16de60
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Carpet
+    second: {fileID: -1420874079755031372, guid: 68089a2e9eceb594fb0a42bc02eebf55, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DiningTable
+    second: {fileID: 8394448462728930191, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightChrome
+    second: {fileID: -4153491299929948841, guid: 68089a2e9eceb594fb0a42bc02eebf55, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Picture
+    second: {fileID: 7686731550617325426, guid: 68089a2e9eceb594fb0a42bc02eebf55, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plant
+    second: {fileID: 7364498864460103964, guid: 68089a2e9eceb594fb0a42bc02eebf55, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pot
+    second: {fileID: 6051022360936502160, guid: 68089a2e9eceb594fb0a42bc02eebf55, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lumiere
+    second: {fileID: 1585901590389371489, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +51,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

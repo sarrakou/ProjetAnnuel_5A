@@ -3,7 +3,62 @@ guid: d07f3da093bea4f4f895d079de0eba68
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat
+    second: {fileID: -2310514774154243031, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.1
+    second: {fileID: -749338713933554755, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.2
+    second: {fileID: 5200753494579969130, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.3
+    second: {fileID: 7209514650377959485, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.5
+    second: {fileID: 1792539558728417982, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.6
+    second: {fileID: -8373584595250389242, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paintings
+    second: {fileID: -7859458448775851826, guid: 6290d170ef34f3b4ca6017fbcd4b5c84, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: canape
+    second: {fileID: -6683778863475504237, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lumiere
+    second: {fileID: 1585901590389371489, guid: 0ab34181db7d1cf43a1049badf357d43, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: 616d77b55e7e22244abcf636f2fc1437, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tissusCanape
+    second: {fileID: -3554330035857643164, guid: 7ca4b92df6552ab45b0d859f8eea4440, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +71,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
