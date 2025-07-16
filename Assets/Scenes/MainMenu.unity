@@ -5902,7 +5902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainAudioMixer: {fileID: 0}
   musicAudioMixer: {fileID: 0}
-  gameSceneName: Main
+  gameSceneName: Main 1
   mainMenuPanel: {fileID: 1807717607}
   settingsPanel: {fileID: 1496083399}
 --- !u!1 &2037533251
