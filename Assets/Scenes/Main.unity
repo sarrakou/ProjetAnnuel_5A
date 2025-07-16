@@ -11443,8 +11443,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
-<<<<<<< Updated upstream
-=======
 --- !u!1 &1477653478
 GameObject:
   m_ObjectHideFlags: 0
@@ -11661,7 +11659,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
->>>>>>> Stashed changes
 --- !u!1 &1534334400
 GameObject:
   m_ObjectHideFlags: 0
@@ -14699,8 +14696,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938993049}
   m_Mesh: {fileID: -5053925668127403250, guid: 2a5368f976548454f8a6d19f28fe4a48, type: 3}
-<<<<<<< Updated upstream
-=======
 --- !u!1 &1949250194
 GameObject:
   m_ObjectHideFlags: 0
@@ -14756,7 +14751,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
->>>>>>> Stashed changes
 --- !u!1 &1974329495
 GameObject:
   m_ObjectHideFlags: 0
