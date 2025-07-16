@@ -937,19 +937,38 @@ private System.Collections.IEnumerator CreateAndFadeBlackScreen()
         Debug.Log($" Poupée spawnée pour être récupérée à la prochaine quête");
     }
 
-    void PlayDollAudio()
+    public void PlayDollAudio()
     {
-        if (audioSource == null || dollAudioClip == null)
+        if (spawnedDoll == null)
         {
-            Debug.LogWarning("[GameManager] AudioSource ou AudioClip manquant pour la poupée");
+            Debug.LogWarning("❌ Poupée introuvable.");
             return;
         }
 
-        audioSource.clip = dollAudioClip;
-        audioSource.volume = dollAudioVolume;
-        audioSource.Play();
-        Debug.Log(" Son de la poupée joué");
+        AudioSource source = spawnedDoll.GetComponent<AudioSource>();
+        if (source == null)
+        {
+            source = spawnedDoll.AddComponent<AudioSource>();
+            source.spatialBlend = 1f; // Audio 3D
+            source.minDistance = 1f;
+            source.maxDistance = 10f;
+            source.playOnAwake = false;
+        }
+
+        if (dollAudioClip != null)
+        {
+            source.clip = dollAudioClip;
+            source.volume = dollAudioVolume;
+            source.loop = false;
+            source.Play();
+            Debug.Log("🔊 Audio joué depuis la poupée.");
+        }
+        else
+        {
+            Debug.LogWarning("❌ Aucun clip audio assigné !");
+        }
     }
+
 
     void StopDollAudio()
     {
