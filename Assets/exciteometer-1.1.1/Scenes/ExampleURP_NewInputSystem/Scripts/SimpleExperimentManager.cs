@@ -210,7 +210,9 @@ public class SimpleExperimentManager : MonoBehaviour
             if (enablePhobiaDetection && PhobiaDetectionAPI.instance != null)
             {
                 PhobiaDetectionAPI.instance.StartBaselineCollection();
-                ShowPopupMessage($"Collecting baseline heart rate data for {baselineTimeSeconds} seconds...");
+                //ShowPopupMessage($"Collecting baseline heart rate data for {baselineTimeSeconds} seconds...");
+                StartCoroutine(ShowCountdown(baselineTimeSeconds, "Collecting baseline heart rate. Starting test in"));
+
             }
 
             // Update Video Count
@@ -507,31 +509,32 @@ public class SimpleExperimentManager : MonoBehaviour
             textMeshProUGUI.text = "Resting time, next test begins in...";
 
         // Empieza la cuenta regresiva visual
-        StartCoroutine(ShowCountdown(restingTimeSeconds));
+        StartCoroutine(ShowCountdown(restingTimeSeconds, "Resting time, next test starts in"));
+
 
         // Ya existente: espera y lanza siguiente test
         StartCoroutine(WaitingTime(restingTimeSeconds, LoadAndPlayExperimentalStage));
     }
 
-    IEnumerator ShowCountdown(float time)
+    IEnumerator ShowCountdown(float duration, string baseMessage)
     {
-        float remaining = time;
+        float timeLeft = duration;
 
-        while (remaining > 0)
+        while (timeLeft > 0)
         {
+            int seconds = Mathf.CeilToInt(timeLeft);
             if (textMeshProUGUI != null)
-            {
-                textMeshProUGUI.text = $"Resting time, next test begins in {Mathf.CeilToInt(remaining)} seconds...";
-            }
+                textMeshProUGUI.text = $"{baseMessage} {seconds}...";
 
-            yield return new WaitForSeconds(1f);
-            remaining -= 1f;
+            yield return new WaitForSecondsRealtime(1f);
+            timeLeft -= 1f;
         }
 
-        // Mensaje final antes de cambiar de escena
+        // Al terminar puedes limpiar el texto o dejarlo en blanco
         if (textMeshProUGUI != null)
-            textMeshProUGUI.text = "Starting next test...";
+            textMeshProUGUI.text = "";
     }
+
 
     IEnumerator WaitingTime(float time, Action action)
     {
