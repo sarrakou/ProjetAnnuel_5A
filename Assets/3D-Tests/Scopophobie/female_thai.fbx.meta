@@ -3,7 +3,12 @@ guid: d8d9db3512d4d2a42b6cdf8283b2684b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Thai_Female_Sandstone_v3
+    second: {fileID: 2100000, guid: 04d4490bdb7da214bb604760518e3cb7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

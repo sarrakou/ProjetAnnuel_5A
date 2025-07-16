@@ -44,7 +44,7 @@ public class CharacterControllerTest : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         lastPosition = transform.position;
     }
 
