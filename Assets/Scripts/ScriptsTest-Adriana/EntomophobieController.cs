@@ -9,75 +9,44 @@ public class EntomophobieController : MonoBehaviour
     public float spawnInterval = 0.1f;
     public int insectsPerBatch = 3;
 
-    [Header("Intro Audio")]
-    public List<AudioSource> introSounds;  // Sonidos de introducción
-    public float delayBeforeSpawn = 3f;    // Espera antes de iniciar spawn
-
-    [Header("Looping Insect Audio")]
-    public AudioSource insectLoopAudio;    // Sonido continuo de insectos
-    public float maxVolume = 1f;
-
-    [Header("Local Sound Effects")]
-    public List<AudioSource> randomScareSounds;  // Sonidos localizados que se activan aleatoriamente
-    public float scareSoundInterval = 2f;
+    [Header("Audio")]
+    public AudioSource insectAudioSource;     // El AudioSource con el sonido de insectos
+    public float maxVolume = 1.0f;             // Volumen final al tener todos los insectos activos
 
     private Coroutine spawnCoroutine;
-    private Coroutine scareCoroutine;
 
     void OnEnable()
     {
-        Debug.Log("ENTOMOPHOBIE: Activando escena...");
-
-        // Apagar todos los insectos
+        Debug.Log("entra insects");
+        // Apagar insectos
         foreach (var insect in insects)
-            if (insect != null) insect.SetActive(false);
-
-        // Detener audio principal si estaba sonando
-        if (insectLoopAudio != null)
         {
-            insectLoopAudio.volume = 0f;
-            insectLoopAudio.Stop();
+            if (insect != null)
+                insect.SetActive(false);
         }
 
-        // Reproducir intro sounds
-        foreach (var sound in introSounds)
-            if (sound != null) sound.Play();
+        // Reiniciar audio
+        if (insectAudioSource != null)
+        {
+            insectAudioSource.volume = 0f;
+            insectAudioSource.Play();
+        }
 
-        // Iniciar proceso completo
-        StartCoroutine(FullSequence());
+        spawnCoroutine = StartCoroutine(SpawnInsects());
     }
 
     void OnDisable()
     {
         if (spawnCoroutine != null)
-            StopCoroutine(spawnCoroutine);
-        if (scareCoroutine != null)
-            StopCoroutine(scareCoroutine);
-
-        if (insectLoopAudio != null)
-            insectLoopAudio.Stop();
-
-        foreach (var sound in randomScareSounds)
-            if (sound != null) sound.Stop();
-    }
-
-    IEnumerator FullSequence()
-    {
-        // Esperar hasta que terminen los sonidos intro o delay manual
-        yield return new WaitForSeconds(delayBeforeSpawn);
-
-        // Iniciar audio principal
-        if (insectLoopAudio != null)
         {
-            insectLoopAudio.Play();
-            insectLoopAudio.volume = 0f;
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
         }
 
-        // Iniciar aparición de insectos
-        spawnCoroutine = StartCoroutine(SpawnInsects());
-
-        // Iniciar sonidos aleatorios
-        scareCoroutine = StartCoroutine(PlayScareSounds());
+        if (insectAudioSource != null)
+        {
+            insectAudioSource.Stop();
+        }
     }
 
     IEnumerator SpawnInsects()
@@ -91,38 +60,18 @@ public class EntomophobieController : MonoBehaviour
             {
                 if (insects[index] != null)
                     insects[index].SetActive(true);
+
                 index++;
             }
 
-            // Escalar volumen progresivamente
-            if (insectLoopAudio != null)
+            // Escalar volumen proporcionalmente
+            if (insectAudioSource != null)
             {
                 float progress = (float)index / total;
-                insectLoopAudio.volume = Mathf.Lerp(0f, maxVolume, progress);
+                insectAudioSource.volume = Mathf.Lerp(0f, maxVolume, progress);
             }
 
             yield return new WaitForSeconds(spawnInterval);
-        }
-    }
-
-    IEnumerator PlayScareSounds()
-    {
-        yield return new WaitForSeconds(1f); // Pequeño delay inicial
-
-        while (true)
-        {
-            if (randomScareSounds.Count > 0)
-            {
-                // Elegir un sonido al azar
-                int randIndex = Random.Range(0, randomScareSounds.Count);
-                AudioSource sound = randomScareSounds[randIndex];
-                if (sound != null && !sound.isPlaying)
-                {
-                    sound.Play();
-                }
-            }
-
-            yield return new WaitForSeconds(scareSoundInterval);
         }
     }
 }
