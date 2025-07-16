@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 8b3eb0c8fb962374180a7f8d5a4d27e8
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 5820d24aa5b5b1140bdc66951a7ed69e
+  - enabled: 1
+    path: Assets/Scenes/Scenes-Elodie/MainGameHorror.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
