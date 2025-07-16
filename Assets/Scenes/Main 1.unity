@@ -613,6 +613,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2027043007, guid: 910ac157030bfbc46b03056cc501b342, type: 3}
+      propertyPath: objectsToTrack.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1999586636791462633, guid: 910ac157030bfbc46b03056cc501b342, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2846,14 +2850,15 @@ GameObject:
   m_Component:
   - component: {fileID: 339041196}
   - component: {fileID: 339041197}
-  - component: {fileID: 339041198}
+  - component: {fileID: 339041199}
+  - component: {fileID: 339041200}
   m_Layer: 0
   m_Name: EntomophobieStage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &339041196
 Transform:
   m_ObjectHideFlags: 0
@@ -2896,17 +2901,38 @@ MonoBehaviour:
   - {fileID: 2096180967}
   - {fileID: 1542382634}
   - {fileID: 1099208227}
-  spawnInterval: 3.5
+  spawnInterval: 3
   insectsPerBatch: 1
   introSounds: []
   delayBeforeSpawn: 3
-  insectLoopAudio: {fileID: 339041198}
+  insectLoopAudio: {fileID: 0}
   maxVolume: 1
   randomScareSounds:
-  - {fileID: 1251286335}
-  - {fileID: 1490255189}
+  - {fileID: 339041200}
   scareSoundInterval: 2
---- !u!82 &339041198
+--- !u!114 &339041199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339041195}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331d8a238738a2e4697df66cd7114c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scareClips:
+  - {fileID: 8300000, guid: 3bfa42bad917e084c95e6463080dc8eb, type: 3}
+  - {fileID: 8300000, guid: f1997d42f6105174aadb65f618df2edb, type: 3}
+  - {fileID: 8300000, guid: 183c52529b6b5ad43bd29485ed4cc267, type: 3}
+  minDelay: 3
+  maxDelay: 7
+  soundRadius: 5
+  fadeOutDuration: 2
+  player: {fileID: 767925308}
+  audioPrefab: {fileID: 5537250239568192000, guid: 2ef3b59e56715694bb236574f4c879df, type: 3}
+--- !u!82 &339041200
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2916,12 +2942,12 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1cc7202a233d63c4bb9396987beef328, type: 3}
-  m_Resource: {fileID: 8300000, guid: 1cc7202a233d63c4bb9396987beef328, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f1997d42f6105174aadb65f618df2edb, type: 3}
+  m_Resource: {fileID: 8300000, guid: f1997d42f6105174aadb65f618df2edb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4180,7 +4206,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -13598,7 +13624,6 @@ MonoBehaviour:
   - {fileID: 2105004887}
   - {fileID: 181959398}
   - {fileID: 1073318963}
-  scarySound: {fileID: 1613926720}
   blinkInterval: 0.3
   totalBlinkTime: 10
   spotlightOffDelay: 10
@@ -13659,7 +13684,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -13934,7 +13959,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 875460713, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -25.433014
+      value: -25.433044
       objectReference: {fileID: 0}
     - target: {fileID: 875460713, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14365,6 +14390,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.029927628, y: 0.0016366496, z: 0.029999992}
   m_Center: {x: -0.000000011175871, y: -0.00016607932, z: -0.00465625}
+--- !u!1 &1761103344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1761103345}
+  - component: {fileID: 1761103346}
+  m_Layer: 0
+  m_Name: ReportSaver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1761103345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761103344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 842.01825, y: 514.6532, z: -229.47993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1761103346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761103344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ad01038c3e1714d8b6a53b5334e2bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSceneName: MainGameHorror
+  fileName: final_game_report.json
 --- !u!1 &1773560215
 GameObject:
   m_ObjectHideFlags: 0
@@ -15434,6 +15505,7 @@ MonoBehaviour:
   rotationSpeed: 5
   interval: 2
   statuesPerWave: 2
+  turnSound: {fileID: 1810652164}
 --- !u!82 &1810652164
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15446,10 +15518,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0634138d2099ccf44bca113bfe8d705a, type: 3}
   m_Resource: {fileID: 8300000, guid: 0634138d2099ccf44bca113bfe8d705a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -15491,7 +15563,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -17835,7 +17907,7 @@ Transform:
   m_GameObject: {fileID: 919132148799467237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.26, y: -0.821, z: -4.96}
+  m_LocalPosition: {x: -3.26, y: -0.821, z: -6.04}
   m_LocalScale: {x: 62.358425, y: 62.35843, z: 62.35843}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18301,7 +18373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7843245703181902168, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -180
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7843245703252948726, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -18310,6 +18382,38 @@ PrefabInstance:
     - target: {fileID: 7843245703252948726, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 69.999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7843245702777577656}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnOkButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SimpleExperimentManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7843245703541829353, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: nextSceneName
+      value: ProceduralHouse
       objectReference: {fileID: 0}
     - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: textMeshProUGUI
@@ -18324,9 +18428,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1534334400}
     - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: restingTimeSeconds
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: trainingGameObject
       value: 
       objectReference: {fileID: 674021359}
+    - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+      propertyPath: baselineTimeSeconds
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: experimentalStageSeconds
       value: 35
@@ -18359,6 +18471,17 @@ PrefabInstance:
       addedObject: {fileID: 1312733487}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+--- !u!114 &7843245702777577656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
+  m_PrefabInstance: {fileID: 7843245702777577655}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427d26dc96f44f546afc545ef771f765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8646264373231015732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18533,3 +18656,4 @@ SceneRoots:
   - {fileID: 961110675}
   - {fileID: 767925305}
   - {fileID: 1773560219}
+  - {fileID: 1761103345}

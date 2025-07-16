@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using ExciteOMeter;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 /*
 * Enhanced SimpleExperimentManager with integrated phobia detection API.
@@ -48,6 +49,8 @@ public class SimpleExperimentManager : MonoBehaviour
     public GameObject popupMessages;
     public TextMeshProUGUI popupMessageText;
     public GameObject popupForceEndOfExperiment;
+    public string nextSceneName = "ProceduralHouse";
+    public bool popupOkButton = false;
 
     [Header("Phobia Detection")]
     [SerializeField] private bool enablePhobiaDetection = true;
@@ -294,6 +297,7 @@ public class SimpleExperimentManager : MonoBehaviour
             }
 
             ShowPopupMessage(resultMessage);
+            popupOkButton = true;
             SavePhobiaResults.SaveResultsToJson();
         }
 
@@ -304,6 +308,7 @@ public class SimpleExperimentManager : MonoBehaviour
             if (!enablePhobiaDetection)
             {
                 ShowPopupMessage("The experiment has finished successfully. Data can be accessed in the offline analysis.");
+                
             }
         }
     }
@@ -598,6 +603,19 @@ public class SimpleExperimentManager : MonoBehaviour
     {
         popupMessageText.text = text;
         popupMessages.SetActive(true);
+    }
+    public void OnOkButtonClicked()
+    {
+        Debug.Log("changescene : " + popupOkButton);
+        if (popupOkButton)
+        {
+            popupMessages.SetActive(false);
+            if (!string.IsNullOrEmpty(nextSceneName))
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
+        }
+        
     }
 
     ////////////////////////

@@ -5,8 +5,7 @@ public class NyctophobiaLightsAudio : MonoBehaviour
 {
     public Light flashlight;            // Linterna que titila
     public Light[] sceneLights;         // Array de luces tipo spotlight
-    public AudioSource scarySound;      // Sonido de miedo
-
+   
     public float blinkInterval = 0.3f;       // Intervalo titileo linterna y spots
     public float totalBlinkTime = 5f;        // Duración titileo linterna y spots
     public float spotlightOffDelay = 1f;     // Tiempo entre apagado luces spots
@@ -66,11 +65,7 @@ public class NyctophobiaLightsAudio : MonoBehaviour
             }
         }
 
-        // Detener sonido si sigue activo
-        if (scarySound != null && scarySound.isPlaying)
-        {
-            scarySound.Stop();
-        }
+        
     }
 
     IEnumerator RunNyctophobiaSequence()
@@ -109,7 +104,5 @@ public class NyctophobiaLightsAudio : MonoBehaviour
             yield return new WaitForSeconds(spotlightOffDelay);
         }
 
-        if (scarySound != null)
-            scarySound.Play();
     }
 }
