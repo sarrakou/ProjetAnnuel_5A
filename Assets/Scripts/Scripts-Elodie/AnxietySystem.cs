@@ -351,12 +351,13 @@ public class AnxietySystem : MonoBehaviour
     {
         if (screenPulseOverlay == null) return;
 
-      
-        float pulseInterval = 60f / currentHeartRate; 
+        // Calculer l'intervalle entre les pulsions basé sur le rythme cardiaque
+        float pulseInterval = 60f / currentHeartRate; // Intervalle en secondes
 
+        // Vérifier si le rythme cardiaque est assez élevé pour déclencher les pulsions
         if (currentHeartRate > pulseStartHeartRate)
         {
-         
+            // Déclencher une nouvelle pulsion si l'intervalle est écoulé
             if (Time.time - lastPulseTime >= pulseInterval)
             {
                 lastPulseTime = Time.time;
@@ -364,32 +365,33 @@ public class AnxietySystem : MonoBehaviour
             }
         }
 
-   
+        // Animer la pulsion en cours
         if (isPulsing)
         {
             pulseTimer += Time.deltaTime;
-         
+            
+            // Calculer l'intensité de la pulsion basée sur le rythme cardiaque
             float pulseIntensity = (currentHeartRate - pulseStartHeartRate) / (200f - pulseStartHeartRate);
             pulseIntensity = Mathf.Clamp01(pulseIntensity);
             
-      
+            // Utiliser une courbe d'animation pour la pulsion (rapide montée, descente plus lente)
             float pulseProgress = pulseTimer / pulseDuration;
             float pulseAlpha = 0f;
             
-            if (pulseProgress < 0.2f)
+            if (pulseProgress < 0.2f) // Montée rapide (20% du temps)
             {
                 pulseAlpha = Mathf.Lerp(0f, maxPulseOpacity * pulseIntensity, pulseProgress / 0.2f);
             }
-            else
+            else // Descente plus lente (80% du temps)
             {
                 float fadeProgress = (pulseProgress - 0.2f) / 0.8f;
                 pulseAlpha = Mathf.Lerp(maxPulseOpacity * pulseIntensity, 0f, fadeProgress);
             }
             
-        
+            // Appliquer la couleur avec l'alpha calculé
             screenPulseOverlay.color = new Color(pulseColor.r, pulseColor.g, pulseColor.b, pulseAlpha);
             
-         
+            // Arrêter la pulsion quand elle est terminée
             if (pulseTimer >= pulseDuration)
             {
                 isPulsing = false;
@@ -399,6 +401,7 @@ public class AnxietySystem : MonoBehaviour
         }
         else if (currentHeartRate <= pulseStartHeartRate)
         {
+            // Assurer que l'overlay est transparent quand le rythme cardiaque est normal
             screenPulseOverlay.color = new Color(pulseColor.r, pulseColor.g, pulseColor.b, 0f);
         }
     }
@@ -419,23 +422,23 @@ public class AnxietySystem : MonoBehaviour
     {
         if (heartbeatAudioSource == null || heartbeatClip == null) return;
 
-       
-        float heartbeatInterval = 60f / currentHeartRate; 
+        // Calculer l'intervalle entre les battements basé sur le BPM
+        float heartbeatInterval = 60f / currentHeartRate; // Intervalle en secondes
         
-       
+        // Vérifier si c'est le moment de jouer un battement
         if (Time.time - lastHeartbeatTime >= heartbeatInterval)
         {
             lastHeartbeatTime = Time.time;
             
-          
+            // Jouer le battement seulement si le rythme dépasse le seuil
             if (currentHeartRate > heartbeatVolumeThreshold)
             {
-               
+                // Calculer le volume basé sur le rythme cardiaque
                 float volumeIntensity = (currentHeartRate - heartbeatVolumeThreshold) / (200f - heartbeatVolumeThreshold);
                 volumeIntensity = Mathf.Clamp01(volumeIntensity);
                 
                 heartbeatAudioSource.volume = volumeIntensity * maxHeartbeatVolume;
-                heartbeatAudioSource.pitch = 1f + (volumeIntensity * 0.3f);
+                heartbeatAudioSource.pitch = 1f + (volumeIntensity * 0.3f); // Légère augmentation du pitch
                 heartbeatAudioSource.Play();
             }
         }
@@ -455,36 +458,36 @@ public class AnxietySystem : MonoBehaviour
             return;
         }
 
-      
-        float currentBreathingRate = baseBreathingRate; 
-        float currentBreathingVolume = baseBreathingVolume;
-        float currentBreathingPitch = breathingPitchMin;
+        // Calculer la fréquence de respiration avec progression douce
+        float currentBreathingRate = baseBreathingRate; // Commencer par la fréquence de base (plus lente)
+        float currentBreathingVolume = baseBreathingVolume; // Volume de base très discret
+        float currentBreathingPitch = breathingPitchMin; // Pitch grave au repos
         
-      
+        // Accélération progressive dès que le seuil est dépassé
         if (currentHeartRate > breathingAccelerationThreshold)
         {
-          
+            // Facteur d'accélération progressif et plus sensible
             float accelerationFactor = (currentHeartRate - breathingAccelerationThreshold) / (180f - breathingAccelerationThreshold);
             accelerationFactor = Mathf.Clamp01(accelerationFactor);
             
-           
-            float smoothAcceleration = Mathf.Pow(accelerationFactor, 1.5f); 
+            // Courbe d'accélération plus douce au début, plus rapide à la fin
+            float smoothAcceleration = Mathf.Pow(accelerationFactor, 1.5f); // Courbe exponentielle douce
             
-         
+            // Appliquer l'accélération à tous les paramètres
             currentBreathingRate = Mathf.Lerp(baseBreathingRate, maxBreathingRate, smoothAcceleration);
             currentBreathingVolume = Mathf.Lerp(baseBreathingVolume, maxBreathingVolume, smoothAcceleration);
-            currentBreathingPitch = Mathf.Lerp(breathingPitchMin, breathingPitchMax, smoothAcceleration * 0.8f);
+            currentBreathingPitch = Mathf.Lerp(breathingPitchMin, breathingPitchMax, smoothAcceleration * 0.8f); // Pitch change plus subtil
         }
         
-       
-        float breathingInterval = 60f / currentBreathingRate; 
+        // Calculer l'intervalle de respiration
+        float breathingInterval = 60f / currentBreathingRate; // Intervalle en secondes
         
-  
+        // Vérifier si c'est le moment de jouer une respiration
         if (Time.time - lastBreathingTime >= breathingInterval)
         {
             lastBreathingTime = Time.time;
             
-         
+            // Appliquer les paramètres calculés
             breathingAudioSource.volume = currentBreathingVolume;
             breathingAudioSource.clip = breathingClip;
             breathingAudioSource.pitch = currentBreathingPitch;
@@ -497,17 +500,17 @@ public class AnxietySystem : MonoBehaviour
 
     private float CalculateAnxietyIncreaseRate()
     {
-      
+        // Si le rythme cardiaque dépasse le seuil, augmentation accélérée
         if (currentHeartRate > heartRateThreshold)
         {
-            
+            // Plus le rythme cardiaque est élevé, plus l'anxiété monte vite
             float exceedAmount = currentHeartRate - heartRateThreshold;
-            float multiplier = 1f + (exceedAmount / 50f);
+            float multiplier = 1f + (exceedAmount / 50f); // Multiplier qui augmente progressivement
             return baseIncreaseRate + (acceleratedIncreaseRate * multiplier);
         }
         else
         {
-            
+            // Augmentation normale (plus lente)
             return baseIncreaseRate;
         }
     }
@@ -516,18 +519,18 @@ public class AnxietySystem : MonoBehaviour
     {
         if (!isInCriticalDanger && currentHeartRate >= criticalHeartRate)
         {
-           
+            // Entrer en danger critique
             isInCriticalDanger = true;
             gameWasPaused = Time.timeScale > 0;
             
-           
+            // Pause le jeu
             Time.timeScale = 0f;
             
-         
+            // Afficher l'écran noir
             if (criticalDangerPanel != null)
                 criticalDangerPanel.SetActive(true);
             
-          
+            // Désactiver les contrôles du joueur
             if (characterMovement != null)
                 characterMovement.enabled = false;
             
@@ -535,18 +538,18 @@ public class AnxietySystem : MonoBehaviour
         }
         else if (isInCriticalDanger && currentHeartRate <= normalHeartRate)
         {
-            
+            // Sortir du danger critique
             isInCriticalDanger = false;
             
-         
+            // Reprendre le jeu si il était en cours
             if (gameWasPaused)
                 Time.timeScale = 1f;
             
-           
+            // Masquer l'écran noir
             if (criticalDangerPanel != null)
                 criticalDangerPanel.SetActive(false);
             
-           
+            // Réactiver les contrôles du joueur
             if (characterMovement != null)
                 characterMovement.enabled = true;
             
@@ -563,7 +566,7 @@ public class AnxietySystem : MonoBehaviour
     {
         EoM_Events.OnDataReceived -= UpdateHeartRateDisplay;
         
-     
+        // Réinitialiser tous les effets quand le script est désactivé
         ResetAllEffects();
     }
 
@@ -584,49 +587,52 @@ public class AnxietySystem : MonoBehaviour
         simulationTimer += Time.deltaTime;
         heartRateUpdateTimer += Time.deltaTime;
 
+        // Update target heart rate every 3 seconds (plus lent)
         if (heartRateUpdateTimer >= 3f)
         {
             heartRateUpdateTimer = 0f;
 
-        
+            // Base heart rate around 70 BPM
             float baseHeartRate = 70f;
 
-          
+            // Cycle plus long et modéré sur 30 secondes
             float currentCycleTime = simulationTimer % 30f;
             
-            if (currentCycleTime < 8f) 
+            if (currentCycleTime < 8f) // Repos prolongé (8 secondes)
             {
                 targetHeartRate = baseHeartRate + Random.Range(-3f, 3f); // 67-73 BPM
             }
-            else if (currentCycleTime < 15f) 
+            else if (currentCycleTime < 15f) // Stress très léger (7 secondes)
             {
                 targetHeartRate = baseHeartRate + 15f + Random.Range(-3f, 3f); // 82-88 BPM
             }
-            else if (currentCycleTime < 22f) 
+            else if (currentCycleTime < 22f) // Stress modéré (7 secondes)
             {
                 targetHeartRate = baseHeartRate + 30f + Random.Range(-5f, 5f); // 95-105 BPM
             }
-            else if (currentCycleTime < 26f) 
+            else if (currentCycleTime < 26f) // Pic de stress (4 secondes)
             {
                 targetHeartRate = baseHeartRate + 50f + Random.Range(-5f, 10f); // 115-130 BPM
             }
-            else 
+            else // Retour progressif au calme (4 secondes)
             {
                 targetHeartRate = baseHeartRate + Random.Range(-5f, 5f); // 65-75 BPM
             }
             
+            // Limites plus conservatrices
             targetHeartRate = Mathf.Clamp(targetHeartRate, 60f, 140f);
         }
 
-      
-        float lerpSpeed = 0.8f;
+        // Transition encore plus lente et douce
+        float lerpSpeed = 0.8f; // Beaucoup plus lent pour des transitions très progressives
         currentHeartRate = Mathf.Lerp(currentHeartRate, targetHeartRate, Time.deltaTime * lerpSpeed);
 
         breathingRate = currentHeartRate / 4f;
 
         heartRateText.text = $"{Mathf.RoundToInt(currentHeartRate)} BPM";
         breathingRateText.text = $"{Mathf.RoundToInt(breathingRate)} Breaths/Min";
-
+        
+        // Debug pour voir les phases
         string currentPhase = "";
         float debugCycleTime = simulationTimer % 30f;
         if (debugCycleTime < 8f) currentPhase = "Repos";
@@ -669,7 +675,7 @@ public class AnxietySystem : MonoBehaviour
 
     void ResetAllEffects()
     {
-       
+        // Réinitialiser les intensités des lumières
         if (lightsInitialized && allLights != null && originalLightIntensities != null)
         {
             for (int i = 0; i < allLights.Length && i < originalLightIntensities.Length; i++)
