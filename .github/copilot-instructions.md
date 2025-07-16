@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: pile
+  - Name: Journal
   - Tag: Untagged
-  - Layer: Interactable
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
