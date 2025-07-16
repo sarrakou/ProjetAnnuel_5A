@@ -80,8 +80,8 @@ public class MainMenu : MonoBehaviour
     // Settings button function
     public void Settings()
     {
-        // Add your settings panel logic here
-        Debug.Log("Settings opened");
+        settingsPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
     }
 
     // Play button function
