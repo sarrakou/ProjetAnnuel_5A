@@ -1939,7 +1939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9c9598a0e07943d499f43ab8abf2dc00, type: 3}
       propertyPath: m_Name
-      value: boitedepillule
+      value: pillule
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9c9598a0e07943d499f43ab8abf2dc00, type: 3}
       propertyPath: m_Layer
@@ -3519,7 +3519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bb5ab8cebde9ad94491522f1628a6155, type: 3}
       propertyPath: m_Name
-      value: paperOld
+      value: journal
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bb5ab8cebde9ad94491522f1628a6155, type: 3}
       propertyPath: m_Layer
@@ -3687,7 +3687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c0707909aa6352a49bd089042a4298b1, type: 3}
       propertyPath: m_Name
-      value: battery
+      value: pile
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c0707909aa6352a49bd089042a4298b1, type: 3}
       propertyPath: m_Layer
