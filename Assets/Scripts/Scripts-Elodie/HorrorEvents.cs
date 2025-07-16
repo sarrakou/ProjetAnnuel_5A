@@ -46,25 +46,12 @@ public class HorrorEvents : MonoBehaviour
     private Dictionary<PhobiaType, List<Action<Vector3>>> phobiaEvents;
     private HashSet<string> playedEvents = new HashSet<string>();
     
-    [Header("Prefabs par Phobie")]
-    [Tooltip("Prefab à spawner pour Entomophobie")]
-    public string entomophobiePrefabName = "EntomophobiePrefab";
-    
-    [Tooltip("Prefab à spawner pour Nyctophobie")]
-    public string nyctophobiePrefabName = "NyctophobiePrefab";
-    
-    [Tooltip("Prefab à spawner pour Scopophobie")]
-    public string scopophobiePrefabName = "ScopophobiePrefab";
-    
-    [Tooltip("Prefab à spawner pour Claustrophobie")]
-    public string claustrophobiePrefabName = "ClaustrophobiePrefab";
-    
-    [Header("Configuration Spawn")]
-    [Tooltip("Position de spawn par défaut relative au joueur")]
-    public Vector3 defaultSpawnOffset = new Vector3(0, 0, 2);
-    
-    [Tooltip("Durée d'affichage du prefab")]
-    public float prefabDisplayDuration = 5f;
+    [Header("Prefabs Resources Paths")]
+    public string entomophobiePrefabPath = "EventsEntomophobie_";
+    public string nyctophobiePrefabPath = "EventsNyctophobie";
+    public string scopophobiePrefabPath = "EventsScopophobie";
+    public string claustrophobiePrefabPath = "EventsClaustrophobie";
+    private GameObject activatedPrefab;
     private void Awake()
     {
         playerCamera = Camera.main;
@@ -76,7 +63,7 @@ public class HorrorEvents : MonoBehaviour
         
         // Lecture unique du JSON au démarrage
         LoadPhobiaFromJson();
-        
+        ActivatePhobiaPrefab();
         InitializePhobiaEvents();
         
         Debug.Log($"🎯 Système initialisé avec la phobie : {currentPhobia}");
@@ -204,7 +191,46 @@ private void LoadPhobiaFromJson()
            Event_TightSpace
         };
     }
-
+    private void ActivatePhobiaPrefab()
+    {
+        string prefabPath = GetPrefabPath(currentPhobia);
+        
+        if (string.IsNullOrEmpty(prefabPath))
+        {
+            Debug.LogWarning($"⚠️ Aucun chemin de prefab défini pour {currentPhobia}");
+            return;
+        }
+        
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        
+        if (prefab == null)
+        {
+            Debug.LogError($"❌ Prefab non trouvé dans Resources : {prefabPath}");
+            return;
+        }
+        
+        // Instancier le prefab
+        activatedPrefab = Instantiate(prefab);
+        
+        Debug.Log($"✅ Prefab activé pour {currentPhobia} : {prefab.name}");
+    }
+    
+    private string GetPrefabPath(PhobiaType phobia)
+    {
+        switch (phobia)
+        {
+            case PhobiaType.Entomophobie:
+                return entomophobiePrefabPath;
+            case PhobiaType.Nyctophobie:
+                return nyctophobiePrefabPath;
+            case PhobiaType.Scopophobie:
+                return scopophobiePrefabPath;
+            case PhobiaType.Claustrophobie:
+                return claustrophobiePrefabPath;
+            default:
+                return null;
+        }
+    }
     public void TriggerRandomEvent(Vector3 position)
     {
         if (!phobiaEvents.ContainsKey(currentPhobia))
@@ -1283,264 +1309,7 @@ bool IsPositionTooClose(Vector3 newPosition, List<Vector3> usedPositions, float 
             Debug.LogError($"❌ Erreur lors de l'affichage des statistiques : {e.Message}");
         }
     }
-public void SpawnPhobiaPrefab(Vector3 spawnPosition)
-{
-    string prefabName = GetPrefabNameForCurrentPhobia();
-    
-    if (string.IsNullOrEmpty(prefabName))
-    {
-        Debug.LogWarning($"⚠️ Aucun prefab configuré pour la phobie : {currentPhobia}");
-        return;
-    }
-    
-    StartCoroutine(SpawnPhobiaPrefabCoroutine(prefabName, spawnPosition));
-}
 
-// Méthode pour spawner un prefab pour une phobie spécifique
-public void SpawnPrefabForPhobia(PhobiaType phobia, Vector3 spawnPosition)
-{
-    string prefabName = GetPrefabNameForPhobia(phobia);
-    
-    if (string.IsNullOrEmpty(prefabName))
-    {
-        Debug.LogWarning($"⚠️ Aucun prefab configuré pour la phobie : {phobia}");
-        return;
-    }
-    
-    StartCoroutine(SpawnPhobiaPrefabCoroutine(prefabName, spawnPosition));
-    Debug.Log($"🎭 Spawn forcé du prefab {prefabName} pour {phobia}");
-}
-
-// Méthode pour spawner devant le joueur
-public void SpawnPhobiaPrefabInFrontOfPlayer()
-{
-    if (playerCamera == null)
-    {
-        Debug.LogWarning("⚠️ Camera joueur non trouvée !");
-        return;
-    }
-    
-    Vector3 spawnPosition = playerCamera.transform.position + playerCamera.transform.forward * defaultSpawnOffset.z + 
-                           playerCamera.transform.up * defaultSpawnOffset.y + 
-                           playerCamera.transform.right * defaultSpawnOffset.x;
-    
-    SpawnPhobiaPrefab(spawnPosition);
-}
-
-// Méthode pour spawner comme enfant de la caméra (suit le joueur)
-public void SpawnPhobiaPrefabAttachedToPlayer()
-{
-    if (playerCamera == null)
-    {
-        Debug.LogWarning("⚠️ Camera joueur non trouvée !");
-        return;
-    }
-    
-    string prefabName = GetPrefabNameForCurrentPhobia();
-    
-    if (string.IsNullOrEmpty(prefabName))
-    {
-        Debug.LogWarning($"⚠️ Aucun prefab configuré pour la phobie : {currentPhobia}");
-        return;
-    }
-    
-    StartCoroutine(SpawnAttachedPrefabCoroutine(prefabName));
-}
-
-// Obtenir le nom du prefab pour la phobie actuelle
-private string GetPrefabNameForCurrentPhobia()
-{
-    return GetPrefabNameForPhobia(currentPhobia);
-}
-
-// Obtenir le nom du prefab pour une phobie spécifique
-private string GetPrefabNameForPhobia(PhobiaType phobia)
-{
-    switch (phobia)
-    {
-        case PhobiaType.Entomophobie:
-            return entomophobiePrefabName;
-        case PhobiaType.Nyctophobie:
-            return nyctophobiePrefabName;
-        case PhobiaType.Scopophobie:
-            return scopophobiePrefabName;
-        case PhobiaType.Claustrophobie:
-            return claustrophobiePrefabName;
-        default:
-            Debug.LogWarning($"⚠️ Phobie non reconnue : {phobia}");
-            return null;
-    }
-}
-
-// Coroutine pour spawner un prefab à une position donnée
-private IEnumerator SpawnPhobiaPrefabCoroutine(string prefabName, Vector3 spawnPosition)
-{
-    GameObject prefab = Resources.Load<GameObject>(prefabName);
-    
-    if (prefab == null)
-    {
-        Debug.LogWarning($"⚠️ Prefab '{prefabName}' non trouvé dans Resources !");
-        yield break;
-    }
-    
-    GameObject spawnedPrefab = Instantiate(prefab, spawnPosition, Quaternion.identity);
-    Debug.Log($"✨ Prefab {prefabName} spawné à {spawnPosition} pour {currentPhobia}");
-    
-    // Attendre la durée d'affichage
-    yield return new WaitForSeconds(prefabDisplayDuration);
-    
-    // Détruire le prefab
-    if (spawnedPrefab != null)
-    {
-        Destroy(spawnedPrefab);
-        Debug.Log($"🗑️ Prefab {prefabName} détruit");
-    }
-}
-
-// Coroutine pour spawner un prefab attaché à la caméra
-private IEnumerator SpawnAttachedPrefabCoroutine(string prefabName)
-{
-    GameObject prefab = Resources.Load<GameObject>(prefabName);
-    
-    if (prefab == null)
-    {
-        Debug.LogWarning($"⚠️ Prefab '{prefabName}' non trouvé dans Resources !");
-        yield break;
-    }
-    
-    GameObject spawnedPrefab = Instantiate(prefab);
-    spawnedPrefab.transform.SetParent(playerCamera.transform);
-    spawnedPrefab.transform.localPosition = defaultSpawnOffset;
-    spawnedPrefab.transform.localRotation = Quaternion.identity;
-    spawnedPrefab.transform.localScale = Vector3.one;
-    
-    Debug.Log($"✨ Prefab {prefabName} attaché à la caméra pour {currentPhobia}");
-    
-    // Attendre la durée d'affichage
-    yield return new WaitForSeconds(prefabDisplayDuration);
-    
-    // Détruire le prefab
-    if (spawnedPrefab != null)
-    {
-        Destroy(spawnedPrefab);
-        Debug.Log($"🗑️ Prefab {prefabName} détruit");
-    }
-}
-
-// Méthodes de test pour l'inspecteur
-[ContextMenu("Spawn Prefab Phobie Actuelle")]
-public void TestSpawnCurrentPhobiaPrefab()
-{
-    SpawnPhobiaPrefabInFrontOfPlayer();
-}
-
-[ContextMenu("Spawn Prefab Entomophobie")]
-public void TestSpawnEntomophobiePrefab()
-{
-    Vector3 testPosition = playerCamera != null ? 
-        playerCamera.transform.position + playerCamera.transform.forward * 3f : 
-        Vector3.forward * 3f;
-    SpawnPrefabForPhobia(PhobiaType.Entomophobie, testPosition);
-}
-
-[ContextMenu("Spawn Prefab Nyctophobie")]
-public void TestSpawnNyctophobiePrefab()
-{
-    Vector3 testPosition = playerCamera != null ? 
-        playerCamera.transform.position + playerCamera.transform.forward * 3f : 
-        Vector3.forward * 3f;
-    SpawnPrefabForPhobia(PhobiaType.Nyctophobie, testPosition);
-}
-
-[ContextMenu("Spawn Prefab Scopophobie")]
-public void TestSpawnScopophobiePrefab()
-{
-    Vector3 testPosition = playerCamera != null ? 
-        playerCamera.transform.position + playerCamera.transform.forward * 3f : 
-        Vector3.forward * 3f;
-    SpawnPrefabForPhobia(PhobiaType.Scopophobie, testPosition);
-}
-
-[ContextMenu("Spawn Prefab Claustrophobie")]
-public void TestSpawnClaustrophobiePrefab()
-{
-    Vector3 testPosition = playerCamera != null ? 
-        playerCamera.transform.position + playerCamera.transform.forward * 3f : 
-        Vector3.forward * 3f;
-    SpawnPrefabForPhobia(PhobiaType.Claustrophobie, testPosition);
-}
-
-// Méthode pour spawner un prefab avec des paramètres personnalisés
-public void SpawnPhobiaPrefabCustom(Vector3 position, float duration = -1f, bool attachToCamera = false)
-{
-    string prefabName = GetPrefabNameForCurrentPhobia();
-    
-    if (string.IsNullOrEmpty(prefabName))
-    {
-        Debug.LogWarning($"⚠️ Aucun prefab configuré pour la phobie : {currentPhobia}");
-        return;
-    }
-    
-    float displayDuration = duration > 0 ? duration : prefabDisplayDuration;
-    
-    if (attachToCamera)
-    {
-        StartCoroutine(SpawnAttachedPrefabCoroutineCustom(prefabName, displayDuration));
-    }
-    else
-    {
-        StartCoroutine(SpawnPhobiaPrefabCoroutineCustom(prefabName, position, displayDuration));
-    }
-}
-
-private IEnumerator SpawnPhobiaPrefabCoroutineCustom(string prefabName, Vector3 spawnPosition, float duration)
-{
-    GameObject prefab = Resources.Load<GameObject>(prefabName);
-    
-    if (prefab == null)
-    {
-        Debug.LogWarning($"⚠️ Prefab '{prefabName}' non trouvé dans Resources !");
-        yield break;
-    }
-    
-    GameObject spawnedPrefab = Instantiate(prefab, spawnPosition, Quaternion.identity);
-    Debug.Log($"✨ Prefab {prefabName} spawné (durée: {duration}s) pour {currentPhobia}");
-    
-    yield return new WaitForSeconds(duration);
-    
-    if (spawnedPrefab != null)
-    {
-        Destroy(spawnedPrefab);
-        Debug.Log($"🗑️ Prefab {prefabName} détruit");
-    }
-}
-
-private IEnumerator SpawnAttachedPrefabCoroutineCustom(string prefabName, float duration)
-{
-    GameObject prefab = Resources.Load<GameObject>(prefabName);
-    
-    if (prefab == null)
-    {
-        Debug.LogWarning($"⚠️ Prefab '{prefabName}' non trouvé dans Resources !");
-        yield break;
-    }
-    
-    GameObject spawnedPrefab = Instantiate(prefab);
-    spawnedPrefab.transform.SetParent(playerCamera.transform);
-    spawnedPrefab.transform.localPosition = defaultSpawnOffset;
-    spawnedPrefab.transform.localRotation = Quaternion.identity;
-    spawnedPrefab.transform.localScale = Vector3.one;
-    
-    Debug.Log($"✨ Prefab {prefabName} attaché (durée: {duration}s) pour {currentPhobia}");
-    
-    yield return new WaitForSeconds(duration);
-    
-    if (spawnedPrefab != null)
-    {
-        Destroy(spawnedPrefab);
-        Debug.Log($"🗑️ Prefab {prefabName} détruit");
-    }
-}
     [ContextMenu("Afficher Phobie Actuelle")]
     public void ShowCurrentPhobiaContextMenu()
     {

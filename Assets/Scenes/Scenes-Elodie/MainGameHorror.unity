@@ -1905,63 +1905,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 59768188e6a5e294381d9538ba6e4437, type: 3}
   m_PrefabInstance: {fileID: 1858703947}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &362413630
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -34.492542
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.798326
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -33.54662
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385079455039942079, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281724985225755500, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
-      propertyPath: m_Name
-      value: EventsScopohobie
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c6fa5faf84f8a4c49be6a6fcd30fb2fc, type: 3}
 --- !u!114 &383397379 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6124859673175075293, guid: 03c277eff118946728ef8b2bc5c14fd9, type: 3}
@@ -3962,63 +3905,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0003, y: 0.0005, z: 0.0003}
   m_Center: {x: 0, y: 0.00017527022, z: -7.2759576e-11}
---- !u!1001 &986015101
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.19103587
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.076596
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.82101536
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 32264156283055215, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7482154247178627882, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
-      propertyPath: m_Name
-      value: EventsClaustrophobie
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5a51ce57373744478bfa80e12e0e546d, type: 3}
 --- !u!1 &1005123462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4622380450775037386, guid: 892ef6f76ad96406498ecd87a80377d9, type: 3}
@@ -5685,120 +5571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1328481320
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2911848718435101069, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_Name
-      value: EventsEntomophobie_
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -23.685553
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.6544175
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -42.395668
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712309640022449002, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0dfd2acc0639482489f455d03217e94b, type: 3}
---- !u!1001 &1332712092
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2208286644766640798, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_Name
-      value: EventsNyctophobie
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -75.613266
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.0106225
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -78.57404
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5948562936389644019, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 32c2af85716578b418ff273617df9b8c, type: 3}
 --- !u!1001 &1343614428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11077,6 +10849,38 @@ PrefabInstance:
       propertyPath: anxietySystem
       value: 
       objectReference: {fileID: 324634380}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: nyctophobiePrefabName
+      value: EventsNyctophobie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: nyctophobiePrefabPath
+      value: EventsNyctophobie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: scopophobiePrefabName
+      value: EventsScopophobie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: scopophobiePrefabPath
+      value: EventsScopophobie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: entomophobiePrefabName
+      value: EventsEntomophobie_
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: entomophobiePrefabPath
+      value: EventsEntomophobie_
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: claustrophobiePrefabName
+      value: EventsClaustrophobie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: claustrophobiePrefabPath
+      value: EventsClaustrophobie
+      objectReference: {fileID: 0}
     - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: blackScreenUI
       value: 
@@ -11839,8 +11643,4 @@ SceneRoots:
   - {fileID: 5763334943548595038}
   - {fileID: 1087039057}
   - {fileID: 279644557}
-  - {fileID: 1328481320}
-  - {fileID: 986015101}
-  - {fileID: 1332712092}
-  - {fileID: 362413630}
   - {fileID: 1132003075}
