@@ -2314,9 +2314,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a9286970a782e4faa44439240c9435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bedPrefab: {fileID: 8783515358896665048, guid: 403f9844643fde748b06c74a083edd00, type: 3}
-  wardrobePrefab: {fileID: 428436355796570436, guid: 63f5134cb7c1cc14e9fb3d27fabcdecb, type: 3}
-  dresserPrefab: {fileID: 1121177784716378248, guid: eeea6b4cba6ece34a83a6a853be833a4, type: 3}
+  furniturePrefabs:
+  - {fileID: 1121177784716378248, guid: eeea6b4cba6ece34a83a6a853be833a4, type: 3}
+  - {fileID: 428436355796570436, guid: 63f5134cb7c1cc14e9fb3d27fabcdecb, type: 3}
+  - {fileID: 8783515358896665048, guid: 403f9844643fde748b06c74a083edd00, type: 3}
+  - {fileID: 3220921726197926053, guid: fb09359ce7d130a45aedca78d68942b3, type: 3}
   spawnPoints:
   - {fileID: 6949605017235673450}
   - {fileID: 3282261682646575814}

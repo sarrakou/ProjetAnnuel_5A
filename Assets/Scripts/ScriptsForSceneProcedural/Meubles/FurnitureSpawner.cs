@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 public class FurnitureSpawner : MonoBehaviour
 {
-    [Header("Meubles à instancier")]
-    public GameObject bedPrefab;
-    public GameObject wardrobePrefab;
-    public GameObject dresserPrefab;
+    [Header("Liste de meubles à instancier")]
+    public List<GameObject> furniturePrefabs = new List<GameObject>(); // Ajoute autant de meubles que tu veux
 
-    [Header("Emplacements possibles")]
-    public Transform[] spawnPoints; // 3 emplacements
+    [Header("Emplacements disponibles")]
+    public Transform[] spawnPoints; // Toujours 3 emplacements
 
     void Start()
     {
@@ -18,32 +16,40 @@ public class FurnitureSpawner : MonoBehaviour
 
     void SpawnFurniture()
     {
-        // Créer une liste pour mélanger les points
-        List<Transform> availableSpots = new List<Transform>(spawnPoints);
-
-        if (availableSpots.Count < 3)
+        if (spawnPoints.Length < 3)
         {
-            Debug.LogError("Il faut au moins 3 emplacements dans spawnPoints !");
+            Debug.LogError("Tu dois définir au moins 3 emplacements !");
             return;
         }
 
-        // Mélanger les emplacements
-        Shuffle(availableSpots);
+        if (furniturePrefabs.Count < 3)
+        {
+            Debug.LogError("Tu dois fournir au moins 3 meubles !");
+            return;
+        }
 
-        // Instancier chaque meuble à un emplacement unique
-        Instantiate(bedPrefab, availableSpots[0].position, availableSpots[0].rotation);
-        Instantiate(wardrobePrefab, availableSpots[1].position, availableSpots[1].rotation);
-        Instantiate(dresserPrefab, availableSpots[2].position, availableSpots[2].rotation);
+        // Mélanger les meubles et les emplacements
+        List<GameObject> shuffledFurniture = new List<GameObject>(furniturePrefabs);
+        List<Transform> shuffledSpots = new List<Transform>(spawnPoints);
+
+        Shuffle(shuffledFurniture);
+        Shuffle(shuffledSpots);
+
+        // Instancier 3 meubles à 3 emplacements
+        for (int i = 0; i < 3; i++)
+        {
+            Instantiate(shuffledFurniture[i], shuffledSpots[i].position, shuffledSpots[i].rotation);
+        }
     }
 
-    void Shuffle(List<Transform> list)
+    void Shuffle<T>(List<T> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
-            Transform temp = list[i];
-            int randomIndex = Random.Range(i, list.Count);
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+            T temp = list[i];
+            int rand = Random.Range(i, list.Count);
+            list[i] = list[rand];
+            list[rand] = temp;
         }
     }
 }
