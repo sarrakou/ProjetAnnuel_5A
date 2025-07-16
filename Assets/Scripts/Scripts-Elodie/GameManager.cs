@@ -45,10 +45,7 @@ public class GameManager : MonoBehaviour
     [Header("Victory Game Configuration")]
     public GameObject gameOverUI; // UI à afficher pour Game Over
     public GameObject victoryUI; // UI à afficher pour la victoire
-    public AudioClip gameOverSound; // Son de Game Over
-    public AudioClip victorySound; // Son de victoire
-    public string gameOverSoundPath = "Audio/GameOver"; // Chemin Resources pour Game Over
-    public string victorySoundPath = "Audio/Victory";
+
 
     private GameObject spawnedFinalQuestObject;
     private int finalQuestIndex = 10;

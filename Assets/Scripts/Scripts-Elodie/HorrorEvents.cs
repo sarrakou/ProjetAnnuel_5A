@@ -47,7 +47,9 @@ public class HorrorEvents : MonoBehaviour
         {
             Event_InsectOnScreen,
             Event_InsectSound,
-            Event_Randomsounds
+            Event_Randomsounds,
+           
+            
         };
 
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
@@ -55,7 +57,8 @@ public class HorrorEvents : MonoBehaviour
             Event_FlickeringLights,
             Event_TeleportToEmptyRoom,
             Event_PlayCreepyAudio,
-              Event_Crying
+              Event_Crying, 
+              Event_Nycto
         };
 
 
@@ -65,6 +68,7 @@ public class HorrorEvents : MonoBehaviour
             Event_PlayCreepyAudio,
             Event_Crying,
             Event_TeleportWithMannequins,
+            Event_Scopo
             
         };
 
@@ -174,7 +178,7 @@ public class HorrorEvents : MonoBehaviour
     void Event_Randomsounds(Vector3 pos)
     {
         // Charger tous les sons depuis Resources/Audios
-        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Audios");
+        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Audios/AudiosInsectes");
     
         if (audioClips.Length == 0)
         {
@@ -325,6 +329,35 @@ public class HorrorEvents : MonoBehaviour
     {
         Debug.Log("👁️ Multiples yeux");
         StartCoroutine(MultipleEyesCoroutine());
+    }
+    void Event_Scopo(Vector3 pos)
+    {
+        // Charger tous les sons depuis Resources/Audios
+        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Audios/Scopophobie");
+    
+        if (audioClips.Length == 0)
+        {
+            Debug.LogWarning("⚠️ Aucun son trouvé dans ");
+            return;
+        }
+    
+        // Choisir un son aléatoire
+        AudioClip randomClip = audioClips[Random.Range(0, audioClips.Length)];
+    
+        // Créer un objet temporaire pour jouer le son à la position
+        GameObject tempAudioObject = new GameObject("TempSound");
+        tempAudioObject.transform.position = pos;
+    
+        AudioSource tempAudioSource = tempAudioObject.AddComponent<AudioSource>();
+        tempAudioSource.clip = randomClip;
+        tempAudioSource.volume = 1f;
+        tempAudioSource.spatialBlend = 1f; // 3D
+        tempAudioSource.Play();
+    
+        // Détruire l'objet après la lecture
+        Destroy(tempAudioObject, randomClip.length);
+    
+        Debug.Log($"🔊 Son aléatoire joué: {randomClip.name} à {pos}");
     }
 void Event_TeleportWithMannequins(Vector3 pos)
 {
@@ -776,7 +809,35 @@ bool IsPositionTooClose(Vector3 newPosition, List<Vector3> usedPositions, float 
         Debug.Log(" Panne de lumière");
         StartCoroutine(LightFailureCoroutine());
     }
-
+    void Event_Nycto(Vector3 pos)
+    {
+        // Charger tous les sons depuis Resources/Audios
+        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Audios/Nycto");
+    
+        if (audioClips.Length == 0)
+        {
+            Debug.LogWarning("⚠️ Aucun son trouvé dans ");
+            return;
+        }
+    
+        // Choisir un son aléatoire
+        AudioClip randomClip = audioClips[Random.Range(0, audioClips.Length)];
+    
+        // Créer un objet temporaire pour jouer le son à la position
+        GameObject tempAudioObject = new GameObject("TempSound");
+        tempAudioObject.transform.position = pos;
+    
+        AudioSource tempAudioSource = tempAudioObject.AddComponent<AudioSource>();
+        tempAudioSource.clip = randomClip;
+        tempAudioSource.volume = 1f;
+        tempAudioSource.spatialBlend = 1f; // 3D
+        tempAudioSource.Play();
+    
+        // Détruire l'objet après la lecture
+        Destroy(tempAudioObject, randomClip.length);
+    
+        Debug.Log($"🔊 Son aléatoire joué: {randomClip.name} à {pos}");
+    }
     IEnumerator DarknessCoroutine()
     {
         // Obscurité progressive plus intense que la vignette
