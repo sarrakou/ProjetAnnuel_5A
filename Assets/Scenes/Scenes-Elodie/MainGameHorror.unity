@@ -928,6 +928,7 @@ RectTransform:
   - {fileID: 1421107704}
   - {fileID: 1824046351}
   - {fileID: 1874628437}
+  - {fileID: 1469361086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2661,6 +2662,15 @@ MonoBehaviour:
   heartRateThreshold: 90
   playerCamera: {fileID: 0}
   maxShakeAmount: 0.1
+  screenPulseOverlay: {fileID: 0}
+  pulseStartHeartRate: 80
+  maxPulseOpacity: 0.3
+  pulseColor: {r: 1, g: 0, b: 0, a: 1}
+  lightFlickerStartHeartRate: 85
+  maxFlickerIntensity: 0.4
+  flickerSpeed: 2
+  autoFindLights: 1
+  customLights: []
   pillEffectAmount: 40
   pillItemName: pillule
   criticalHeartRate: 150
@@ -2676,7 +2686,10 @@ MonoBehaviour:
   baseBreathingRate: 12
   breathingAccelerationThreshold: 90
   maxBreathingRate: 30
-  breathingVolume: 0.4
+  baseBreathingVolume: 0.05
+  maxBreathingVolume: 0.25
+  breathingPitchMin: 0.6
+  breathingPitchMax: 1
   characterMovement: {fileID: 0}
   heartRateText: {fileID: 0}
   breathingRateText: {fileID: 0}
@@ -3227,6 +3240,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openAngle: 90
   speed: 2
+--- !u!1 &1469361085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1469361086}
+  - component: {fileID: 1469361088}
+  - component: {fileID: 1469361087}
+  m_Layer: 5
+  m_Name: Pulsions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1469361086
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469361085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 24.259615, y: 25.387686, z: 120.382385}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 282773786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 2.5, y: -459}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1469361087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469361085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1469361088
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469361085}
+  m_CullTransparentMesh: 1
 --- !u!1 &1478912000 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4031474655119136128, guid: 2884601e683d29746b17c3442353b884, type: 3}
@@ -6448,6 +6536,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 251221871}
     - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: pulseColor.b
+      value: 0.017354928
+      objectReference: {fileID: 0}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: pulseColor.g
+      value: 0.017354928
+      objectReference: {fileID: 0}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: pulseColor.r
+      value: 0.24528301
+      objectReference: {fileID: 0}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
       propertyPath: anxietySlider
       value: 
       objectReference: {fileID: 0}
@@ -6476,6 +6576,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: ae3818bbf8088964eb24905dd938416f, type: 3}
     - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: breathingVolume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
       propertyPath: pillEffectAmount
       value: 100
       objectReference: {fileID: 0}
@@ -6492,9 +6596,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 92577547}
     - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: screenPulseOverlay
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
       propertyPath: criticalDangerPanel
       value: 
       objectReference: {fileID: 1874628436}
+    - target: {fileID: 618264432824488825, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
+      propertyPath: maxFlickerIntensity
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2377814285892873948, guid: 5903dad699fc14c4d943731d9c2f4ed1, type: 3}
       propertyPath: m_Name
       value: AnxietyManager
