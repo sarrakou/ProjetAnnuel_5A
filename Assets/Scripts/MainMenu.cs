@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
     public AudioMixer musicAudioMixer;
 
     [Header("Game Settings")]
-    public string gameSceneName = "Main";
+    public string gameSceneName = "Main1";
 
     [Header("UI Panels")]
     public GameObject mainMenuPanel;
