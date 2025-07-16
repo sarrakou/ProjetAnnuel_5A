@@ -45,7 +45,8 @@ public class HorrorEvents : MonoBehaviour
         phobiaEvents[PhobiaType.Entomophobie] = new List<Action<Vector3>>
         {
             Event_InsectOnScreen,
-            Event_InsectSound
+            Event_InsectSound,
+            Event_Randomsounds
         };
 
         phobiaEvents[PhobiaType.Nyctophobie] = new List<Action<Vector3>>
@@ -112,6 +113,35 @@ public class HorrorEvents : MonoBehaviour
         
     }
 
+    void Event_Randomsounds(Vector3 pos)
+    {
+        // Charger tous les sons depuis Resources/Audios
+        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("Audios");
+    
+        if (audioClips.Length == 0)
+        {
+            Debug.LogWarning("⚠️ Aucun son trouvé dans Resources/AudiosInsectes");
+            return;
+        }
+    
+        // Choisir un son aléatoire
+        AudioClip randomClip = audioClips[Random.Range(0, audioClips.Length)];
+    
+        // Créer un objet temporaire pour jouer le son à la position
+        GameObject tempAudioObject = new GameObject("TempSound");
+        tempAudioObject.transform.position = pos;
+    
+        AudioSource tempAudioSource = tempAudioObject.AddComponent<AudioSource>();
+        tempAudioSource.clip = randomClip;
+        tempAudioSource.volume = 1f;
+        tempAudioSource.spatialBlend = 1f; // 3D
+        tempAudioSource.Play();
+    
+        // Détruire l'objet après la lecture
+        Destroy(tempAudioObject, randomClip.length);
+    
+        Debug.Log($"🔊 Son aléatoire joué: {randomClip.name} à {pos}");
+    }
     void Event_InsectSound(Vector3 pos)
     {
         Debug.Log(" Son d'insectes");
