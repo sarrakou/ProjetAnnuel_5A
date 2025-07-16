@@ -171,7 +171,7 @@ public class MonsterAppearanceManager : MonoBehaviour
     
     private IEnumerator SpawnMonster()
     {
-        // Charger le prefab monstre
+       
         GameObject monsterPrefab = Resources.Load<GameObject>(monsterPrefabName);
         if (monsterPrefab == null)
         {
@@ -179,14 +179,14 @@ public class MonsterAppearanceManager : MonoBehaviour
             yield break;
         }
         
-        // Calculer position derrière le joueur
+       
         Vector3 spawnPosition = GetSpawnPosition();
         
-        // Instancier le monstre
+       
         GameObject monster = Instantiate(monsterPrefab, spawnPosition, GetSpawnRotation(spawnPosition));
         Debug.Log($"MonsterManager: Monstre spawné à {spawnPosition}");
         
-        // Optionnel: Ajouter un comportement au monstre
+        
         AddMonsterBehavior(monster);
         
         // Attendre puis détruire
@@ -201,11 +201,11 @@ public class MonsterAppearanceManager : MonoBehaviour
     
     private Vector3 GetSpawnPosition()
     {
-        // Position derrière le joueur
+        
         Vector3 behindDirection = -player.forward;
         Vector3 basePosition = player.position + behindDirection * distanceBehindPlayer;
         
-        // Ajouter variation aléatoire
+        
         Vector3 randomOffset = new Vector3(
             Random.Range(-positionVariation, positionVariation),
             0f,
@@ -213,33 +213,33 @@ public class MonsterAppearanceManager : MonoBehaviour
         );
         
         Vector3 finalPosition = basePosition + randomOffset;
-        finalPosition.y = player.position.y; // Même hauteur que le joueur
+        finalPosition.y = player.position.y; 
         
         return finalPosition;
     }
     
     private Quaternion GetSpawnRotation(Vector3 spawnPosition)
     {
-        // Faire regarder le monstre vers le joueur (inverser la direction)
-        Vector3 directionToPlayer = (spawnPosition - player.position).normalized;
+        // Faire regarder le monstre vers le joueur
+        Vector3 directionToPlayer = (player.position - spawnPosition).normalized;
         directionToPlayer.y = 0; // Pas de rotation verticale
-        
+    
         if (directionToPlayer != Vector3.zero)
         {
-            return Quaternion.LookRotation(directionToPlayer);
+            return Quaternion.LookRotation(directionToPlayer) * Quaternion.Euler(0, 90, 0);
         }
-        
+    
         return Quaternion.identity;
     }
     
     private void AddMonsterBehavior(GameObject monster)
     {
-        // Optionnel: Ajouter le script MoveWhenNotLookedAt
+       
         MoveWhenNotLookedAt moveScript = monster.GetComponent<MoveWhenNotLookedAt>();
         if (moveScript == null)
         {
             moveScript = monster.AddComponent<MoveWhenNotLookedAt>();
-            // Configurer le script
+            
             moveScript.speed = 1.5f;
             moveScript.lookThreshold = 0.8f;
             moveScript.lifeTime = monsterLifetime;
