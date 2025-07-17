@@ -106,6 +106,13 @@ public class GameTimer : MonoBehaviour
                 Win.gameObject.SetActive(true);
             
         }
+        StartCoroutine(ChangeSceneWin());
+    }
+
+    private IEnumerator ChangeSceneWin()
+    {
+        yield return new WaitForSeconds(3f); // délai pour change scene
+        SceneManager.LoadScene("MainGameHorror");
     }
 
 }
