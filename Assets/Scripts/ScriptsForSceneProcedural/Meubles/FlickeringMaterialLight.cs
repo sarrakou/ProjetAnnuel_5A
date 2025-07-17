@@ -10,7 +10,7 @@ public class FlickeringMaterialLight : MonoBehaviour
     public Color dangerColor = new Color(130f / 255f, 26f / 255f, 26f / 255f); // #821A1A
 
 
-    public float baseIntensity = 0.002f;
+    public float baseIntensity = 0.001f;
     private bool alarmStarted = false;
 
     private bool flickerStarted = false;

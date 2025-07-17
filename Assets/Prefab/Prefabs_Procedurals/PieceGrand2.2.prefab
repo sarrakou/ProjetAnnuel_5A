@@ -1386,7 +1386,7 @@ Transform:
   m_GameObject: {fileID: 4572372913499311396}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0000000754979, y: 0.00000017881393, z: 1, w: -3.5527137e-15}
-  m_LocalPosition: {x: 0.050511993, y: 0.0100923, z: -0.0002078174}
+  m_LocalPosition: {x: -0, y: 0, z: 0.0037}
   m_LocalScale: {x: 0.02750591, y: 0.02750591, z: 0.02750591}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1495,7 +1495,7 @@ MonoBehaviour:
   lightSource: {fileID: 4439529176525315449}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 0.50980395, g: 0.1, b: 0.1, a: 1}
-  baseIntensity: 0.007
+  baseIntensity: 0.001
   audioSource: {fileID: 2520958893960044045}
   flickerSound: {fileID: 8300000, guid: 13614660227028145ae0f0bd21c6ebf6, type: 3}
   alarmSound: {fileID: 8300000, guid: ce6a1c5fa3effca42b51a9d395c6a7f3, type: 3}
@@ -1959,7 +1959,7 @@ MonoBehaviour:
   lightSource: {fileID: 5601936134602448724}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   dangerColor: {r: 0.50980395, g: 0.1, b: 0.1, a: 1}
-  baseIntensity: 0.007
+  baseIntensity: 0.001
   audioSource: {fileID: 8271159270288749943}
   flickerSound: {fileID: 8300000, guid: 13614660227028145ae0f0bd21c6ebf6, type: 3}
   alarmSound: {fileID: 8300000, guid: ce6a1c5fa3effca42b51a9d395c6a7f3, type: 3}
