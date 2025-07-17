@@ -51,6 +51,7 @@ public class SimpleExperimentManager : MonoBehaviour
     public GameObject popupForceEndOfExperiment;
     public string nextSceneName = "ProceduralHouse";
     public bool popupOkButton = false;
+    public GameObject startBtn;
 
     [Header("Phobia Detection")]
     [SerializeField] private bool enablePhobiaDetection = true;
@@ -612,6 +613,7 @@ public class SimpleExperimentManager : MonoBehaviour
             popupMessages.SetActive(false);
             if (!string.IsNullOrEmpty(nextSceneName))
             {
+                startBtn.SetActive(false);
                 SceneManager.LoadScene(nextSceneName);
             }
         }
