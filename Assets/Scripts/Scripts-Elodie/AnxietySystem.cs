@@ -178,7 +178,7 @@ public class AnxietySystem : MonoBehaviour
 
     void SetupLightFlicker()
     {
-     "
+     
         GameObject flashlightObject = GameObject.Find(flashlightObjectName);
     
         if (flashlightObject != null)
