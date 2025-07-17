@@ -34,14 +34,14 @@ public class SavePhobiaResults : MonoBehaviour
         var resultsDict = PhobiaDetectionAPI.instance.GetAllResults();
 
         // Calculamos la suma total de cambios ponderados
-        float totalWeightedChange = resultsDict.Values.Sum(r => r.averageHeartRateIncrease * r.confidenceScore);
+        float totalWeightedChange = resultsDict.Values.Sum(r => Mathf.Abs(r.averageHeartRateIncrease) * r.confidenceScore);
 
         var container = new ResultsContainer();
 
         foreach (var entry in resultsDict)
         {
             var result = entry.Value;
-            float weightedChange = result.averageHeartRateIncrease * result.confidenceScore;
+            float weightedChange = Mathf.Abs(result.averageHeartRateIncrease) * result.confidenceScore;
 
             var serializableResult = new SerializablePhobiaResult
             {
