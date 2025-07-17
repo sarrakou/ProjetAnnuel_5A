@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
     public List<Quest> quests = new List<Quest>();
     
     [Header("Doll Event Configuration")]
-    public string dollPrefabResourcePath = "Doll/DollPrefab"; 
+    public string dollPrefabResourcePath = "annabelle"; 
     public AudioClip dollAudioClip; 
-    public string dollAudioResourcePath = "Audio/DollSound"; 
+    public string dollAudioResourcePath = "Audios/BabyCrying"; 
     
     [Header("Claustrophobia Configuration")]
     public GameObject closedGameObject; 
@@ -926,7 +926,7 @@ private System.Collections.IEnumerator CreateAndFadeBlackScreen()
         }
 
         GameObject dollPrefab = Resources.Load<GameObject>(dollPrefabResourcePath);
-        
+
         if (dollPrefab == null)
         {
             Debug.LogError($"[GameManager] Impossible de charger la poupée à: Resources/{dollPrefabResourcePath}");
@@ -937,38 +937,19 @@ private System.Collections.IEnumerator CreateAndFadeBlackScreen()
         Debug.Log($" Poupée spawnée pour être récupérée à la prochaine quête");
     }
 
-    public void PlayDollAudio()
+    void PlayDollAudio()
     {
-        if (spawnedDoll == null)
+        if (audioSource == null || dollAudioClip == null)
         {
-            Debug.LogWarning("❌ Poupée introuvable.");
+            Debug.LogWarning("[GameManager] AudioSource ou AudioClip manquant pour la poupée");
             return;
         }
 
-        AudioSource source = spawnedDoll.GetComponent<AudioSource>();
-        if (source == null)
-        {
-            source = spawnedDoll.AddComponent<AudioSource>();
-            source.spatialBlend = 1f; // Audio 3D
-            source.minDistance = 1f;
-            source.maxDistance = 10f;
-            source.playOnAwake = false;
-        }
-
-        if (dollAudioClip != null)
-        {
-            source.clip = dollAudioClip;
-            source.volume = dollAudioVolume;
-            source.loop = false;
-            source.Play();
-            Debug.Log("🔊 Audio joué depuis la poupée.");
-        }
-        else
-        {
-            Debug.LogWarning("❌ Aucun clip audio assigné !");
-        }
+        audioSource.clip = dollAudioClip;
+        audioSource.volume = dollAudioVolume;
+        audioSource.Play();
+        Debug.Log(" Son de la poupée joué");
     }
-
 
     void StopDollAudio()
     {
@@ -978,7 +959,7 @@ private System.Collections.IEnumerator CreateAndFadeBlackScreen()
             Debug.Log(" Son de la poupée arrêté");
         }
     }
-
+    
     public void RemoveDoll()
     {
         if (spawnedDoll != null)

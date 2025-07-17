@@ -110,14 +110,13 @@ public class PrefabActivator : MonoBehaviour
 
         Debug.Log("Prefab trouvé, instanciation...");
         
-        // Calculer la position d'spawn
+     
         Vector3 spawnPos = GetSpawnPosition(prefab);
         
         instance = Instantiate(prefab, spawnPos, prefab.transform.rotation);
         Debug.Log("Prefab instancié à la position : " + instance.transform.position);
 
-        // Ajouter le script MoveWhenNotLookedAt seulement si demandé
-        if (shouldMove && movementType == MovementType.MoveWhenNotLookedAt)
+         if (shouldMove && movementType == MovementType.MoveWhenNotLookedAt)
         {
             MoveWhenNotLookedAt moveScript = instance.GetComponent<MoveWhenNotLookedAt>();
             if (moveScript == null)

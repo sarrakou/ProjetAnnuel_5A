@@ -10881,6 +10881,14 @@ PrefabInstance:
       propertyPath: claustrophobiePrefabPath
       value: EventsClaustrophobie
       objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: maxTimeBetweenPhobiaSounds
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: minTimeBetweenPhobiaSounds
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: blackScreenUI
       value: 
@@ -10893,6 +10901,10 @@ PrefabInstance:
       propertyPath: characterPrefab
       value: 
       objectReference: {fileID: 1929534086}
+    - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: dollAudioVolume
+      value: 13.8
+      objectReference: {fileID: 0}
     - target: {fileID: 6244041130077954019, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: closedGameObject
       value: 

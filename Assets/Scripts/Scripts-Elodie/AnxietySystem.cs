@@ -27,15 +27,13 @@ public class AnxietySystem : MonoBehaviour
     private float pulseDuration = 0.3f; // Durée d'une pulsion
 
     [Header("Light Flicker Settings")]
-    public float lightFlickerStartHeartRate = 85f; // Rythme cardiaque où les lumières commencent à vaciller
-
-    public float maxFlickerIntensity = 0.4f; // Intensité maximum du vacillement (0-1)
-    public float flickerSpeed = 2f; // Vitesse du vacillement
-    public bool autoFindLights = true; // Trouve automatiquement toutes les lumières
-    public Light[] customLights; // Lumières personnalisées à affecter
-    private Light[] allLights;
-    private float[] originalLightIntensities;
-    private bool lightsInitialized = false;
+    public float lightFlickerStartHeartRate = 85f;
+    public float maxFlickerIntensity = 0.4f;
+    public float flickerSpeed = 2f;
+    public string flashlightObjectName = "FlashLight"; 
+    private Light flashlight; 
+    private float originalFlashlightIntensity;
+    private bool flashlightInitialized = false;
 
     [Header("Pill Settings")] public float pillEffectAmount = 100f;
     public string pillItemName = "pillule";
@@ -180,89 +178,68 @@ public class AnxietySystem : MonoBehaviour
 
     void SetupLightFlicker()
     {
-        if (autoFindLights)
+     "
+        GameObject flashlightObject = GameObject.Find(flashlightObjectName);
+    
+        if (flashlightObject != null)
         {
-            // Trouver automatiquement toutes les lumières dans la scène
-            allLights = FindObjectsOfType<Light>();
-            Debug.Log($"Trouvé {allLights.Length} lumières dans la scène pour le vacillement");
-        }
-        else if (customLights != null && customLights.Length > 0)
-        {
-            // Utiliser les lumières personnalisées
-            allLights = customLights;
-            Debug.Log($"Utilisation de {allLights.Length} lumières personnalisées pour le vacillement");
+            flashlight = flashlightObject.GetComponent<Light>();
+        
+            if (flashlight != null)
+            {
+                originalFlashlightIntensity = flashlight.intensity;
+                flashlightInitialized = true;
+                Debug.Log($"💡 Flashlight trouvée ! Intensité originale: {originalFlashlightIntensity}");
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ GameObject '{flashlightObjectName}' trouvé mais pas de composant Light dessus !");
+            }
         }
         else
         {
-            Debug.LogWarning("Aucune lumière trouvée pour le système de vacillement !");
-            return;
-        }
-
-        // Sauvegarder les intensités originales
-        if (allLights != null && allLights.Length > 0)
-        {
-            originalLightIntensities = new float[allLights.Length];
-            for (int i = 0; i < allLights.Length; i++)
-            {
-                if (allLights[i] != null)
-                {
-                    originalLightIntensities[i] = allLights[i].intensity;
-                }
-            }
-
-            lightsInitialized = true;
+            Debug.LogWarning($"⚠️ GameObject '{flashlightObjectName}' non trouvé dans la scène !");
         }
     }
-
     private void UpdateLightFlicker()
     {
-        if (!lightsInitialized || allLights == null || allLights.Length == 0) return;
+        if (!flashlightInitialized || flashlight == null) return;
 
-        // Calculer l'intensité du vacillement basée sur le rythme cardiaque
+  
         float flickerIntensity = 0f;
 
         if (currentHeartRate > lightFlickerStartHeartRate)
         {
-            // Calculer l'intensité progressive
+           
             flickerIntensity = (currentHeartRate - lightFlickerStartHeartRate) / (200f - lightFlickerStartHeartRate);
             flickerIntensity = Mathf.Clamp01(flickerIntensity) * maxFlickerIntensity;
         }
 
-        // Appliquer le vacillement à toutes les lumières
-        for (int i = 0; i < allLights.Length; i++)
+      
+        if (flickerIntensity > 0f)
         {
-            if (allLights[i] != null && i < originalLightIntensities.Length)
-            {
-                if (flickerIntensity > 0f)
-                {
-                    // Créer un pattern de vacillement unique pour chaque lumière
-                    float timeOffset = i * 0.5f; // Décalage pour que toutes les lumières ne vacillent pas en même temps
-                    float flickerPattern = Mathf.PerlinNoise(Time.time * flickerSpeed + timeOffset, 0f);
-
-                    // Synchroniser partiellement avec le rythme cardiaque
-                    float heartbeatSync = Mathf.Sin(Time.time * (currentHeartRate / 60f) * Mathf.PI * 2f + timeOffset);
-                    heartbeatSync = (heartbeatSync + 1f) * 0.5f; // Normaliser entre 0 et 1
-
-                    // Mélanger le pattern aléatoire et la synchronisation cardiaque
-                    float combinedPattern = Mathf.Lerp(flickerPattern, heartbeatSync, 0.3f);
-
-                    // Calculer la variation d'intensité
-                    float intensityVariation = (combinedPattern - 0.5f) * 2f * flickerIntensity;
-
-               
-                    float newIntensity =
-                        originalLightIntensities[i] + (originalLightIntensities[i] * intensityVariation);
-                    newIntensity = Mathf.Max(0f, newIntensity); 
-
-                    allLights[i].intensity = newIntensity;
-                }
-                else
-                {
-                  
-                    allLights[i].intensity = Mathf.Lerp(allLights[i].intensity, originalLightIntensities[i],
-                        Time.deltaTime * 2f);
-                }
-            }
+           
+            float flickerPattern = Mathf.PerlinNoise(Time.time * flickerSpeed, 0f);
+        
+         
+            float heartbeatSync = Mathf.Sin(Time.time * (currentHeartRate / 60f) * Mathf.PI * 2f);
+            heartbeatSync = (heartbeatSync + 1f) * 0.5f; 
+        
+           
+            float combinedPattern = Mathf.Lerp(flickerPattern, heartbeatSync, 0.3f);
+        
+          
+            float intensityVariation = (combinedPattern - 0.5f) * 2f * flickerIntensity;
+        
+           
+            float newIntensity = originalFlashlightIntensity + (originalFlashlightIntensity * intensityVariation);
+            newIntensity = Mathf.Max(0.1f, newIntensity); 
+        
+            flashlight.intensity = newIntensity;
+        }
+        else
+        {
+            flashlight.intensity = Mathf.Lerp(flashlight.intensity, originalFlashlightIntensity, Time.deltaTime * 2f);
         }
     }
 
@@ -675,16 +652,11 @@ public class AnxietySystem : MonoBehaviour
 
     void ResetAllEffects()
     {
-        
-        if (lightsInitialized && allLights != null && originalLightIntensities != null)
+        // Restaurer uniquement la flashlight
+        if (flashlightInitialized && flashlight != null)
         {
-            for (int i = 0; i < allLights.Length && i < originalLightIntensities.Length; i++)
-            {
-                if (allLights[i] != null)
-                {
-                    allLights[i].intensity = originalLightIntensities[i];
-                }
-            }
+            flashlight.intensity = originalFlashlightIntensity;
+            Debug.Log($"💡 Flashlight restaurée à l'intensité originale: {originalFlashlightIntensity}");
         }
     }
 

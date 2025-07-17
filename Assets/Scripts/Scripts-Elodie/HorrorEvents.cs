@@ -45,30 +45,384 @@ public class HorrorEvents : MonoBehaviour
     private Camera playerCamera;
     private Dictionary<PhobiaType, List<Action<Vector3>>> phobiaEvents;
     private HashSet<string> playedEvents = new HashSet<string>();
-    
+    [Header("Configuration Sons Phobie")]
+    public float minTimeBetweenPhobiaSounds = 30f; // Temps minimum entre les sons (en secondes)
+    public float maxTimeBetweenPhobiaSounds = 120f; // Temps maximum entre les sons (en secondes)
+    private Coroutine phobiaSoundCoroutine;
+    private AudioClip[] currentPhobiaAudioClips;
+    private float fixedPitch;
     [Header("Prefabs Resources Paths")]
     public string entomophobiePrefabPath = "EventsEntomophobie_";
     public string nyctophobiePrefabPath = "EventsNyctophobie";
     public string scopophobiePrefabPath = "EventsScopophobie";
     public string claustrophobiePrefabPath = "EventsClaustrophobie";
+    private Dictionary<AudioClip, int> soundPlayCount = new Dictionary<AudioClip, int>();
     private GameObject activatedPrefab;
     private void Awake()
     {
         playerCamera = Camera.main;
-        
+    
         if (anxietySystem == null)
         {
             anxietySystem = FindObjectOfType<AnxietySystem>();
         }
-        
-        // Lecture unique du JSON au démarrage
+    
         LoadPhobiaFromJson();
         ActivatePhobiaPrefab();
         InitializePhobiaEvents();
-        
+        StartPhobiaSoundSystem(); 
+    
         Debug.Log($"🎯 Système initialisé avec la phobie : {currentPhobia}");
     }
-private void LoadPhobiaFromJson()
+   
+    private void Start()
+    {
+       
+        StartCoroutine(PlaySpecificSoundsSequentially());
+    }
+  
+    private string GetPhobiaAudioPath(PhobiaType phobia)
+{
+    switch (phobia)
+    {
+        case PhobiaType.Entomophobie:
+            return "Audios/FR/Entomophobie";
+        case PhobiaType.Nyctophobie:
+            return "Audios/FR/Nycto";
+        case PhobiaType.Scopophobie:
+            return "Audios/FR/Scopo";
+        case PhobiaType.Claustrophobie:
+            return "Audios/FR/Claustrophobie";
+        default:
+            return null;
+    }
+}
+private void LoadPhobiaAudioClips()
+{
+    string audioFolderPath = GetPhobiaAudioPath(currentPhobia);
+    
+    Debug.Log($"🔍 Tentative de chargement des sons pour {currentPhobia}");
+    Debug.Log($"📁 Chemin du dossier: Resources/{audioFolderPath}");
+    
+    if (string.IsNullOrEmpty(audioFolderPath))
+    {
+        Debug.LogWarning($"⚠️ Aucun dossier audio défini pour {currentPhobia}");
+        return;
+    }
+    
+    currentPhobiaAudioClips = Resources.LoadAll<AudioClip>(audioFolderPath);
+    
+    Debug.Log($"📊 Nombre de sons trouvés: {currentPhobiaAudioClips.Length}");
+    
+    if (currentPhobiaAudioClips.Length == 0)
+    {
+        Debug.LogError($" AUCUN son trouvé dans Resources/{audioFolderPath}");
+        Debug.LogError(" Vérifiez que:");
+        Debug.LogError($"   - Le dossier Resources/{audioFolderPath} existe");
+        Debug.LogError("   - Il y a des fichiers audio (.wav, .mp3, .ogg) dedans");
+        Debug.LogError("   - Les fichiers sont bien importés dans Unity");
+    }
+    else
+    {
+        Debug.Log($"✅ {currentPhobiaAudioClips.Length} sons chargés depuis {audioFolderPath}:");
+        for (int i = 0; i < currentPhobiaAudioClips.Length; i++)
+        {
+            Debug.Log($"   {i + 1}. {currentPhobiaAudioClips[i].name}");
+        }
+    }
+}
+
+
+private void StartPhobiaSoundSystem()
+{
+   
+    fixedPitch = Random.Range(0.9f, 1.1f);
+    Debug.Log($"🎵 Pitch fixe pour cette session: {fixedPitch:F2}");
+    
+    LoadPhobiaAudioClips();
+    if (currentPhobiaAudioClips != null && currentPhobiaAudioClips.Length > 0)
+    {
+      
+        foreach (AudioClip clip in currentPhobiaAudioClips)
+        {
+            soundPlayCount[clip] = 0;
+        }
+        
+        phobiaSoundCoroutine = StartCoroutine(PhobiaSoundLoop());
+        Debug.Log($"✅ Système de sons phobie démarré avec {currentPhobiaAudioClips.Length} sons");
+    }
+    else
+    {
+        Debug.LogWarning($"⚠️ Aucun son trouvé pour la phobie {currentPhobia}");
+    }
+}
+
+
+private void PlayRandomPhobiaSound()
+{
+    if (currentPhobiaAudioClips == null || currentPhobiaAudioClips.Length == 0)
+    {
+        Debug.LogWarning("⚠️ Aucun son de phobie disponible");
+        return;
+    }
+    
+    // Filtrer les sons qui n'ont pas encore été joués 2 fois
+    List<AudioClip> availableClips = new List<AudioClip>();
+    foreach (AudioClip clip in currentPhobiaAudioClips)
+    {
+        if (soundPlayCount[clip] < 2)
+        {
+            availableClips.Add(clip);
+        }
+    }
+    
+
+    if (availableClips.Count == 0)
+    {
+        Debug.Log("🔇 Tous les sons ont été joués 2 fois. Arrêt du système.");
+        StopPhobiaSounds();
+        return;
+    }
+    
+ 
+    AudioClip selectedClip = availableClips[Random.Range(0, availableClips.Count)];
+    
+
+    soundPlayCount[selectedClip]++;
+    
+    Debug.Log($"🎵 Son sélectionné: {selectedClip.name} (Lecture #{soundPlayCount[selectedClip]}/2)");
+    
+    StartCoroutine(PlayPhobiaSoundWithEffects(selectedClip));
+}
+
+// Modifie PlayPhobiaSoundWithEffects() pour utiliser le pitch fixe
+private IEnumerator PlayPhobiaSoundWithEffects(AudioClip clip)
+{
+    GameObject tempAudioObject = new GameObject($"PhobiaSound_{clip.name}");
+    
+
+    bool is3D = Random.Range(0f, 1f) > 0.5f;
+    
+    if (is3D && playerCamera != null)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere.normalized;
+        float distance = Random.Range(2f, 8f);
+        tempAudioObject.transform.position = playerCamera.transform.position + randomDirection * distance;
+    }
+    else if (playerCamera != null)
+    {
+        tempAudioObject.transform.SetParent(playerCamera.transform);
+        tempAudioObject.transform.localPosition = Vector3.zero;
+    }
+    
+    AudioSource source = tempAudioObject.AddComponent<AudioSource>();
+    source.clip = clip;
+    
+
+    source.pitch = fixedPitch; 
+    source.spatialBlend = is3D ? 1f : 0f;
+    source.rolloffMode = AudioRolloffMode.Logarithmic;
+    source.minDistance = 1f;
+    source.maxDistance = 15f;
+    
+    source.volume = 0.05f;
+    source.Play();
+    
+    Debug.Log($"🔊 Son phobie: {clip.name} (3D: {is3D}, Pitch fixe: {source.pitch:F2})");
+    
+    
+    float targetVolume = Random.Range(0.2f, 0.4f);
+    float fadeInDuration = Random.Range(1f, 2f);
+    float timer = 0f;
+    
+    while (timer < fadeInDuration && source != null)
+    {
+        timer += Time.deltaTime;
+        source.volume = Mathf.Lerp(0.05f, targetVolume, timer / fadeInDuration);
+        yield return null;
+    }
+    
+    if (source != null) source.volume = targetVolume;
+    
+    float maintainDuration = clip.length - fadeInDuration - 1f;
+    if (maintainDuration > 0)
+    {
+        yield return new WaitForSeconds(maintainDuration);
+    }
+    
+    
+    float fadeOutDuration = 1f;
+    timer = 0f;
+    
+    while (timer < fadeOutDuration && source != null)
+    {
+        timer += Time.deltaTime;
+        source.volume = Mathf.Lerp(targetVolume, 0f, timer / fadeOutDuration);
+        yield return null;
+    }
+    
+    Destroy(tempAudioObject);
+}
+
+
+private IEnumerator PhobiaSoundLoop()
+{
+    Debug.Log("⏳ Attente de 10 secondes avant le premier son...");
+    yield return new WaitForSeconds(10f);
+    
+    int soundCount = 0;
+    
+    while (true)
+    {
+        float waitTime = Random.Range(minTimeBetweenPhobiaSounds, maxTimeBetweenPhobiaSounds);
+        Debug.Log($"⏰ Prochain son dans {waitTime:F1} secondes...");
+        yield return new WaitForSeconds(waitTime);
+        
+        soundCount++;
+        Debug.Log($"🎵 Tentative de lecture du son #{soundCount}");
+        PlayRandomPhobiaSound();
+    }
+}
+
+
+public void PlaySpecificPhobiaSound(string soundName)
+{
+    if (currentPhobiaAudioClips == null || currentPhobiaAudioClips.Length == 0)
+    {
+        Debug.LogWarning("⚠️ Aucun son de phobie chargé");
+        return;
+    }
+    
+
+    AudioClip targetClip = null;
+    foreach (AudioClip clip in currentPhobiaAudioClips)
+    {
+        if (clip.name == soundName)
+        {
+            targetClip = clip;
+            break;
+        }
+    }
+    
+    if (targetClip == null)
+    {
+        Debug.LogWarning($"⚠️ Son '{soundName}' non trouvé dans les sons de {currentPhobia}");
+        Debug.Log("🔍 Sons disponibles:");
+        foreach (AudioClip clip in currentPhobiaAudioClips)
+        {
+            Debug.Log($"   - {clip.name}");
+        }
+        return;
+    }
+    
+    Debug.Log($"🎵 Lecture manuelle du son: {soundName}");
+    StartCoroutine(PlayPhobiaSoundWithEffects(targetClip));
+}
+
+public void PlaySpecificPhobiaSound(AudioClip clip)
+{
+    if (clip == null)
+    {
+        Debug.LogWarning("⚠️ AudioClip null fourni");
+        return;
+    }
+    
+    Debug.Log($"🎵 Lecture manuelle du son: {clip.name}");
+    StartCoroutine(PlayPhobiaSoundWithEffects(clip));
+}
+
+public void PlaySpecificSoundFromResources(string resourcePath)
+{
+    AudioClip clip = Resources.Load<AudioClip>(resourcePath);
+    
+    if (clip == null)
+    {
+        Debug.LogWarning($"⚠️ Son non trouvé: Resources/{resourcePath}");
+        return;
+    }
+    
+    Debug.Log($"🎵 Lecture manuelle du son: {resourcePath}");
+    StartCoroutine(PlayPhobiaSoundWithEffects(clip));
+}
+public void StopPhobiaSounds()
+{
+    if (phobiaSoundCoroutine != null)
+    {
+        StopCoroutine(phobiaSoundCoroutine);
+        Debug.Log("🔇 Système de sons phobie arrêté");
+    }
+}
+    private IEnumerator PlaySpecificSoundsSequentially()
+    {
+        string[] soundNames = { "1 - je me sens étrange", "2 - vite", "3 - vieille maison" }; 
+        yield return new WaitForSeconds(0.3f);
+
+        for (int i = 0; i < soundNames.Length; i++)
+        {
+            AudioClip clip = Resources.Load<AudioClip>($"Audios/FR/{soundNames[i]}");
+         if (clip == null)
+        {
+            Debug.LogWarning($"⚠️ Son non trouvé: {soundNames[i]}");
+            continue;
+        }
+        
+        GameObject tempAudioObject = new GameObject($"Sound_{soundNames[i]}");
+        AudioSource source = tempAudioObject.AddComponent<AudioSource>();
+        source.clip = clip;
+        
+
+        source.pitch = Random.Range(0.95f, 1.05f);
+        source.spatialBlend = 0f; 
+
+        source.volume = 0.1f; 
+        source.Play();
+        
+        Debug.Log($"🔊 Son {i+1} démarré: {soundNames[i]} (Pitch: {source.pitch:F2})");
+        
+        // Fondu d'entrée
+        float targetVolume = 0.4f;
+        float fadeInDuration = 0.8f; 
+        float timer = 0f;
+        
+        while (timer < fadeInDuration)
+        {
+            timer += Time.deltaTime;
+            source.volume = Mathf.Lerp(0.1f, targetVolume, timer / fadeInDuration);
+            yield return null;
+        }
+        
+        source.volume = targetVolume; 
+        
+     
+        float maintainDuration = clip.length - fadeInDuration - 0.5f;
+        if (maintainDuration > 0)
+        {
+            yield return new WaitForSeconds(maintainDuration);
+        }
+
+        float fadeOutDuration = 0.5f;
+        timer = 0f;
+        
+        while (timer < fadeOutDuration && source != null)
+        {
+            timer += Time.deltaTime;
+            source.volume = Mathf.Lerp(targetVolume, 0f, timer / fadeOutDuration);
+            yield return null;
+        }
+        
+        Debug.Log($"✅ Son {i+1} terminé: {soundNames[i]}");
+        
+     
+        Destroy(tempAudioObject);
+        
+        
+        yield return new WaitForSeconds(0.3f);
+    }
+    
+    Debug.Log("🎵 Séquence audio terminée !");
+}
+
+    private void LoadPhobiaFromJson()
     {
         try
         {
@@ -94,7 +448,7 @@ private void LoadPhobiaFromJson()
                 return;
             }
             
-            // Trouver la phobie avec le pourcentage le plus élevé
+          
             PhobiaResult highestPhobia = null;
             float highestPercentage = -1f;
             
@@ -152,10 +506,10 @@ private void LoadPhobiaFromJson()
     {
         phobiaEvents = new Dictionary<PhobiaType, List<Action<Vector3>>>();
 
-        // Entomophobie - Peur des insectes
+       
         phobiaEvents[PhobiaType.Entomophobie] = new List<Action<Vector3>>
         {
-            Event_InsectOnScreen,
+          
             Event_InsectSound,
             Event_Randomsounds,
            
@@ -257,18 +611,18 @@ private void LoadPhobiaFromJson()
             }
         }
 
-        // Vérifier s'il reste des événements disponibles
+  
         if (availableEvents.Count == 0)
         {
             Debug.LogWarning($"⚠️ Tous les événements de {currentPhobia} ont déjà été joués !");
             return;
         }
 
-        // Choisir un événement aléatoire parmi ceux disponibles
+
         int eventIndex = UnityEngine.Random.Range(0, availableEvents.Count);
         Action<Vector3> selectedEvent = availableEvents[eventIndex];
         
-        // Marquer l'événement comme joué
+      
         string selectedEventKey = $"{currentPhobia}_{selectedEvent.Method.Name}";
         playedEvents.Add(selectedEventKey);
         
@@ -297,12 +651,7 @@ private void LoadPhobiaFromJson()
 
     #region Entomophobie Events
     
-    void Event_InsectOnScreen(Vector3 pos)
-    {
-        Debug.Log(" Insecte à l'écran");
-        StartCoroutine(InsectCoroutine());
-    }
-
+   
     void Event_InsectSwarm(Vector3 pos)
     {
         Debug.Log(" Essaim d'insectes");
@@ -333,7 +682,7 @@ private void LoadPhobiaFromJson()
         tempAudioSource.spatialBlend = 1f; // 3D
         tempAudioSource.Play();
     
-        // Détruire l'objet après la lecture
+      
         Destroy(tempAudioObject, randomClip.length);
     
         Debug.Log($"🔊 Son aléatoire joué: {randomClip.name} à {pos}");
