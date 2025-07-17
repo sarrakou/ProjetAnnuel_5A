@@ -25,7 +25,6 @@ public class FinalReportSaver : MonoBehaviour
 
     private float gameStartTime;
     private float maxHeartRateInGame = 0f;
-    private string peakEvent = "Unknown";
     private AnxietySystem anxietySystem;
 
     private void Awake()
@@ -86,7 +85,6 @@ public class FinalReportSaver : MonoBehaviour
                 if (currentHR > maxHeartRateInGame)
                 {
                     maxHeartRateInGame = currentHR;
-                    peakEvent = GetCurrentEventLabel(); // reemplaza con lógica real
                 }
             }
         }
@@ -104,7 +102,7 @@ public class FinalReportSaver : MonoBehaviour
             var main = sorted[0];
             report.phobiaDetected = main.phobiaType.ToString();
             report.phobiaConfidence = main.confidenceScore;
-            report.maxHeartRateDuringTest = main.maxHeartRateIncrease;
+            report.maxHeartRateDuringTest = main.maxHeartRate;
         }
         else
         {
@@ -122,7 +120,6 @@ public class FinalReportSaver : MonoBehaviour
 
         report.totalPlayTimeSeconds = Time.time - gameStartTime;
 
-        report.peakHeartRateEvent = peakEvent;
 
         string path = Path.Combine(Application.persistentDataPath, "phobia_results.json");
         if (File.Exists(path))

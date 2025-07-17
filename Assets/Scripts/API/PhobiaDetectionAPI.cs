@@ -22,6 +22,7 @@ public class PhobiaDetectionAPI : MonoBehaviour
         public float confidenceScore; // 0-1, how confident we are about the result
         public float averageHeartRateIncrease; // Percentage increase from baseline
         public float maxHeartRateIncrease; // Maximum increase observed
+        public float maxHeartRate; // Maximum increase observed
     }
 
     [System.Serializable]
@@ -105,7 +106,8 @@ public class PhobiaDetectionAPI : MonoBehaviour
                 hasPhobia = false,
                 confidenceScore = 0f,
                 averageHeartRateIncrease = 0f,
-                maxHeartRateIncrease = 0f
+                maxHeartRateIncrease = 0f,
+                maxHeartRate = 0f
             };
         }
     }
@@ -332,7 +334,8 @@ public class PhobiaDetectionAPI : MonoBehaviour
             hasPhobia = hasPhobia,
             confidenceScore = confidenceScore,
             averageHeartRateIncrease = averageIncrease,
-            maxHeartRateIncrease = maxIncrease
+            maxHeartRateIncrease = maxIncrease,
+            maxHeartRate= maxTestHR
         };
 
         if (enableDebugLogs)
@@ -342,6 +345,7 @@ public class PhobiaDetectionAPI : MonoBehaviour
                      $"Max Increase: {maxIncrease:F1}%, " +
                      $"Sustained: {sustainedResponse:F1}s, " +
                      $"Has Phobia: {hasPhobia}, " +
+                     $"Has Phobia: {maxTestHR}, " +
                      $"Confidence: {confidenceScore:F2}");
         }
     }

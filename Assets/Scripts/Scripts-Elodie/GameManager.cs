@@ -350,7 +350,7 @@ private System.Collections.IEnumerator VictoryFadeToBlack()
     
 
     CreateVictoryText();
-        yield return new WaitForSeconds(2f); // o el tiempo que quieras
+        yield return new WaitForSeconds(1f); // o el tiempo que quieras
 
         // Cargar escena reporte
         SceneManager.LoadScene("ReportFinal");
@@ -514,7 +514,7 @@ private System.Collections.IEnumerator DefeatCameraRise()
     {
         StartCoroutine(FadeToBlack());
     }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
         SceneManager.LoadScene("ReportFinal");
     }

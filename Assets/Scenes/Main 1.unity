@@ -9646,6 +9646,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -559
       objectReference: {fileID: 0}
+    - target: {fileID: 8363717526519510615, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8363717526566729848, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -9935,6 +9939,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
+--- !u!1 &919939184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8363717526519510615, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
+  m_PrefabInstance: {fileID: 919939183}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &923202663
 GameObject:
   m_ObjectHideFlags: 0
@@ -19077,11 +19086,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4889730538520098217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4889730540197587357, guid: 65c7ee4619929b04aab3f76e20c7cad0, type: 3}
-  m_PrefabInstance: {fileID: 919939183}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4937180262468452686
 GameObject:
   m_ObjectHideFlags: 0
@@ -19405,7 +19409,7 @@ PrefabInstance:
     - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: startBtn
       value: 
-      objectReference: {fileID: 4889730538520098217}
+      objectReference: {fileID: 919939184}
     - target: {fileID: 8486691802476286089, guid: f783811455d02b948bbe0298587e3d81, type: 3}
       propertyPath: nextSceneName
       value: ProceduralHouse
