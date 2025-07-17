@@ -1,8 +1,9 @@
 using System.IO;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
-public class FinalReportDisplayCondensed_FR : MonoBehaviour
+public class FinalReportDisplay : MonoBehaviour
 {
     [System.Serializable]
     public class FinalReport
@@ -53,7 +54,11 @@ public class FinalReportDisplayCondensed_FR : MonoBehaviour
             $"<b>Fréquence max pendant le test :</b> \n{r.maxHeartRateDuringTest} BPM\n\n" +
             $"<b>Fréquence max pendant le jeu :</b> \n{r.maxHeartRateDuringGame} BPM\n\n" +
             $"<b>Niveau moyen d’anxiété :</b> \n{r.averageAnxietyLevel:F2}\n\n" +
-            $"<b>Temps total de jeu :</b> \n{r.totalPlayTimeSeconds:F0} s\n\n" +
-            $"<b>Événement du pic de fréquence :</b> \n{r.peakHeartRateEvent}";
+            $"<b>Temps total de jeu :</b> \n{r.totalPlayTimeSeconds:F0} s\n\n";
+    }
+    public void backToMainMenu()
+    {
+        Debug.Log("Finish");
+        SceneManager.LoadScene("MainMenu");
     }
 }

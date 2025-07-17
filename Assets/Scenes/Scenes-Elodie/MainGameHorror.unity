@@ -11127,7 +11127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8419613286775449853, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: objectsWithImages.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8419613286775449853, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: 'objectsWithImages.Array.data[0]'
@@ -11167,7 +11167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8419613286775449853, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: 'objectsWithImages.Array.data[9]'
-      value: 9
+      value: journal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

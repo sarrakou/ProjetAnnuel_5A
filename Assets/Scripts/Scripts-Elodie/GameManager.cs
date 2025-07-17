@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -175,6 +176,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("📞 La police a été appelée - GAME OVER !");
             TriggerGameOver();
+
         }
         else
         {
@@ -186,8 +188,17 @@ public class GameManager : MonoBehaviour
     private void TriggerGameOver()
     {
         Debug.Log("💀 DÉFAITE - Vous avez appelé la police mais il était trop tard...");
-    
-       
+
+        FinalReportSaver reportSaver = FindObjectOfType<FinalReportSaver>();
+        if (reportSaver != null)
+        {
+            reportSaver.SaveFinalReport();
+            Debug.Log("💾 Reporte final guardado (victoria)");
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ No se encontró FinalReportSaver para guardar reporte");
+        }
         AnxietySystem anxietyManager = FindObjectOfType<AnxietySystem>();
         if (anxietyManager != null)
         {
@@ -258,9 +269,19 @@ public class GameManager : MonoBehaviour
 private void TriggerVictory() // VICTOIRE - avec fade vers le noir
 {
     Debug.Log("🏆 VICTOIRE - Vous avez réussi à vous échapper à temps !");
-    
-    
-    AnxietySystem anxietyManager = FindObjectOfType<AnxietySystem>();
+
+    FinalReportSaver reportSaver = FindObjectOfType<FinalReportSaver>();
+    if (reportSaver != null)
+    {
+        reportSaver.SaveFinalReport();
+        Debug.Log("💾 Reporte final guardado (victoria)");
+    }
+    else
+    {
+        Debug.LogWarning("⚠️ No se encontró FinalReportSaver para guardar reporte");
+    }
+
+        AnxietySystem anxietyManager = FindObjectOfType<AnxietySystem>();
     if (anxietyManager != null)
     {
         anxietyManager.enabled = false;
@@ -329,7 +350,11 @@ private System.Collections.IEnumerator VictoryFadeToBlack()
     
 
     CreateVictoryText();
-}
+        yield return new WaitForSeconds(1f); // o el tiempo que quieras
+
+        // Cargar escena reporte
+        SceneManager.LoadScene("ReportFinal");
+    }
 
 private void CreateVictoryText()
 {
@@ -489,7 +514,10 @@ private System.Collections.IEnumerator DefeatCameraRise()
     {
         StartCoroutine(FadeToBlack());
     }
-}
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene("ReportFinal");
+    }
 
 public void CleanupVictoryPrefab()
 {
