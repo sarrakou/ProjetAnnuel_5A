@@ -3566,7 +3566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9ae36dd9e700fa4bac1264d1b7e88e5, type: 3}
       propertyPath: m_Name
-      value: "Cl\xE9QUEST1"
+      value: chambresecrete
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9ae36dd9e700fa4bac1264d1b7e88e5, type: 3}
       propertyPath: m_Layer
@@ -5110,55 +5110,55 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.001
+      value: 0.00053154
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.001
+      value: 0.00053154
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.001
+      value: 0.00053154
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.5231
+      value: -7.387
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2603
+      value: 1.221
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.543
+      value: -43.873
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5004952
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.49056974
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.4993271
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.5094296
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 88.853
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -0.001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 91.013
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -5166,7 +5166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_Name
-      value: chambresecrete
+      value: "Cl\xE9QUEST1"
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_Layer

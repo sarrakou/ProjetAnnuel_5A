@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Door, Interactable, Tirroir, MurPiece, Mur, Sole
 - Active game object:
-  - Name: ChambrePrincipal
+  - Name: chambresecrete
   - Tag: Untagged
   - Layer: Interactable
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
