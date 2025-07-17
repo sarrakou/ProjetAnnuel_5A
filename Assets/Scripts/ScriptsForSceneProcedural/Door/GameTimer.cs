@@ -66,6 +66,7 @@ public class GameTimer : MonoBehaviour
             //Debug.Log(" Temps écoulé ! Tu as perdu !");
             OnLose();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) WinGame();
 
     }
 
