@@ -111,7 +111,7 @@ public class GameTimer : MonoBehaviour
 
     private IEnumerator ChangeSceneWin()
     {
-        yield return new WaitForSeconds(3f); // délai pour change scene
+        yield return new WaitForSeconds(2f); // délai pour change scene
         SceneManager.LoadScene("MainGameHorror");
     }
 
