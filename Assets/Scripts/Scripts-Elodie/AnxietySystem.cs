@@ -80,6 +80,8 @@ public class AnxietySystem : MonoBehaviour
 
     void Start()
     {
+        Debug.Log($"ExciteOMeter Manager exists: {ExciteOMeterManager.instance != null}");
+
         heartRateText.text = "0 BPM";
         breathingRateText.text = "0 Breaths/Min";
 
