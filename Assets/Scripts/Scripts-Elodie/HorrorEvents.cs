@@ -54,7 +54,7 @@ public class HorrorEvents : MonoBehaviour
     [Header("Prefabs Resources Paths")]
     public string entomophobiePrefabPath = "EventsEntomophobie_";
     public string nyctophobiePrefabPath = "EventsNyctophobie";
-    public string scopophobiePrefabPath = "EventsScopophobie";
+    public string scopophobiePrefabPath = "EventsScopohobie";
     public string claustrophobiePrefabPath = "EventsClaustrophobie";
     private Dictionary<AudioClip, int> soundPlayCount = new Dictionary<AudioClip, int>();
     private GameObject activatedPrefab;

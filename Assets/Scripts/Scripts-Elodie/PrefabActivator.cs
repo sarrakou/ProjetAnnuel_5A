@@ -110,13 +110,14 @@ public class PrefabActivator : MonoBehaviour
 
         Debug.Log("Prefab trouvé, instanciation...");
         
-     
+        // Calculer la position d'spawn
         Vector3 spawnPos = GetSpawnPosition(prefab);
         
         instance = Instantiate(prefab, spawnPos, prefab.transform.rotation);
         Debug.Log("Prefab instancié à la position : " + instance.transform.position);
 
-         if (shouldMove && movementType == MovementType.MoveWhenNotLookedAt)
+        // Ajouter le script MoveWhenNotLookedAt seulement si demandé
+        if (shouldMove && movementType == MovementType.MoveWhenNotLookedAt)
         {
             MoveWhenNotLookedAt moveScript = instance.GetComponent<MoveWhenNotLookedAt>();
             if (moveScript == null)
@@ -157,21 +158,20 @@ public class PrefabActivator : MonoBehaviour
         }
         else
         {
-            // Mouvement basique vers le joueur
-            Debug.Log("Mouvement basique vers le joueur");
+            // Mouvement tout droit
+            Debug.Log("Mouvement tout droit");
             float elapsed = 0f;
-            while (elapsed < activeDuration && instance != null && player != null)
+    
+            while (elapsed < activeDuration && instance != null)
             {
-                Vector3 directionToPlayer = (player.position - instance.transform.position);
-                directionToPlayer.y = 0;
-                directionToPlayer = directionToPlayer.normalized;
-                
-                instance.transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
-                
+                // Avancer tout droit dans la direction forward de l'objet
+                instance.transform.position += instance.transform.forward * moveSpeed * Time.deltaTime;
+        
                 elapsed += Time.deltaTime;
                 yield return null;
             }
         }
+
 
         if (instance != null)
         {

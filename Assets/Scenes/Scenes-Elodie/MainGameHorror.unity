@@ -3566,7 +3566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9ae36dd9e700fa4bac1264d1b7e88e5, type: 3}
       propertyPath: m_Name
-      value: Key
+      value: "Cl\xE9QUEST1"
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9ae36dd9e700fa4bac1264d1b7e88e5, type: 3}
       propertyPath: m_Layer
@@ -5076,8 +5076,7 @@ MonoBehaviour:
   lightFlickerStartHeartRate: 85
   maxFlickerIntensity: 0.4
   flickerSpeed: 2
-  autoFindLights: 1
-  customLights: []
+  flashlightObjectName: FlashLight
   pillEffectAmount: 40
   pillItemName: pillule
   criticalHeartRate: 150
@@ -5167,7 +5166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_Name
-      value: Key2
+      value: chambresecrete
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c90c7cd3aac705c4fa0556f29305363f, type: 3}
       propertyPath: m_Layer
@@ -10850,6 +10849,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 324634380}
     - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
+      propertyPath: fallbackPhobia
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: nyctophobiePrefabName
       value: EventsNyctophobie
       objectReference: {fileID: 0}
@@ -10863,7 +10866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: scopophobiePrefabPath
-      value: EventsScopophobie
+      value: EventsScopohobie
       objectReference: {fileID: 0}
     - target: {fileID: 5587214414113166882, guid: 1bde81696e434432f82e5737f32db915, type: 3}
       propertyPath: entomophobiePrefabName
@@ -11609,7 +11612,7 @@ PrefabInstance:
     - target: {fileID: 6321652337326524017, guid: 8a774c09b91ab4f3188de890ad7f17da, type: 3}
       propertyPath: darknessMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 9c330ba5b6570834fbc8af02158a86ce, type: 3}
+      objectReference: {fileID: 8300000, guid: cdc86422b04fc8e4a9bd58ad7073bf20, type: 3}
     - target: {fileID: 8353927170301520492, guid: 8a774c09b91ab4f3188de890ad7f17da, type: 3}
       propertyPath: mouseSensitivity
       value: 100

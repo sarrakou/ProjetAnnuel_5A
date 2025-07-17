@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8459234029993155682
+--- !u!1001 &3201888587321904490
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 892acc3e6009ed04ebab12755af8a89f, type: 3}
       propertyPath: m_Name
-      value: SpiderBig
+      value: SpiderBig 1
       objectReference: {fileID: 0}
     - target: {fileID: 2831898453034752957, guid: 892acc3e6009ed04ebab12755af8a89f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -182,21 +182,21 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 892acc3e6009ed04ebab12755af8a89f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3894533359554627754}
+      addedObject: {fileID: 1666925830990411478}
   m_SourcePrefab: {fileID: 100100000, guid: 892acc3e6009ed04ebab12755af8a89f, type: 3}
---- !u!1 &8765224619296579891 stripped
+--- !u!1 &2354834384042733627 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 892acc3e6009ed04ebab12755af8a89f, type: 3}
-  m_PrefabInstance: {fileID: 8459234029993155682}
+  m_PrefabInstance: {fileID: 3201888587321904490}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &3894533359554627754
+--- !u!95 &1666925830990411478
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8765224619296579891}
+  m_GameObject: {fileID: 2354834384042733627}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 892acc3e6009ed04ebab12755af8a89f, type: 3}
   m_Controller: {fileID: 9100000, guid: ca2237f50392d9446a4c04bb2e9f641e, type: 2}
