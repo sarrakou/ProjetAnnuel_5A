@@ -1,3 +1,4 @@
+using ExciteOMeter;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,13 +62,22 @@ public class HeartRateReader : MonoBehaviour
     }
 
     // Permet d'écouter les vraies données (si utilisées plus tard)
-    public void UpdateHeartRateExternally(float bpm)
+    private void OnEnable()
     {
-        if (!useSimulation && bpm >= 30f && bpm <= 220f)
+        EoM_Events.OnDataReceived += UpdateHeartRateDisplay;
+    }
+
+    private void OnDisable()
+    {
+        EoM_Events.OnDataReceived -= UpdateHeartRateDisplay;
+    }
+
+    private void UpdateHeartRateDisplay(DataType dataType, float timestamp, float value)
+    {
+        if (!useSimulation && dataType == DataType.HeartRate && value >= 30f && value <= 220f)
         {
-            currentHeartRate = bpm;
-            if (heartRateText != null)
-                heartRateText.text = $"{Mathf.RoundToInt(currentHeartRate)} BPM";
+            currentHeartRate = value;
+            heartRateText.text = $"{Mathf.RoundToInt(currentHeartRate)} BPM";
         }
     }
 }
